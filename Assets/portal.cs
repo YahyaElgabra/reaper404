@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class portal : MonoBehaviour
 {
-    bool phase = false;
     Vector3 startingPosition;
+    bool phase = false;
     // Start is called before the first frame update
     void Start()
     {
         // save Player's starting position
-        GameObject player = GameObject.FindWithTag("Player");
+        GameObject player = GameObject.FindWithTag("reaper");
         startingPosition = player.transform.position;
     }
 
@@ -22,11 +22,17 @@ public class portal : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("reaper"))
         {
-            if (phase)
+            if (!phase)
             {
                 collision.gameObject.transform.position = startingPosition;
+                Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
+
+                if (rb != null) {
+                    rb.velocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                }
             }
             else
             {
