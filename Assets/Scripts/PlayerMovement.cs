@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private const float MoveScale = 0.2f;
     private const float RunScale = 0.5f;
     private const float RotScale = 2f;
-    private const float JumpScale = 5f;
+    private const float JumpScale = 8f;
     
     void Start()
     {
