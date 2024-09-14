@@ -9,7 +9,6 @@ public class portal : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // save Player's starting position
         GameObject player = GameObject.FindWithTag("Player");
         startingPosition = player.transform.position;
     }
