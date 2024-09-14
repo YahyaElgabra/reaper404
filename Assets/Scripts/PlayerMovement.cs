@@ -9,8 +9,12 @@ public class PlayerMovement : MonoBehaviour
     private float _rotationInput;
     
     private bool _isGrounded;
+    private bool _isOnWall;
     private bool _userJumped;
-    
+    private bool _userWallJumped;
+
+    private Vector3 _wallJump = new Vector3(0.0f, 10.0f, 0.0f);
+
     private Rigidbody _rigidbody;
 
     private const float MoveScale = 0.2f;
@@ -40,9 +44,16 @@ public class PlayerMovement : MonoBehaviour
             _rotationInput = 0;
         }
 
-        if (Input.GetButton("Jump") && _isGrounded)
-        {
-            _userJumped = true;
+        if (Input.GetButton("Jump")){
+            if (_isGrounded)
+            {
+                _userJumped = true;
+            }
+            else if (_isOnWall) 
+            {
+                _userWallJumped = true;
+            }
+            
         }
     }
 
@@ -60,13 +71,36 @@ public class PlayerMovement : MonoBehaviour
             _userJumped = false;
             _isGrounded = false;
         }
+        if (_userWallJumped)
+        {
+            _userWallJumped = false;
+            _isOnWall = false;
+            _rigidbody.AddForce(_wallJump, ForceMode.VelocityChange);
+
+        }
     }
     
     private void OnCollisionEnter(Collision collision)
     {
         _isGrounded = true;
+        Debug.Log("grounded");
+        Debug.Log(collision.gameObject.name);
     }
-    
+
+    private void OnTriggerEnter(Collider trigger)
+    {
+        _isOnWall = true;
+        Debug.Log("trigger");
+        Debug.Log(trigger.gameObject.name);
+    }
+
+    private void OnTriggerExit(Collider trigger)
+    {
+        _isOnWall = false;
+        Debug.Log("trigger out");
+        Debug.Log(trigger.gameObject.name);
+    }
+
     private void OnCollisionExit(Collision collision)
     {
         _isGrounded = false;
