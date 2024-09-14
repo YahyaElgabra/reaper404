@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class portal : MonoBehaviour
 {
-    bool phase = false;
     Vector3 startingPosition;
+    public GameObject winScreen;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,13 +24,19 @@ public class portal : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (phase)
+            PlayerMovement script = collision.gameObject.GetComponent<PlayerMovement>();
+
+            if (script._isSecondRun)
             {
-                collision.gameObject.transform.position = startingPosition;
+                winScreen.SetActive(true);
             }
             else
             {
-                collision.gameObject.transform.position = new Vector3(10, 0, 0);
+                collision.gameObject.transform.position = startingPosition;
+                Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+                script._isSecondRun = true;
             }
         }
     }
