@@ -24,6 +24,9 @@ public class PlayerMovement : MonoBehaviour
     private const float RunScale = 0.5f;
     private const float RotScale = 2f;
     private const float JumpScale = 8f;
+
+    private const float maxSpeed = 10f;
+    private const float maxRunningSpeed = 15f;
     
     void Start()
     {
@@ -32,8 +35,8 @@ public class PlayerMovement : MonoBehaviour
     
     void Update()
     {
-        _fbInput = Input.GetAxis("Vertical");
-        _lrInput = Input.GetAxis("Horizontal");
+        _fbInput = Input.GetAxisRaw("Vertical");
+        _lrInput = Input.GetAxisRaw("Horizontal");
         
         if (Input.GetKey(KeyCode.Z))
         {
@@ -80,8 +83,8 @@ public class PlayerMovement : MonoBehaviour
             _rigidbody.velocity += transform.right * (_lrInput * MoveScale);
         }
         else {
-            _rigidbody.velocity += transform.forward * (_fbInput * RunScale);
-            _rigidbody.velocity += transform.right * (_lrInput * RunScale);
+            _rigidbody.velocity = transform.forward * (_fbInput * RunScale);
+            _rigidbody.velocity = transform.right * (_lrInput * RunScale);
         }
 
         if (_userJumped)
