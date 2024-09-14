@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private bool _isSecondRun = true;
+    public bool _isSecondRun = false;
 
     private float _fbInput;
     private float _lrInput;

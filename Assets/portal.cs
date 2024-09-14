@@ -5,12 +5,12 @@ using UnityEngine;
 public class portal : MonoBehaviour
 {
     Vector3 startingPosition;
-    bool phase = false;
+    public GameObject winScreen;
     // Start is called before the first frame update
     void Start()
     {
         // save Player's starting position
-        GameObject player = GameObject.FindWithTag("reaper");
+        GameObject player = GameObject.FindWithTag("Player");
         startingPosition = player.transform.position;
     }
 
@@ -22,21 +22,21 @@ public class portal : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("reaper"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            if (!phase)
-            {
-                collision.gameObject.transform.position = startingPosition;
-                Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
+            PlayerMovement script = collision.gameObject.GetComponent<PlayerMovement>();
 
-                if (rb != null) {
-                    rb.velocity = Vector3.zero;
-                    rb.angularVelocity = Vector3.zero;
-                }
+            if (script._isSecondRun)
+            {
+                winScreen.SetActive(true);
             }
             else
             {
-                collision.gameObject.transform.position = new Vector3(10, 0, 0);
+                collision.gameObject.transform.position = startingPosition;
+                Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+                script._isSecondRun = true;
             }
         }
     }
