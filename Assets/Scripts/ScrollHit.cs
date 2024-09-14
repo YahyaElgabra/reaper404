@@ -8,9 +8,9 @@ public class ScrollHit : MonoBehaviour
     public SpawnPlayer spawnPlayer;
     public UpdatePlayerInfo updatePlayerInfo;
     
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider trigger)
     {
-        if (collision.collider.tag == "Player")
+        if (trigger.gameObject.tag == "Player")
         {
             Destroy(this.gameObject);
             
