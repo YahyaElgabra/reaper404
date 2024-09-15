@@ -97,8 +97,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 _normalizedInputDirection.z = Mathf.Max(_normalizedInputDirection.z, 0);
             }
-            Debug.Log(_normalizedInputDirection.ToString());
-            Debug.Log(_rigidbody.velocity.ToString());
         }
         if (!_running)
         {
@@ -126,22 +124,16 @@ public class PlayerMovement : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         _isGrounded = true;
-        Debug.Log("grounded");
-        Debug.Log(collision.gameObject.name);
     }
 
     private void OnTriggerEnter(Collider trigger)
     {
         _isOnWall = true;
-        Debug.Log("trigger");
-        Debug.Log(trigger.gameObject.name);
     }
 
     private void OnTriggerExit(Collider trigger)
     {
         _isOnWall = false;
-        Debug.Log("trigger out");
-        Debug.Log(trigger.gameObject.name);
     }
 
     private void OnCollisionExit(Collision collision)

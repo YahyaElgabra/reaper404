@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Timer : MonoBehaviour
+public class ScoreDisplay : MonoBehaviour
 {
     private Text _textObject;
     public ScoreTracker scorer;
@@ -17,6 +17,6 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _textObject.text = ("Time taken: " + scorer.time.ToString());
+        _textObject.text = ("Scrolls: " + scorer.score.ToString());
     }
 }
