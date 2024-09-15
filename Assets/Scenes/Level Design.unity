@@ -356,7 +356,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4256096409501165959, guid: e70dc5f2fb87a9241b1a1a4ee3a4f1a4, type: 3}
       propertyPath: _isSecondRun
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5337298183616549606, guid: e70dc5f2fb87a9241b1a1a4ee3a4f1a4, type: 3}
       propertyPath: m_Name
