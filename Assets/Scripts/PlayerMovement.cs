@@ -29,7 +29,10 @@ public class PlayerMovement : MonoBehaviour
 
     private const float maxSpeed = 8f;
     private const float maxRunningSpeed = 15f;
-    
+    float speedH = 2.0f;
+    float yaw = 0.0f;
+
+
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -39,19 +42,11 @@ public class PlayerMovement : MonoBehaviour
     {
         _fbInput = Input.GetAxisRaw("Vertical");
         _lrInput = Input.GetAxisRaw("Horizontal");
-        
-        if (Input.GetKey(KeyCode.Z))
-        {
-            _rotationInput = -1;
-        }
-        else if (Input.GetKey(KeyCode.X))
-        {
-            _rotationInput = 1;
-        }
-        else
-        {
-            _rotationInput = 0;
-        }
+
+
+        yaw += speedH* Input.GetAxis("Mouse X");
+
+        transform.eulerAngles = new Vector3(0.0f, yaw, 0.0f);
         if (Input.GetKey(KeyCode.LeftShift) && _isSecondRun)
         {
             _running = true;
