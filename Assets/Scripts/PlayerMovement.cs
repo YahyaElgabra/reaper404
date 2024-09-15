@@ -21,14 +21,14 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody _rigidbody;
 
     private const float MoveScale = 25f;
-    private const float RunScale = 0.5f;
+    private const float RunScale = 35f;
     private const float RotScale = 2f;
     private const float JumpScale = 8f;
 
     private Vector3 _normalizedInputDirection;
 
     private const float maxSpeed = 8f;
-    private const float maxRunningSpeed = 15f;
+    private const float maxRunningSpeed = 12f;
     float speedH = 2.0f;
     float yaw = 0.0f;
 
@@ -75,8 +75,10 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(userRot);
 
         _normalizedInputDirection = Vector3.Normalize(transform.forward * _fbInput + transform.right * _lrInput);
+
         Vector3 _currentMovementWithoutVertical = new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z);
-        if (maxSpeed <= _currentMovementWithoutVertical.magnitude)
+        float _currentMax = _running ? maxRunningSpeed : maxSpeed;
+        if (_currentMax <= _currentMovementWithoutVertical.magnitude)
         {
             Debug.Log("hit max");
             if (_rigidbody.velocity.x > 0)
@@ -103,8 +105,7 @@ public class PlayerMovement : MonoBehaviour
             _rigidbody.AddForce(_normalizedInputDirection * MoveScale, ForceMode.Force);
         }
         else {
-            _rigidbody.velocity = transform.forward * (_fbInput * RunScale);
-            _rigidbody.velocity = transform.right * (_lrInput * RunScale);
+            _rigidbody.AddForce(_normalizedInputDirection * RunScale, ForceMode.Force);
         }
 
         if (_userJumped)
