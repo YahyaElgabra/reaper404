@@ -20,12 +20,14 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody _rigidbody;
 
-    private const float MoveScale = 0.2f;
+    private const float MoveScale = 25f;
     private const float RunScale = 0.5f;
     private const float RotScale = 2f;
     private const float JumpScale = 8f;
 
-    private const float maxSpeed = 10f;
+    private Vector3 _normalizedInputDirection;
+
+    private const float maxSpeed = 8f;
     private const float maxRunningSpeed = 15f;
     
     void Start()
@@ -77,10 +79,33 @@ public class PlayerMovement : MonoBehaviour
         Vector3 userRot = transform.rotation.eulerAngles + new Vector3(0, _rotationInput * RotScale, 0);
         transform.rotation = Quaternion.Euler(userRot);
 
+        _normalizedInputDirection = Vector3.Normalize(transform.forward * _fbInput + transform.right * _lrInput);
+        Vector3 _currentMovementWithoutVertical = new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z);
+        if (maxSpeed <= _currentMovementWithoutVertical.magnitude)
+        {
+            Debug.Log("hit max");
+            if (_rigidbody.velocity.x > 0)
+            {
+                _normalizedInputDirection.x = Mathf.Min(_normalizedInputDirection.x, 0);
+            }
+            if (_rigidbody.velocity.x < 0)
+            {
+                _normalizedInputDirection.x = Mathf.Max(_normalizedInputDirection.x, 0);
+            }
+            if (_rigidbody.velocity.z > 0)
+            {
+                _normalizedInputDirection.z = Mathf.Min(_normalizedInputDirection.z, 0);
+            }
+            if (_rigidbody.velocity.z < 0)
+            {
+                _normalizedInputDirection.z = Mathf.Max(_normalizedInputDirection.z, 0);
+            }
+            Debug.Log(_normalizedInputDirection.ToString());
+            Debug.Log(_rigidbody.velocity.ToString());
+        }
         if (!_running)
         {
-            _rigidbody.velocity += transform.forward * (_fbInput * MoveScale);
-            _rigidbody.velocity += transform.right * (_lrInput * MoveScale);
+            _rigidbody.AddForce(_normalizedInputDirection * MoveScale, ForceMode.Force);
         }
         else {
             _rigidbody.velocity = transform.forward * (_fbInput * RunScale);
