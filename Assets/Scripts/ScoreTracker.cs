@@ -41,7 +41,5 @@ public class ScoreTracker : MonoBehaviour
         {
             time += Time.deltaTime;
         }
-        Debug.Log(score.ToString());
-        Debug.Log(time.ToString());
     }
 }

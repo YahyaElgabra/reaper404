@@ -16,14 +16,14 @@ public class PlayerMovement : MonoBehaviour
     private bool _userWallJumped;
     private bool _running = false;
 
-    private Vector3 _wallJump = new Vector3(0.0f, 7.0f, 0.0f);
+    private Vector3 _wallJump = new Vector3(0.0f, 9.0f, 0.0f);
 
     private Rigidbody _rigidbody;
 
     private const float MoveScale = 25f;
     private const float RunScale = 35f;
     private const float RotScale = 2f;
-    private const float JumpScale = 8f;
+    private const float JumpScale = 9f;
 
     private Vector3 _normalizedInputDirection;
 
@@ -37,7 +37,17 @@ public class PlayerMovement : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
     }
-    
+
+    public void SetIsGrounded(bool grounded)
+    {
+        _isGrounded = grounded;
+    }
+
+    public void SetIsOnWall(bool onWall)
+    {
+        _isOnWall = onWall;
+    }
+
     void Update()
     {
         _fbInput = Input.GetAxisRaw("Vertical");
@@ -80,7 +90,6 @@ public class PlayerMovement : MonoBehaviour
         float _currentMax = _running ? maxRunningSpeed : maxSpeed;
         if (_currentMax <= _currentMovementWithoutVertical.magnitude)
         {
-            Debug.Log("hit max");
             if (_rigidbody.velocity.x > 0)
             {
                 _normalizedInputDirection.x = Mathf.Min(_normalizedInputDirection.x, 0);
@@ -119,25 +128,5 @@ public class PlayerMovement : MonoBehaviour
             _rigidbody.AddForce(_wallJump, ForceMode.VelocityChange);
 
         }
-    }
-    
-    private void OnCollisionEnter(Collision collision)
-    {
-        _isGrounded = true;
-    }
-
-    private void OnTriggerEnter(Collider trigger)
-    {
-        _isOnWall = true;
-    }
-
-    private void OnTriggerExit(Collider trigger)
-    {
-        _isOnWall = false;
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        _isGrounded = false;
     }
 }
