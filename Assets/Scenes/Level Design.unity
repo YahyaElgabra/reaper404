@@ -7375,9 +7375,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 989567165552705915, guid: 3a6495fd4adf7e7439a26f3ea301839e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1052621166881574424, guid: 3a6495fd4adf7e7439a26f3ea301839e, type: 3}
       propertyPath: m_Name
       value: Reaper
+      objectReference: {fileID: 0}
+    - target: {fileID: 3112794577258397768, guid: 3a6495fd4adf7e7439a26f3ea301839e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4694746885902120616, guid: 3a6495fd4adf7e7439a26f3ea301839e, type: 3}
       propertyPath: m_LocalPosition.x
