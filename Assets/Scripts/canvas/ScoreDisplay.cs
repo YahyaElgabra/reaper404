@@ -17,6 +17,6 @@ public class ScoreDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _textObject.text = ("Scrolls: " + scorer.score.ToString());
+        _textObject.text = ("Score: " + scorer.score.ToString());
     }
 }

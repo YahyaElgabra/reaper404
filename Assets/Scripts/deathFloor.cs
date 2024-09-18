@@ -11,6 +11,9 @@ public class deathFloor : MonoBehaviour
     {
         GameObject player = GameObject.FindWithTag("Player");
         startingPosition = player.transform.position;
+        
+        // _startingRotation = Quaternion.Euler(0, 80, 0);
+        // player.transform.rotation = _startingRotation;
     }
 
     // Update is called once per frame

@@ -17,6 +17,8 @@ public class TimeDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _textObject.text = ("Time taken: " + scorer.time.ToString());
+        // _textObject.text = ("Time taken: " + scorer.time.ToString());
+        float roundedTime = Mathf.Round(scorer.time * 10f) / 10f;
+        _textObject.text = ("Time taken: " + roundedTime.ToString());
     }
 }
