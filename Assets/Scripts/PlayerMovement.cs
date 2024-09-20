@@ -14,9 +14,10 @@ public class PlayerMovement : MonoBehaviour
     private bool _isOnWall;
     private bool _userJumped;
     private bool _userWallJumped;
+    private bool _jumpDisabled = false;
     private bool _running = false;
-
-    private Vector3 _wallJump = new Vector3(0.0f, 9.0f, 0.0f);
+    private Vector3 _vectorToWall;
+    private Vector3 _prevNormalizedWallJumpHori = Vector3.zero;
 
     private Rigidbody _rigidbody;
 
@@ -24,6 +25,10 @@ public class PlayerMovement : MonoBehaviour
     private const float RunScale = 35f;
     private const float RotScale = 2f;
     private const float JumpScale = 9f;
+    private const float WallJumpVertScale = 14f;
+    private const float WallJumpHoriScale = 12f;
+
+
 
     private Vector3 _normalizedInputDirection;
 
@@ -43,9 +48,10 @@ public class PlayerMovement : MonoBehaviour
         _isGrounded = grounded;
     }
 
-    public void SetIsOnWall(bool onWall)
+    public void SetIsOnWall(bool onWall, Vector3 closestPointOnWall)
     {
         _isOnWall = onWall;
+        _vectorToWall = closestPointOnWall;
     }
 
     void Update()
@@ -66,14 +72,16 @@ public class PlayerMovement : MonoBehaviour
             _running = false;
         }
 
-        if (Input.GetButton("Jump")){
-            if (_isGrounded)
+        if (Input.GetButton("Jump") && !_jumpDisabled){
+            if (_isGrounded && !_userWallJumped)
             {
                 _userJumped = true;
+                _isGrounded = false;
             }
-            else if (_isOnWall && _isSecondRun) 
+            else if (_isOnWall && _isSecondRun && !_userJumped) 
             {
                 _userWallJumped = true;
+                _isOnWall = false;
             }
             
         }
@@ -84,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 userRot = transform.rotation.eulerAngles + new Vector3(0, _rotationInput * RotScale, 0);
         transform.rotation = Quaternion.Euler(userRot);
 
-        _normalizedInputDirection = Vector3.Normalize(transform.forward * _fbInput + transform.right * _lrInput);
+        _normalizedInputDirection = Vector3.Normalize(Vector3.Normalize(transform.forward * _fbInput + transform.right * _lrInput) - _prevNormalizedWallJumpHori);
 
         Vector3 _currentMovementWithoutVertical = new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z);
         float _currentMax = _running ? maxRunningSpeed : maxSpeed;
@@ -120,13 +128,35 @@ public class PlayerMovement : MonoBehaviour
             _rigidbody.AddForce(Vector3.up * JumpScale, ForceMode.VelocityChange);
             _userJumped = false;
             _isGrounded = false;
+            _jumpDisabled = true;
+            StartCoroutine(RegainJump());
         }
         if (_userWallJumped)
         {
             _userWallJumped = false;
             _isOnWall = false;
-            _rigidbody.AddForce(_wallJump, ForceMode.VelocityChange);
+            Vector3 _normalizedVectorToWall = Vector3.Normalize(_vectorToWall);
+            _normalizedVectorToWall.y = 0;
+            _prevNormalizedWallJumpHori = _normalizedVectorToWall;
+            Vector3 _final = (Vector3.up * WallJumpVertScale) - (_normalizedVectorToWall * WallJumpHoriScale);
+            _rigidbody.AddForce(_final, ForceMode.VelocityChange);
+            Debug.Log(_final.ToString());
+            _jumpDisabled = true;
+            StartCoroutine(RegainJump());
+            StartCoroutine(RegainFullHoriControl());
 
         }
+    }
+    
+    private IEnumerator RegainJump()
+    {
+        yield return new WaitForSeconds(0.1f);
+        _jumpDisabled = false;
+    }
+
+    private IEnumerator RegainFullHoriControl()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _prevNormalizedWallJumpHori = Vector3.zero;
     }
 }

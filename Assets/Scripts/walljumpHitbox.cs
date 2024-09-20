@@ -5,6 +5,8 @@ using UnityEngine;
 public class walljumpHitbox : MonoBehaviour
 {
     public PlayerMovement player;
+    private Vector3 _closest;
+    private string _previousTouched;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,11 +15,22 @@ public class walljumpHitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider trigger)
     {
-        player.SetIsOnWall(true);
+        if (trigger.name != _previousTouched) {
+            _previousTouched = trigger.name;
+            _closest = trigger.ClosestPoint(transform.position);
+            player.SetIsOnWall(true, _closest - transform.position);
+            StartCoroutine(WipePrevious());
+        }
     }
 
     private void OnTriggerExit(Collider trigger)
     {
-        player.SetIsOnWall(false);
+        player.SetIsOnWall(false, _closest - transform.position);
+    }
+
+    private IEnumerator WipePrevious()
+    {
+        yield return new WaitForSeconds(0.7f);
+        _previousTouched = "";
     }
 }

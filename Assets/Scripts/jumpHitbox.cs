@@ -5,6 +5,7 @@ using UnityEngine;
 public class jumpHitbox : MonoBehaviour
 {
     public PlayerMovement player;
+    private string _previousTouched;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,11 +14,22 @@ public class jumpHitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider trigger)
     {
-        player.SetIsGrounded(true);
+        if (trigger.name != _previousTouched)
+        {
+            _previousTouched = trigger.name;
+            player.SetIsGrounded(true);
+            StartCoroutine(WipePrevious());
+        }
     }
 
     private void OnTriggerExit(Collider trigger)
     {
         player.SetIsGrounded(false);
+    }
+
+    private IEnumerator WipePrevious()
+    {
+        yield return new WaitForSeconds(0.7f);
+        _previousTouched = "";
     }
 }
