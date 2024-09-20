@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private float _fbInput;
     private float _lrInput;
     private float _rotationInput;
+    private float _yaw;
     
     private bool _isGrounded;
     private bool _isOnWall;
@@ -35,7 +36,6 @@ public class PlayerMovement : MonoBehaviour
     private const float maxSpeed = 8f;
     private const float maxRunningSpeed = 12f;
     float speedH = 2.0f;
-    float yaw = 0.0f;
 
 
     void Start()
@@ -59,10 +59,9 @@ public class PlayerMovement : MonoBehaviour
         _fbInput = Input.GetAxisRaw("Vertical");
         _lrInput = Input.GetAxisRaw("Horizontal");
 
-
-        yaw += speedH* Input.GetAxis("Mouse X");
-
-        transform.eulerAngles = new Vector3(0.0f, yaw, 0.0f);
+        
+        _yaw += speedH* Input.GetAxis("Mouse X");
+        
         if (Input.GetKey(KeyCode.LeftShift) && _isSecondRun)
         {
             _running = true;
@@ -89,8 +88,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 userRot = transform.rotation.eulerAngles + new Vector3(0, _rotationInput * RotScale, 0);
+
+        Vector3 userRot = transform.rotation.eulerAngles + new Vector3(0, _yaw, 0);
         transform.rotation = Quaternion.Euler(userRot);
+        _yaw = 0.0f;
 
         _normalizedInputDirection = Vector3.Normalize(Vector3.Normalize(transform.forward * _fbInput + transform.right * _lrInput) - _prevNormalizedWallJumpHori);
 
