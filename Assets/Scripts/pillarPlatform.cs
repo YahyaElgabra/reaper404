@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class pillarPlatform : MonoBehaviour
 {
-    private Vector3[] originalVertices;
-    private Vector3[] modifiedVertices;
-    private Mesh mesh;
-    float shakeDuration = 1f;
-    float shakeMagnitude = 0.1f;
-    public GameObject spawnedPillar;
+    public GameObject pillarPrefab;
+    private GameObject _spawnedPillar;
+    private bool _alreadyTriggered = false;
 
     // Start is called before the first frame update
     void Start()
@@ -25,27 +22,24 @@ public class pillarPlatform : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && !_alreadyTriggered)
         {
-            StartCoroutine(disintegrate());
-            GameObject spawned = Instantiate(spawnedPillar, transform.position - new Vector3(0, -4, 0), Quaternion.identity);
-            spawned.transform.localScale += new Vector3(0, 10, 0);
+            _spawnedPillar = Instantiate(pillarPrefab, transform.position - new Vector3(0f, 1f, 0f), Quaternion.identity, this.transform);
+            _alreadyTriggered = true;
+            StartCoroutine(expand());
         }
     }
 
-    IEnumerator disintegrate()
+    IEnumerator expand()
     {
+        Vector3 growthFactor = new Vector3(0f, 2.8f, 0f);
+        float growthTarget = 15f;
 
-        float elapsedTime = 0f;
-
-        Vector3 originalPosition = transform.position;
-
-        while (shakeDuration > elapsedTime)
+        while (_spawnedPillar.transform.localScale.y < growthTarget)
         {
-            elapsedTime += Time.deltaTime;
+            _spawnedPillar.transform.localScale += growthFactor * Time.deltaTime;
+            _spawnedPillar.transform.position -= (growthFactor/2f) * Time.deltaTime;
             yield return null;
         }
-
-        Destroy(gameObject);
     }
 }
