@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class disintegratingPlatform : MonoBehaviour
 {
+    private Vector3[] originalVertices;
+    private Vector3[] modifiedVertices;
+    private Mesh mesh;
+    float shakeDuration = 1f;
+    float shakeMagnitude = 0.1f;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        mesh = GetComponent<MeshFilter>().mesh;
+        originalVertices = mesh.vertices;
+        modifiedVertices = new Vector3[originalVertices.Length];
     }
 
     // Update is called once per frame
@@ -27,16 +35,21 @@ public class disintegratingPlatform : MonoBehaviour
     IEnumerator disintegrate()
     {
 
-        float shakeDuration = 1f;
         float elapsedTime = 0f;
-        float shakeMagnitude = 0.1f;
 
         Vector3 originalPosition = transform.position;
         
         while (shakeDuration > elapsedTime)
         {
-            Vector3 randomOffset = Random.insideUnitSphere * shakeMagnitude;
-            transform.position = originalPosition + randomOffset;
+            for (int i = 0; i < originalVertices.Length; i++)
+            {
+                Vector3 offset = Random.insideUnitSphere * shakeMagnitude;
+                modifiedVertices[i] = originalVertices[i] + offset;
+            }
+
+            mesh.vertices = modifiedVertices;
+            mesh.RecalculateNormals();
+            mesh.RecalculateBounds();
             elapsedTime += Time.deltaTime;
             yield return null;
         }
