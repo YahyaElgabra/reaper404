@@ -460,6 +460,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isSecondRun: 0
+  playerCamera: {fileID: 0}
+  defaultFOV: 70
+  sprintFOV: 90
+  fovTransitionSpeed: 1
 --- !u!114 &5219509656535299064
 MonoBehaviour:
   m_ObjectHideFlags: 0

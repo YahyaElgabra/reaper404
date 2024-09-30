@@ -6,31 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="5580101a-c1c3-49c0-ae75-68e3344bbe3a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.reaper404/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.reaper404/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level Design.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level Design.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CameraControl.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CameraControl.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerMovement.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerMovement.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerState.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerState.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScoreTracker.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScoreTracker.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SoulAnimOffset.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SoulAnimOffset.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SoulHit.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SoulHit.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/deathFloor.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/deathFloor.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/disintegratingPlatform.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/disintegratingPlatform.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/jumpHitbox.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/jumpHitbox.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/pillarPlatform.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/pillarPlatform.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/portal.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/portal.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/walljumpHitbox.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/walljumpHitbox.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/stone4.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/stone4.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Reaper.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Reaper.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level Design.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level Design.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level2.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level2.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Control-Movement/CameraControl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Control-Movement/CameraControl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Control-Movement/PlayerMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Control-Movement/PlayerMovement.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/InputManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/InputManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -108,7 +91,7 @@
       <option name="presentableId" value="Default" />
       <updated>1726329583087</updated>
       <workItem from="1726329584234" duration="6538000" />
-      <workItem from="1727640549282" duration="10540000" />
+      <workItem from="1727640549282" duration="14479000" />
     </task>
     <servers />
   </component>

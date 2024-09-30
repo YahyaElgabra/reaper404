@@ -36,8 +36,8 @@ public class PlayerMovement : MonoBehaviour
     float speedH = 2.0f;
 
     public Camera playerCamera;
-    public float defaultFOV = 60f;
-    public float sprintFOV = 90f;
+    public float defaultFOV = 70f;
+    public float sprintFOV = 100f;
     public float fovTransitionSpeed = 1f;
 
     void Start()
@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
         _lrInput = Input.GetAxisRaw("Horizontal");
 
         
-        _yaw += speedH* Input.GetAxis("Mouse X");
+        _yaw += speedH* (Input.GetAxis("Mouse X") + Input.GetAxis("RJoy X"));
         
         // if ((Input.GetKey(KeyCode.LeftShift) || Input.GetButton("Fire2")))
         if ((Input.GetKey(KeyCode.LeftShift) || Input.GetButton("Fire2")) && _isSecondRun)
