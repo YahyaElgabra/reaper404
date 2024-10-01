@@ -120,9 +120,6 @@ public class PlayerMovement : MonoBehaviour
     {
         _rigidbody.AddForce(-transform.up * _gravityStrength, ForceMode.Acceleration);
 
-        //Vector3 userRot = transform.rotation.eulerAngles + _yaw * transform.up;
-        //transform.rotation = Quaternion.Euler(userRot);
-
         Quaternion userRot = Quaternion.AngleAxis(_yaw, transform.up);
         transform.rotation = userRot * transform.rotation;
 
