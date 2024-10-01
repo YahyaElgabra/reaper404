@@ -7,12 +7,10 @@ public class CameraControl : MonoBehaviour
     public float speedV = 2.0f;
 
     private float pitch = 0.0f;
-
     void Update()
     {
         pitch -= speedV * Input.GetAxis("Mouse Y");
-
-        transform.localEulerAngles = new Vector3(pitch, 0.0f, 0.0f);
+        //transform.localEulerAngles = Vector3.right * pitch;
     }
 }
 

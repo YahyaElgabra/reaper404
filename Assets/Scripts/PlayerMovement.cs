@@ -36,6 +36,8 @@ public class PlayerMovement : MonoBehaviour
     private const float maxSpeed = 8f;
     private const float maxRunningSpeed = 12f;
     float speedH = 2.0f;
+    public Vector3 _gravityDirection = Vector3.down;
+    private float _gravityStrength = 9.81f;
 
 
     void Start()
@@ -84,13 +86,46 @@ public class PlayerMovement : MonoBehaviour
             }
             
         }
+
+        /*
+        *** I'm keeping these here for now in case you want to use them for development purposes
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            RotateGravity(0);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            RotateGravity(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            RotateGravity(2);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            RotateGravity(3);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            RotateGravity(4);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            RotateGravity(5);
+        }
+        */
     }
 
     private void FixedUpdate()
     {
+        _rigidbody.AddForce(-transform.up * _gravityStrength, ForceMode.Acceleration);
 
-        Vector3 userRot = transform.rotation.eulerAngles + new Vector3(0, _yaw, 0);
-        transform.rotation = Quaternion.Euler(userRot);
+        //Vector3 userRot = transform.rotation.eulerAngles + _yaw * transform.up;
+        //transform.rotation = Quaternion.Euler(userRot);
+
+        Quaternion userRot = Quaternion.AngleAxis(_yaw, transform.up);
+        transform.rotation = userRot * transform.rotation;
+
         _yaw = 0.0f;
 
         _normalizedInputDirection = Vector3.Normalize(Vector3.Normalize(transform.forward * _fbInput + transform.right * _lrInput) - _prevNormalizedWallJumpHori);
@@ -126,7 +161,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (_userJumped)
         {
-            _rigidbody.AddForce(Vector3.up * JumpScale, ForceMode.VelocityChange);
+            _rigidbody.AddForce(transform.up * JumpScale, ForceMode.VelocityChange);
             _userJumped = false;
             _isGrounded = false;
             _jumpDisabled = true;
@@ -139,7 +174,7 @@ public class PlayerMovement : MonoBehaviour
             Vector3 _normalizedVectorToWall = Vector3.Normalize(_vectorToWall);
             _normalizedVectorToWall.y = 0;
             _prevNormalizedWallJumpHori = _normalizedVectorToWall;
-            Vector3 _final = (Vector3.up * WallJumpVertScale) - (_normalizedVectorToWall * WallJumpHoriScale);
+            Vector3 _final = (transform.up * WallJumpVertScale) - (_normalizedVectorToWall * WallJumpHoriScale);
             _rigidbody.AddForce(_final, ForceMode.VelocityChange);
             Debug.Log(_final.ToString());
             _jumpDisabled = true;
@@ -159,5 +194,38 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         _prevNormalizedWallJumpHori = Vector3.zero;
+    }
+    public void RotateGravity(int side)
+    {
+        switch (side)
+        {
+            case 0:
+                _gravityDirection = new Vector3(1, 0, 0);
+                break;
+            case 1:
+                _gravityDirection = new Vector3(-1, 0, 0);
+                break;
+            case 2:
+                _gravityDirection = new Vector3(0, 1, 0);
+                break;
+            case 3:
+                _gravityDirection = new Vector3(0, -1, 0);
+                break;
+            case 4:
+                _gravityDirection = new Vector3(0, 0, 1);
+                break;
+            case 5:
+                _gravityDirection = new Vector3(0, 0, -1);
+                break;
+            default:
+                break;
+        }
+        FlipCharacterModel();
+    }
+
+    private void FlipCharacterModel()
+    {
+        Quaternion rotation = Quaternion.FromToRotation(-transform.up, _gravityDirection);
+        transform.rotation = rotation * transform.rotation;
     }
 }
