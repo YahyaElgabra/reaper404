@@ -7,7 +7,7 @@ public class PlayerState : MonoBehaviour
 {
     public GameObject idlePrefab;
     public GameObject runPrefab;
-    // public GameObject jumpPrefab;
+    public GameObject jumpPrefab;
     // public GameObject attackPrefab;
     
     private bool _isGrounded = false;
@@ -38,15 +38,16 @@ public class PlayerState : MonoBehaviour
         {
             _velocity = _playerRigidbody.velocity.magnitude;
             
-            if (_isGrounded && _velocity > 3f)
+            
+            if (_isGrounded && Input.GetButton("Jump"))
+            {
+                StartCoroutine(SwitchToPrefabForDuration(jumpPrefab, 0.633f));
+            }
+            else if (_isGrounded && _velocity > 3f)
             {
                 SetActivePrefab(runPrefab);
                 PlayRunAudio();
             }
-            // else if (Input.GetKeyDown(KeyCode.Space))
-            // {
-            //     StartCoroutine(SwitchToPrefabForDuration(jumpPrefab, 1.033f));
-            // }
             // else if (Input.GetKeyDown(KeyCode.LeftShift))
             // {
             //     StartCoroutine(SwitchToPrefabForDuration(attackPrefab, 1.533f));
@@ -73,23 +74,23 @@ public class PlayerState : MonoBehaviour
         }
     }
     
-    // private IEnumerator SwitchToPrefabForDuration(GameObject prefab, float duration)
-    // {
-    //     _isActionInProgress = true;
-    //     SetActivePrefab(prefab);
-    //     yield return new WaitForSeconds(duration);
-    //     _isActionInProgress = false;
-    //     
-    //     _velocity = _playerRigidbody.velocity.magnitude;
-    //     if (_velocity > 0.1f)
-    //     {
-    //         SetActivePrefab(runPrefab);
-    //     }
-    //     else
-    //     {
-    //         SetActivePrefab(idlePrefab);
-    //     }
-    // }
+    private IEnumerator SwitchToPrefabForDuration(GameObject prefab, float duration)
+    {
+        _isActionInProgress = true;
+        SetActivePrefab(prefab);
+        yield return new WaitForSeconds(duration);
+        _isActionInProgress = false;
+        
+        _velocity = _playerRigidbody.velocity.magnitude;
+        if (_velocity > 0.1f)
+        {
+            SetActivePrefab(runPrefab);
+        }
+        else
+        {
+            SetActivePrefab(idlePrefab);
+        }
+    }
     
     private void CheckGrounded()
     {
