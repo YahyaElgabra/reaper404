@@ -87,9 +87,9 @@ public class PlayerMovement : MonoBehaviour
             
         }
 
-        /*
-        *** I'm keeping these here for now in case you want to use them for development purposes
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        
+        // I'm keeping these here for now in case you want to use them for development purposes
+        /*if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             RotateGravity(0);
         }
@@ -112,8 +112,8 @@ public class PlayerMovement : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha6))
         {
             RotateGravity(5);
-        }
-        */
+        }*/
+        
     }
 
     private void FixedUpdate()
