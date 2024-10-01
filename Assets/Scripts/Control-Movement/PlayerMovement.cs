@@ -175,7 +175,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (_userJumped)
         {
-            _rigidbody.AddForce(Vector3.up * JumpScale, ForceMode.VelocityChange);
+            _rigidbody.AddForce(transform.up * JumpScale, ForceMode.VelocityChange);
             _userJumped = false;
             _isGrounded = false;
             _jumpDisabled = true;
@@ -186,9 +186,20 @@ public class PlayerMovement : MonoBehaviour
             _userWallJumped = false;
             _isOnWall = false;
             Vector3 _normalizedVectorToWall = Vector3.Normalize(_vectorToWall);
-            _normalizedVectorToWall.y = 0;
+            if (_gravityDirection.x != 0)
+            {
+                _normalizedVectorToWall.x = 0;
+            }
+            else if (_gravityDirection.y != 0)
+            {
+                _normalizedVectorToWall.y = 0;
+            }
+            else if (_gravityDirection.z != 0)
+            {
+                _normalizedVectorToWall.z = 0;
+            }
             _prevNormalizedWallJumpHori = _normalizedVectorToWall;
-            Vector3 _final = (Vector3.up * WallJumpVertScale) - (_normalizedVectorToWall * WallJumpHoriScale);
+            Vector3 _final = (transform.up * WallJumpVertScale) - (_normalizedVectorToWall * WallJumpHoriScale);
             _rigidbody.AddForce(_final, ForceMode.VelocityChange);
             // Debug.Log(_final.ToString());
             _jumpDisabled = true;

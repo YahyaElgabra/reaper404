@@ -464,6 +464,7 @@ MonoBehaviour:
   defaultFOV: 70
   sprintFOV: 90
   fovTransitionSpeed: 1
+  _gravityDirection: {x: 0, y: -1, z: 0}
 --- !u!114 &5219509656535299064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -695,6 +696,10 @@ PrefabInstance:
     - target: {fileID: 3813099627551803994, guid: 7e87c9f70afbe6b4eb8c9184cdddcfe0, type: 3}
       propertyPath: m_Name
       value: reaper-Idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 3813099627551803994, guid: 7e87c9f70afbe6b4eb8c9184cdddcfe0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4117799096368078727, guid: 7e87c9f70afbe6b4eb8c9184cdddcfe0, type: 3}
       propertyPath: m_Materials.Array.data[0]

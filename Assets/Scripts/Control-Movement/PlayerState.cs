@@ -93,8 +93,8 @@ public class PlayerState : MonoBehaviour
     
     private void CheckGrounded()
     {
-        _isGrounded = Physics.Raycast(transform.position - new Vector3(0, _rayOffset, 0), 
-            Vector3.down, _groundCheckDistance);
+        _isGrounded = Physics.Raycast(transform.position - _rayOffset * transform.up, 
+            -transform.up, _groundCheckDistance);
         
         // Debug.Log("Postion: " + transform.position);
         // Debug.Log("IsGrounded: " + _isGrounded);
@@ -103,8 +103,8 @@ public class PlayerState : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position - new Vector3(0, _rayOffset, 0), 
-            (transform.position - new Vector3(0, _rayOffset, 0)) + Vector3.down * _groundCheckDistance);
+        Gizmos.DrawLine(transform.position - _rayOffset * transform.up, 
+            (transform.position - _rayOffset * transform.up) + -transform.up * _groundCheckDistance);
     }
     
     // Method to play the running sound
