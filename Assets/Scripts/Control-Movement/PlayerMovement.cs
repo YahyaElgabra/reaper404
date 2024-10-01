@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
     private const float maxSpeed = 8f;
     private const float maxRunningSpeed = 12f;
     float speedH = 2.0f;
+    private const float maxVerticalSpeed = 9.81f;
 
     public Camera playerCamera;
     public float defaultFOV = 70f;
@@ -176,6 +177,17 @@ public class PlayerMovement : MonoBehaviour
         if (_userJumped)
         {
             _rigidbody.AddForce(transform.up * JumpScale, ForceMode.VelocityChange);
+
+            // capping vertical speed
+            Vector3 velocity = _rigidbody.velocity;
+            float upVelocity = Vector3.Dot(velocity, -_gravityDirection);
+            if (upVelocity > maxVerticalSpeed)
+            {
+                float difference = upVelocity - maxVerticalSpeed;
+                velocity = velocity - difference * -_gravityDirection;
+                _rigidbody.velocity = velocity;
+            }
+
             _userJumped = false;
             _isGrounded = false;
             _jumpDisabled = true;
