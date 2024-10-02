@@ -25,9 +25,28 @@ public class portal : MonoBehaviour
         {
             PlayerMovement script = collision.gameObject.GetComponent<PlayerMovement>();
 
-            if (script._isSecondRun)
+            if (script._isGrav)
             {
                 winScreen.SetActive(true);
+            }
+            else if (script._isTP) {
+            
+                collision.gameObject.transform.position = startingPosition;
+                Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+                script._isTP = false;
+                script._isGrav = true;
+            }
+            else if (script._isSecondRun)
+            {
+
+                collision.gameObject.transform.position = startingPosition;
+                Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+                script._isTP = true;
+                script._isSecondRun = false;
             }
             else
             {
@@ -36,6 +55,7 @@ public class portal : MonoBehaviour
                 rb.velocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
                 script._isSecondRun = true;
+
             }
         }
     }

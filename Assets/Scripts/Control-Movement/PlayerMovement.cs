@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public bool _isSecondRun = false;
+    public bool _isTP = false;
+    public bool _isGrav = false;
 
     private float _fbInput;
     private float _lrInput;
@@ -25,8 +27,8 @@ public class PlayerMovement : MonoBehaviour
     private const float MoveScale = 25f;
     private const float RunScale = 35f;
     private const float RotScale = 2f;
-    private const float JumpScale = 9f;
-    private const float WallJumpVertScale = 14f;
+    private const float JumpScale = 22f;
+    private const float WallJumpVertScale = 25f;
     private const float WallJumpHoriScale = 12f;
     
     private Vector3 _normalizedInputDirection;
@@ -42,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
     public float fovTransitionSpeed = 1f;
 
     public Vector3 _gravityDirection = Vector3.down;
-    private float _gravityStrength = 9.81f;
+    private float _gravityStrength = 28f;
     
     void Start()
     {
@@ -130,11 +132,11 @@ public class PlayerMovement : MonoBehaviour
         {
             RotateGravity(5);
         }*/
-        if (Input.GetKeyDown(KeyCode.Z) || Input.GetButtonUp("Fire4"))
+        if (_isGrav && (Input.GetKeyDown(KeyCode.Z) || Input.GetButtonUp("Fire4")))
         {
             RotateGravity(6);
         }
-        else if (Input.GetKeyDown(KeyCode.X) || Input.GetButtonUp("Fire5"))
+        else if (_isGrav && (Input.GetKeyDown(KeyCode.X) || Input.GetButtonUp("Fire5")))
         {
             RotateGravity(7);
         }
@@ -208,6 +210,12 @@ public class PlayerMovement : MonoBehaviour
             _jumpDisabled = true;
             StartCoroutine(RegainJump());
         }
+        //Vector3 velocity1 = _rigidbody.velocity;
+        //float upVelocity1 = Vector3.Dot(velocity1, -_gravityDirection);
+        //if (0 < upVelocity1 && upVelocity1 < 0.5)
+        //{
+         //   _rigidbody.AddForce(transform.up * JumpScale * -0.8f, ForceMode.VelocityChange);
+        //}
         if (_userWallJumped)
         {
             _userWallJumped = false;
@@ -226,9 +234,19 @@ public class PlayerMovement : MonoBehaviour
                 _normalizedVectorToWall.z = 0;
             }
             _prevNormalizedWallJumpHori = _normalizedVectorToWall;
-            Vector3 _final = (transform.up * WallJumpVertScale) - (_normalizedVectorToWall * WallJumpHoriScale);
+            Vector3 velocity = _rigidbody.velocity;
+            float upVelocity = Vector3.Dot(velocity, -_gravityDirection);
+            Vector3 _final = (transform.up * (WallJumpVertScale - upVelocity )) - (_normalizedVectorToWall * WallJumpHoriScale);
             _rigidbody.AddForce(_final, ForceMode.VelocityChange);
             // Debug.Log(_final.ToString());
+            velocity = _rigidbody.velocity;
+            upVelocity = Vector3.Dot(velocity, -_gravityDirection);
+            if (upVelocity > maxVerticalSpeed)
+            {
+                float difference = upVelocity - maxVerticalSpeed;
+                velocity = velocity - difference * -_gravityDirection;
+                _rigidbody.velocity = velocity;
+            }
             _jumpDisabled = true;
             StartCoroutine(RegainJump());
             StartCoroutine(RegainFullHoriControl());

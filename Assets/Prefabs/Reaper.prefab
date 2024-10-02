@@ -148,7 +148,7 @@ Transform:
   m_GameObject: {fileID: 2728680271861630856}
   serializedVersion: 2
   m_LocalRotation: {x: 0.19547677, y: -0, z: -0, w: 0.9807083}
-  m_LocalPosition: {x: 0, y: 1.769, z: -3.52}
+  m_LocalPosition: {x: 0, y: 2.55, z: -4.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -459,7 +459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33498c13407604f93aa5b9cb081fab08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isSecondRun: 0
+  _isSecondRun: 1
   playerCamera: {fileID: 0}
   defaultFOV: 70
   sprintFOV: 90
@@ -479,6 +479,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idlePrefab: {fileID: 1177694037093405527}
   runPrefab: {fileID: 8866464723644986330}
+  jumpPrefab: {fileID: 0}
 --- !u!82 &2616038126860004267
 AudioSource:
   m_ObjectHideFlags: 0

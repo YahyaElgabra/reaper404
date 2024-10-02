@@ -76,7 +76,15 @@ public class Throwing : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && !isHeld)
         {
-            StartCoroutine(MoveToPlayer());
+            if (collision.gameObject.GetComponent<PlayerMovement>()._isTP)
+            {
+                StartCoroutine(MoveToPlayer());
+                Debug.Log("contact");
+            }
+            else
+            {
+                Debug.Log("Pain");
+            }
         }
         
         if (isThrown && !collision.gameObject.CompareTag("Player"))
