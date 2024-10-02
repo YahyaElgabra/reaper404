@@ -7790,6 +7790,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 46b8a5ddce5fd431ab96bb7ee19987a0, type: 2}
     - target: {fileID: 7905321164522163527, guid: b4b3861ff86f24643948b2f89776d741, type: 3}
+      propertyPath: _isTP
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7905321164522163527, guid: b4b3861ff86f24643948b2f89776d741, type: 3}
+      propertyPath: _isGrav
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7905321164522163527, guid: b4b3861ff86f24643948b2f89776d741, type: 3}
       propertyPath: sprintFOV
       value: 100
       objectReference: {fileID: 0}
