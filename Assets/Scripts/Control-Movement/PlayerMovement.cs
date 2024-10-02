@@ -123,6 +123,14 @@ public class PlayerMovement : MonoBehaviour
         {
             RotateGravity(5);
         }*/
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            RotateGravity(6);
+        }
+        else if (Input.GetKeyDown(KeyCode.X))
+        {
+            RotateGravity(7);
+        }
     }
 
     private void FixedUpdate()
@@ -255,6 +263,12 @@ public class PlayerMovement : MonoBehaviour
             case 5:
                 _gravityDirection = new Vector3(0, 0, -1);
                 break;
+            case 6:
+                _gravityDirection = FindSide(-1);
+                break;
+            case 7:
+                _gravityDirection = FindSide(1);
+                break;
             default:
                 break;
         }
@@ -265,5 +279,34 @@ public class PlayerMovement : MonoBehaviour
     {
         Quaternion rotation = Quaternion.FromToRotation(-transform.up, _gravityDirection);
         transform.rotation = rotation * transform.rotation;
+    }
+
+    private Vector3 FindSide(int scalar)
+    {
+        // returns the closest unit vector to "right" (or left if the input is -1), negative means left and positive means right
+        Vector3[] directions = new Vector3[]
+{
+            new Vector3(0, 0, 1),
+            new Vector3(0, 0, -1),
+            new Vector3(0, 1, 0),
+            new Vector3(0, -1, 0),
+            new Vector3(1, 0, 0),
+            new Vector3(-1, 0, 0)
+        };
+
+        Vector3 closestDirection = Vector3.zero;
+        float closestAngle = float.MaxValue;
+
+        foreach (Vector3 dir in directions)
+        {
+            float angle = Vector3.Angle(scalar * transform.right, dir);
+            if (angle < closestAngle)
+            {
+                closestAngle = angle;
+                closestDirection = dir;
+            }
+        }
+
+        return closestDirection;
     }
 }
