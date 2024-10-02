@@ -74,6 +74,7 @@ public class Throwing : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("collision!");
         if (collision.gameObject.CompareTag("Player") && !isHeld)
         {
             if (collision.gameObject.GetComponent<PlayerMovement>()._isTP)
