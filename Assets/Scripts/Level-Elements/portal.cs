@@ -45,7 +45,7 @@ public class portal : MonoBehaviour
                 Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
                 rb.velocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
-                script._isTP = true;
+                script._isGrav = true;
                 script._isSecondRun = false;
             }
             else
