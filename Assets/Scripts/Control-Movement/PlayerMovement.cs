@@ -130,11 +130,11 @@ public class PlayerMovement : MonoBehaviour
         {
             RotateGravity(5);
         }*/
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z) || Input.GetButtonUp("Fire4"))
         {
             RotateGravity(6);
         }
-        else if (Input.GetKeyDown(KeyCode.X))
+        else if (Input.GetKeyDown(KeyCode.X) || Input.GetButtonUp("Fire5"))
         {
             RotateGravity(7);
         }
