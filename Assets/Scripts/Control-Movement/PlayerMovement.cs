@@ -43,11 +43,11 @@ public class PlayerMovement : MonoBehaviour
 
     public Vector3 _gravityDirection = Vector3.down;
     private float _gravityStrength = 9.81f;
-
+    
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
-
+        
         playerCamera = GetComponentInChildren<Camera>();
         playerCamera.fieldOfView = defaultFOV;
     }
@@ -69,7 +69,14 @@ public class PlayerMovement : MonoBehaviour
         _lrInput = Input.GetAxisRaw("Horizontal");
 
         
-        _yaw += speedH* (Input.GetAxis("Mouse X") + Input.GetAxis("RJoy X"));
+        if (!Throwing.isAiming)
+        {
+            _yaw += speedH* (Input.GetAxis("Mouse X") + Input.GetAxis("RJoy X"));
+        }
+        else
+        {
+            _yaw = 0.0f;
+        }
         
         // if ((Input.GetKey(KeyCode.LeftShift) || Input.GetButton("Fire2")))
         if ((Input.GetKey(KeyCode.LeftShift) || Input.GetButton("Fire2")) && _isSecondRun)
@@ -123,11 +130,11 @@ public class PlayerMovement : MonoBehaviour
         {
             RotateGravity(5);
         }*/
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z) || Input.GetButtonUp("Fire4"))
         {
             RotateGravity(6);
         }
-        else if (Input.GetKeyDown(KeyCode.X))
+        else if (Input.GetKeyDown(KeyCode.X) || Input.GetButtonUp("Fire5"))
         {
             RotateGravity(7);
         }
