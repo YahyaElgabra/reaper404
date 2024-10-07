@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GravitySwitch : MonoBehaviour
 {
-    PlayerMovement playerMovement;
+    GravityControl gravityControl;
     public int rotation = 4;
     bool _onCooldown = false;
     public float cooldownPeriod = 1f;
@@ -13,7 +13,7 @@ public class GravitySwitch : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && !_onCooldown)
         {
             _onCooldown = true;
-            playerMovement = collision.gameObject.GetComponent<PlayerMovement>();
+            gravityControl = collision.gameObject.GetComponent<GravityControl>();
             StartCoroutine(SwitchGravity());
         }
     }
@@ -26,7 +26,7 @@ public class GravitySwitch : MonoBehaviour
         // 3 changes "down" to (0, -1, 0), which is normal,
         // 4 changes "down" to (1, 0, 1), or "back" of our starting position,
         // 5 changes "down" to (0, 0, -1), or "forward" of our starting position,
-        playerMovement.RotateGravity(rotation);
+        gravityControl.RotateGravity(rotation);
         yield return new WaitForSeconds(cooldownPeriod);
         _onCooldown = false;
     }
