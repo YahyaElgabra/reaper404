@@ -997,7 +997,7 @@ GameObject:
   - component: {fileID: 258103748}
   m_Layer: 0
   m_Name: deathWall (2)
-  m_TagString: Untagged
+  m_TagString: death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1640,7 +1640,7 @@ GameObject:
   - component: {fileID: 560439826}
   m_Layer: 0
   m_Name: deathCeiling
-  m_TagString: Untagged
+  m_TagString: death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1943,7 +1943,7 @@ GameObject:
   - component: {fileID: 795527530}
   m_Layer: 0
   m_Name: deathFloor
-  m_TagString: Untagged
+  m_TagString: death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2946,7 +2946,7 @@ GameObject:
   - component: {fileID: 1233644550}
   m_Layer: 0
   m_Name: deathWall (1)
-  m_TagString: Untagged
+  m_TagString: death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3581,7 +3581,7 @@ GameObject:
   - component: {fileID: 1486915116}
   m_Layer: 0
   m_Name: deathWall (3)
-  m_TagString: Untagged
+  m_TagString: death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8949,7 +8949,7 @@ GameObject:
   - component: {fileID: 1777896351}
   m_Layer: 0
   m_Name: deathWall
-  m_TagString: Untagged
+  m_TagString: death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9644,6 +9644,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 46b8a5ddce5fd431ab96bb7ee19987a0, type: 2}
     - target: {fileID: 7905321164522163527, guid: b4b3861ff86f24643948b2f89776d741, type: 3}
+      propertyPath: _isTP
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7905321164522163527, guid: b4b3861ff86f24643948b2f89776d741, type: 3}
       propertyPath: sprintFOV
       value: 100
       objectReference: {fileID: 0}
@@ -9769,13 +9773,35 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8439250783966455323, guid: b4b3861ff86f24643948b2f89776d741, type: 3}
       insertIndex: 3
       addedObject: {fileID: 112617195}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5875303166322712153, guid: b4b3861ff86f24643948b2f89776d741, type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 1940822513}
   m_SourcePrefab: {fileID: 100100000, guid: b4b3861ff86f24643948b2f89776d741, type: 3}
 --- !u!4 &1940822511 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8439250783966455323, guid: b4b3861ff86f24643948b2f89776d741, type: 3}
   m_PrefabInstance: {fileID: 1940822510}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1940822512 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5875303166322712153, guid: b4b3861ff86f24643948b2f89776d741, type: 3}
+  m_PrefabInstance: {fileID: 1940822510}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1940822513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940822512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d5aecb9363ab41af80c24e2edd945ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTransform: {fileID: 0}
+  throwablePrefab: {fileID: 1627955320942381573, guid: 7f7ed46e509f4403ebbafe9c04bc8c80, type: 3}
 --- !u!1 &1963991810
 GameObject:
   m_ObjectHideFlags: 0

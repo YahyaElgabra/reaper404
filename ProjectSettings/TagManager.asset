@@ -10,6 +10,8 @@ TagManager:
   - Wall
   - reaper
   - Goal
+  - death
+
   layers:
   - Default
   - TransparentFX

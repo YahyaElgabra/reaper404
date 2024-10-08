@@ -6,7 +6,30 @@
   <component name="ChangeListManager">
     <list default="true" id="5580101a-c1c3-49c0-ae75-68e3344bbe3a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.reaper404/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.reaper404/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Level-Elements/portal.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Level-Elements/portal.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Asset Store/scrollfree.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Asset Store/scrollfree/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Asset Store/scrollfree/Materials/scrollMat 1.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Asset Store/scrollfree/Materials/scrollMat 1.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Asset Store/scrollfree/Materials/scrollMat.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Asset Store/scrollfree/Materials/scrollMat.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Asset Store/scrollfree/scroll.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Asset Store/scrollfree/scroll.jpg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Asset Store/scrollfree/scroll.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Asset Store/scrollfree/scroll.obj.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Asset Store/scrollfree/scroll.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Asset Store/scrollfree/scroll.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Asset Store/scrollfree/scrollNM.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Asset Store/scrollfree/scrollNM.jpg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Asset Store/scrollfree/scrollSettings.lighting" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Asset Store/scrollfree/scrollSettings.lighting.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Reaper.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Reaper.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Flying Tester.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Flying Tester.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level1.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level2.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level2.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Tutorial.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Tutorial.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Control-Movement/Throwable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Control-Movement/Throwable.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Control-Movement/Throwing.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Control-Movement/Throwing.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +50,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;throwing-mech&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -100,6 +123,8 @@
       <workItem from="1727859908990" duration="6000" />
       <workItem from="1727885712186" duration="1709000" />
       <workItem from="1727906885474" duration="199000" />
+      <workItem from="1728359672117" duration="11599000" />
+      <workItem from="1728382310915" duration="3925000" />
     </task>
     <servers />
   </component>
