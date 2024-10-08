@@ -24,7 +24,7 @@ public class pillarPlatform : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && !_alreadyTriggered)
         {
-            _spawnedPillar = Instantiate(pillarPrefab, transform.position - new Vector3(0f, 1f, 0f), Quaternion.identity, this.transform);
+            _spawnedPillar = Instantiate(pillarPrefab, transform.position - new Vector3(0f, 5f, 0f), Quaternion.identity, this.transform);
             _alreadyTriggered = true;
             StartCoroutine(expand());
         }
@@ -32,13 +32,13 @@ public class pillarPlatform : MonoBehaviour
 
     IEnumerator expand()
     {
-        Vector3 growthFactor = new Vector3(0f, 2.8f, 0f);
-        float growthTarget = 15f;
+        Vector3 growthFactor = new Vector3(0f, 2.8f, 0f) * 0.1f;
+        float growthTarget = 3f;
 
         while (_spawnedPillar.transform.localScale.y < growthTarget)
         {
             _spawnedPillar.transform.localScale += growthFactor * Time.deltaTime;
-            _spawnedPillar.transform.position -= (growthFactor/2f) * Time.deltaTime;
+            _spawnedPillar.transform.position -= (growthFactor*5f/2f) * Time.deltaTime;
             yield return null;
         }
     }
