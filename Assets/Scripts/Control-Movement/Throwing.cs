@@ -10,7 +10,10 @@ public class Throwing : MonoBehaviour
     
     private Rigidbody rb;
     private Collider objectCollider;
-    float timeToMove = 1f;
+    
+    public GameObject throwablePrefab;
+    private GameObject currentThrowable; 
+    private Throwable currentThrowableScript;
     
     private float throwForce = 15f;
     private bool isThrown = false;
@@ -34,31 +37,29 @@ public class Throwing : MonoBehaviour
     private Camera playerCamera;
     private MonoBehaviour cameraController;
 
+    private int inventoryCount = 3;
     
     void Start()
     {
+        playerTransform = this.transform;
         GameObject playerObject = GameObject.FindWithTag("Player");
-
-        if (playerObject != null)
-        {
-            playerTransform = playerObject.transform;
-        }
         
-        rb = GetComponent<Rigidbody>();
-        objectCollider = GetComponent<Collider>();
-        
-        trajectoryLine = GetComponent<LineRenderer>();
-        
-        playerCamera = playerObject.GetComponentInChildren<Camera>();
+        playerCamera = GetComponentInChildren<Camera>();
         
         cameraController = playerCamera.GetComponent<MonoBehaviour>();
     }
     
     void Update()
     {
+        if ((Input.GetKeyDown(KeyCode.C) || Input.GetButtonDown("Fire3")) && 
+            !isHeld && inventoryCount > 0 && !isThrown)
+        {
+            SpawnThrowableObject();
+        }
+        
         if (isHeld)
         {
-            transform.position = playerTransform.position + playerTransform.rotation * offset;
+            currentThrowable.transform.position = playerTransform.position + playerTransform.rotation * offset;
             
             if (Input.GetKey(KeyCode.C) || Input.GetButton("Fire3"))
             {
@@ -71,54 +72,25 @@ public class Throwing : MonoBehaviour
             }
         }
     }
-
-    private void OnCollisionEnter(Collision collision)
+    
+    private void SpawnThrowableObject()
     {
-        Debug.Log("collision!");
-        if (collision.gameObject.CompareTag("Player") && !isHeld)
+        if (inventoryCount > 0)
         {
-            if (collision.gameObject.GetComponent<PlayerMovement>()._isTP)
-            {
-                StartCoroutine(MoveToPlayer());
-                Debug.Log("contact");
-            }
-            else
-            {
-                Debug.Log("Pain");
-            }
-        }
-        
-        if (isThrown && !collision.gameObject.CompareTag("Player"))
-        {
-            TeleportPlayerAndDestroy();
-        }
-    }
+            currentThrowable = Instantiate(throwablePrefab, playerTransform.position + playerTransform.rotation * offset, Quaternion.identity);
 
-    private IEnumerator MoveToPlayer()
-    {
-        isHeld = true;
-        
-        if (rb != null)
-        {
-            rb.isKinematic = true;
-            rb.useGravity = false;
+            currentThrowableScript = currentThrowable.GetComponent<Throwable>();
+            
+            if (currentThrowableScript != null)
+            {
+                currentThrowableScript.Initialize(this);
+            }
+            
+            isHeld = true;
+            isThrown = false;
+            
+            inventoryCount--;
         }
-        
-        if (objectCollider != null)
-        {
-            objectCollider.enabled = false;
-        }
-        
-        Vector3 startPos = transform.position;
-
-        for (float t = 0; t < 1; t += Time.deltaTime / timeToMove)
-        {
-            Vector3 targetPos = playerTransform.position + playerTransform.rotation * offset;
-            transform.position = Vector3.Lerp(startPos, targetPos, t);
-            yield return null;
-        }
-        
-        transform.position = playerTransform.position + playerTransform.rotation * offset;
     }
     
     private void EnterAimMode()
@@ -144,14 +116,16 @@ public class Throwing : MonoBehaviour
     
     private void UpdateAimDirection()
     {
-        aimHorizontal = Input.GetAxis("RJoy X");
-        aimVertical = Input.GetAxis("RJoy Y");
+        aimHorizontal = Input.GetAxis("RJoy X") + Input.GetAxis("Mouse X");
+        aimVertical = Input.GetAxis("RJoy Y") - Input.GetAxis("Mouse Y");
         
         Vector3 right = playerTransform.right;
         Vector3 up = playerTransform.up;
         
         aimDirection += right * (aimHorizontal * _aimSensX);
         aimDirection -= up * (aimVertical * _aimSensY);
+        
+        aimDirection.y = Mathf.Clamp(aimDirection.y, -1f, 1f);
         
         float pitchY = Mathf.Asin(aimDirection.y) * Mathf.Rad2Deg;
         pitchY = Mathf.Clamp(pitchY, _minAimAngleY, _maxAimAngleY);
@@ -172,6 +146,8 @@ public class Throwing : MonoBehaviour
 
     private void ShowTrajectory()
     {
+        trajectoryLine = currentThrowable.GetComponent<LineRenderer>();
+        
         if (trajectoryLine == null) return;
 
         trajectoryLine.positionCount = trajectoryPointsCount;
@@ -191,7 +167,7 @@ public class Throwing : MonoBehaviour
     
     private void ThrowObject()
     {
-        if (isHeld)
+        if (isHeld && currentThrowableScript != null)
         {
             isHeld = false;
             isThrown = true;
@@ -201,28 +177,18 @@ public class Throwing : MonoBehaviour
             
             if (cameraController != null)
                 cameraController.enabled = true;
-
-            if (rb != null)
-            {
-                rb.isKinematic = false;
-                rb.useGravity = true;
-                
-                rb.AddForce(aimDirection * throwForce, ForceMode.Impulse);
-                
-            }
             
-            if (objectCollider != null)
-            {
-                objectCollider.enabled = true;
-            }
+            currentThrowableScript.Throw(aimDirection, throwForce);
         }
         
         isHeld = false;
     }
-
-    private void TeleportPlayerAndDestroy()
+    
+    public void TeleportPlayerAndDestroy(GameObject throwable)
     {
-        playerTransform.position = transform.position;
-        Destroy(gameObject);
+        playerTransform.position = throwable.transform.position;
+
+        Destroy(throwable);
+        isThrown = false;
     }
 }
