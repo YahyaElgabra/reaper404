@@ -32,7 +32,7 @@ public class pillarPlatform : MonoBehaviour
 
     IEnumerator expand()
     {
-        Vector3 growthFactor = new Vector3(0f, 2.8f, 0f);
+        Vector3 growthFactor = new Vector3(0f, 2.8f, 0f) * 0.1f;
         float growthTarget = 3f;
 
         while (_spawnedPillar.transform.localScale.y < growthTarget)

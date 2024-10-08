@@ -43,15 +43,17 @@ public class PlayerMovement : MonoBehaviour
     public float sprintFOV = 100f;
     public float fovTransitionSpeed = 1f;
 
-    public Vector3 _gravityDirection = Vector3.down;
+    public Vector3 gravityDirection = Vector3.down;
     private float _gravityStrength = 28f;
-    
+    GravityControl gravityControl;
+
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
         
         playerCamera = GetComponentInChildren<Camera>();
         playerCamera.fieldOfView = defaultFOV;
+        gravityControl = GetComponent<GravityControl>();
     }
 
     public void SetIsGrounded(bool grounded)
@@ -107,38 +109,13 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // I'm keeping these here for now in case you want to use them for development purposes
-        /*if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            RotateGravity(0);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            RotateGravity(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            RotateGravity(2);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            RotateGravity(3);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            RotateGravity(4);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            RotateGravity(5);
-        }*/
         if (_isGrav && (Input.GetKeyDown(KeyCode.Z) || Input.GetButtonUp("Fire4")))
         {
-            RotateGravity(6);
+            gravityControl.RotateGravity(0);
         }
         else if (_isGrav && (Input.GetKeyDown(KeyCode.X) || Input.GetButtonUp("Fire5")))
         {
-            RotateGravity(7);
+            gravityControl.RotateGravity(1);
         }
     }
 
@@ -152,15 +129,6 @@ public class PlayerMovement : MonoBehaviour
         _yaw = 0.0f;
 
         _normalizedInputDirection = Vector3.Normalize(Vector3.Normalize(transform.forward * _fbInput + transform.right * _lrInput) - _prevNormalizedWallJumpHori);
-        
-        // Ignore this
-        // Vector3 movementDirection = new Vector3(_fbInput, 0, _lrInput);
-        // if (movementDirection.magnitude > 0.5f)
-        // {
-        //     Quaternion targetRotation = Quaternion.LookRotation(_normalizedInputDirection);
-        //     // transform.rotation = targetRotation;
-        //     transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 1f);
-        // }
         
         Vector3 _currentMovementWithoutVertical = new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z);
         float _currentMax = _running ? maxRunningSpeed : maxSpeed;
@@ -197,11 +165,11 @@ public class PlayerMovement : MonoBehaviour
 
             // capping vertical speed
             Vector3 velocity = _rigidbody.velocity;
-            float upVelocity = Vector3.Dot(velocity, -_gravityDirection);
+            float upVelocity = Vector3.Dot(velocity, -gravityDirection);
             if (upVelocity > maxVerticalSpeed)
             {
                 float difference = upVelocity - maxVerticalSpeed;
-                velocity = velocity - difference * -_gravityDirection;
+                velocity = velocity - difference * -gravityDirection;
                 _rigidbody.velocity = velocity;
             }
 
@@ -221,36 +189,34 @@ public class PlayerMovement : MonoBehaviour
             _userWallJumped = false;
             _isOnWall = false;
             Vector3 _normalizedVectorToWall = Vector3.Normalize(_vectorToWall);
-            if (_gravityDirection.x != 0)
+            if (gravityDirection.x != 0)
             {
                 _normalizedVectorToWall.x = 0;
             }
-            else if (_gravityDirection.y != 0)
+            else if (gravityDirection.y != 0)
             {
                 _normalizedVectorToWall.y = 0;
             }
-            else if (_gravityDirection.z != 0)
+            else if (gravityDirection.z != 0)
             {
                 _normalizedVectorToWall.z = 0;
             }
             _prevNormalizedWallJumpHori = _normalizedVectorToWall;
             Vector3 velocity = _rigidbody.velocity;
-            float upVelocity = Vector3.Dot(velocity, -_gravityDirection);
+            float upVelocity = Vector3.Dot(velocity, -gravityDirection);
             Vector3 _final = (transform.up * (WallJumpVertScale - upVelocity )) - (_normalizedVectorToWall * WallJumpHoriScale);
             _rigidbody.AddForce(_final, ForceMode.VelocityChange);
-            // Debug.Log(_final.ToString());
             velocity = _rigidbody.velocity;
-            upVelocity = Vector3.Dot(velocity, -_gravityDirection);
+            upVelocity = Vector3.Dot(velocity, -gravityDirection);
             if (upVelocity > maxVerticalSpeed)
             {
                 float difference = upVelocity - maxVerticalSpeed;
-                velocity = velocity - difference * -_gravityDirection;
+                velocity = velocity - difference * -gravityDirection;
                 _rigidbody.velocity = velocity;
             }
             _jumpDisabled = true;
             StartCoroutine(RegainJump());
             StartCoroutine(RegainFullHoriControl());
-
         }
     }
     
@@ -264,74 +230,5 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         _prevNormalizedWallJumpHori = Vector3.zero;
-    }
-
-        public void RotateGravity(int side)
-    {
-        switch (side)
-        {
-            case 0:
-                _gravityDirection = new Vector3(1, 0, 0);
-                break;
-            case 1:
-                _gravityDirection = new Vector3(-1, 0, 0);
-                break;
-            case 2:
-                _gravityDirection = new Vector3(0, 1, 0);
-                break;
-            case 3:
-                _gravityDirection = new Vector3(0, -1, 0);
-                break;
-            case 4:
-                _gravityDirection = new Vector3(0, 0, 1);
-                break;
-            case 5:
-                _gravityDirection = new Vector3(0, 0, -1);
-                break;
-            case 6:
-                _gravityDirection = FindSide(-1);
-                break;
-            case 7:
-                _gravityDirection = FindSide(1);
-                break;
-            default:
-                break;
-        }
-        FlipCharacterModel();
-    }
-
-    private void FlipCharacterModel()
-    {
-        Quaternion rotation = Quaternion.FromToRotation(-transform.up, _gravityDirection);
-        transform.rotation = rotation * transform.rotation;
-    }
-
-    private Vector3 FindSide(int scalar)
-    {
-        // returns the closest unit vector to "right" (or left if the input is -1), negative means left and positive means right
-        Vector3[] directions = new Vector3[]
-{
-            new Vector3(0, 0, 1),
-            new Vector3(0, 0, -1),
-            new Vector3(0, 1, 0),
-            new Vector3(0, -1, 0),
-            new Vector3(1, 0, 0),
-            new Vector3(-1, 0, 0)
-        };
-
-        Vector3 closestDirection = Vector3.zero;
-        float closestAngle = float.MaxValue;
-
-        foreach (Vector3 dir in directions)
-        {
-            float angle = Vector3.Angle(scalar * transform.right, dir);
-            if (angle < closestAngle)
-            {
-                closestAngle = angle;
-                closestDirection = dir;
-            }
-        }
-
-        return closestDirection;
     }
 }

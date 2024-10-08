@@ -18,14 +18,14 @@ public class PlayerState : MonoBehaviour
     private bool _isActionInProgress = false;
     private float _velocity;
     
-    private AudioSource _audioSource;
+    private AudioSource[] _audioSources;
     
     void Start()
     {
         _playerRigidbody = GetComponent<Rigidbody>();
         SetActivePrefab(idlePrefab);
         
-        _audioSource = GetComponent<AudioSource>();
+        _audioSources = GetComponents<AudioSource>();
     }
 
     void Update()
@@ -109,20 +109,20 @@ public class PlayerState : MonoBehaviour
     // Method to play the running sound
     private void PlayRunAudio()
     {
-        if (!_audioSource.isPlaying)
+        if (!_audioSources[0].isPlaying)
         {
             // _audioSource.clip = runAudioClip;
             // _audioSource.loop = true;
-            _audioSource.Play();
+            _audioSources[0].Play();
         }
     }
 
     // Method to stop the running sound
     private void StopRunAudio()
     {
-        if (_audioSource.isPlaying)
+        if (_audioSources[0].isPlaying)
         {
-            _audioSource.Stop();
+            _audioSources[0].Stop();
         }
     }
 }
