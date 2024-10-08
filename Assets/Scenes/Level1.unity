@@ -25,8 +25,8 @@ RenderSettings:
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 0
-  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 0}
+  m_SubtractiveShadowColor: {r: 0.55345905, g: 0.1653415, b: 0.16952147, a: 1}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 29e2c96d13321454db816bd79f0f2ac2, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -9503,6 +9503,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 46b8a5ddce5fd431ab96bb7ee19987a0, type: 2}
+    - target: {fileID: 3941824925724134047, guid: b4b3861ff86f24643948b2f89776d741, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3941824925724134047, guid: b4b3861ff86f24643948b2f89776d741, type: 3}
+      propertyPath: m_CustomSkybox
+      value: 
+      objectReference: {fileID: 2100000, guid: 14ef734f7af581c4baa384748603312b, type: 2}
     - target: {fileID: 4000285483939462501, guid: b4b3861ff86f24643948b2f89776d741, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -9722,6 +9730,10 @@ PrefabInstance:
     - target: {fileID: 8502303303173175166, guid: b4b3861ff86f24643948b2f89776d741, type: 3}
       propertyPath: field of view
       value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 8502303303173175166, guid: b4b3861ff86f24643948b2f89776d741, type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8557832348982568455, guid: b4b3861ff86f24643948b2f89776d741, type: 3}
       propertyPath: m_Materials.Array.data[0]
