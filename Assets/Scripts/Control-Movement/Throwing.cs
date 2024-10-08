@@ -38,6 +38,8 @@ public class Throwing : MonoBehaviour
     private MonoBehaviour cameraController;
 
     private int inventoryCount = 3;
+
+    private PlayerMovement playerMovement;
     
     void Start()
     {
@@ -47,12 +49,14 @@ public class Throwing : MonoBehaviour
         playerCamera = GetComponentInChildren<Camera>();
         
         cameraController = playerCamera.GetComponent<MonoBehaviour>();
+        
+        playerMovement = playerObject.GetComponent<PlayerMovement>();
     }
     
     void Update()
     {
         if ((Input.GetKeyDown(KeyCode.C) || Input.GetButtonDown("Fire3")) && 
-            !isHeld && inventoryCount > 0 && !isThrown)
+            !isHeld && inventoryCount > 0 && !isThrown && playerMovement._isTP)
         {
             SpawnThrowableObject();
         }
@@ -188,6 +192,12 @@ public class Throwing : MonoBehaviour
     {
         playerTransform.position = throwable.transform.position;
 
+        Destroy(throwable);
+        isThrown = false;
+    }
+    
+    public void OnThrowableHitDeath(GameObject throwable)
+    {
         Destroy(throwable);
         isThrown = false;
     }

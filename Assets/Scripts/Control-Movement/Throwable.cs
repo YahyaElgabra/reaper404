@@ -49,9 +49,14 @@ public class Throwable : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (isThrown && !collision.gameObject.CompareTag("Player"))
+        if (isThrown && collision.gameObject.CompareTag("death"))
+        {
+            playerScript.OnThrowableHitDeath(this.gameObject);
+        }
+        else if (isThrown && !collision.gameObject.CompareTag("Player"))
         {
             playerScript.TeleportPlayerAndDestroy(this.gameObject);
         }
+        
     }
 }

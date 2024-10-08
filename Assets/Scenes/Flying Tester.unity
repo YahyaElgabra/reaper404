@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 260336401}
   m_Layer: 0
   m_Name: deathWall (1)
-  m_TagString: Untagged
+  m_TagString: death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1268,7 +1268,7 @@ GameObject:
   - component: {fileID: 1231027962}
   m_Layer: 0
   m_Name: deathWall (3)
-  m_TagString: Untagged
+  m_TagString: death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1386,7 +1386,7 @@ GameObject:
   - component: {fileID: 1236940123}
   m_Layer: 0
   m_Name: deathWall
-  m_TagString: Untagged
+  m_TagString: death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1848,7 +1848,7 @@ GameObject:
   - component: {fileID: 1484355854}
   m_Layer: 0
   m_Name: deathWall (2)
-  m_TagString: Untagged
+  m_TagString: death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7156,7 +7156,7 @@ GameObject:
   - component: {fileID: 1820728651}
   m_Layer: 0
   m_Name: deathFloor
-  m_TagString: Untagged
+  m_TagString: death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8373,7 +8373,7 @@ GameObject:
   - component: {fileID: 2141498026}
   m_Layer: 0
   m_Name: deathCeiling
-  m_TagString: Untagged
+  m_TagString: death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

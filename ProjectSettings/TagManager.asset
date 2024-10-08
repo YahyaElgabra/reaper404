@@ -9,6 +9,7 @@ TagManager:
   - Boss
   - Wall
   - reaper
+  - death
   layers:
   - Default
   - TransparentFX
