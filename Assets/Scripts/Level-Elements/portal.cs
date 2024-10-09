@@ -11,12 +11,14 @@ public class portal : MonoBehaviour
     int currentPass = 0;
     int currentAbility = -1;
     PlayerMovement movementScript;
+    AbilitiesUI abilitiesUI;
 
     void Start()
     {
         GameObject player = GameObject.FindWithTag("Player");
         startingPosition = player.transform.position;
         movementScript = player.GetComponent<PlayerMovement>();
+        abilitiesUI = GameObject.FindGameObjectWithTag("AbilitiesUI").GetComponent<AbilitiesUI>();
         ChangeAbility();
     }
 
@@ -33,6 +35,7 @@ public class portal : MonoBehaviour
             Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
+            abilitiesUI.updateIcons(currentPass);
         }
     }
 
@@ -62,6 +65,11 @@ public class portal : MonoBehaviour
         }
 
         // next, enable new ability
+        if (currentPass == passes.Length - 2)
+        {
+            return;
+        }
+
         currentAbility = passes[currentPass];
         switch (currentAbility)
         {

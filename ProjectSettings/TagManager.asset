@@ -11,15 +11,15 @@ TagManager:
   - reaper
   - Goal
   - death
-
+  - AbilitiesUI
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - PlayerColliders
+  - 
   - Water
   - UI
-  - PlayerMovement
+  - 
   - 
   - 
   - 
