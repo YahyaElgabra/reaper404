@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public bool _isSecondRun = false;
+    public bool _isRunWallJump = false;
     public bool _isTP = false;
     public bool _isGrav = false;
 
@@ -83,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
         }
         
         // if ((Input.GetKey(KeyCode.LeftShift) || Input.GetButton("Fire2")))
-        if ((Input.GetKey(KeyCode.LeftShift) || Input.GetButton("Fire2")) && _isSecondRun)
+        if ((Input.GetKey(KeyCode.LeftShift) || Input.GetButton("Fire2")) && _isRunWallJump)
         {
             _running = true;
         }
@@ -102,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
                 _userJumped = true;
                 _isGrounded = false;
             }
-            else if (_isOnWall && _isSecondRun && !_userJumped) 
+            else if (_isOnWall && _isRunWallJump && !_userJumped) 
             {
                 _userWallJumped = true;
                 _isOnWall = false;
