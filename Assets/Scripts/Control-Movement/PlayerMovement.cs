@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public bool _isSecondRun = false;
     public bool _isTP = false;
     public bool _isGrav = false;
+    public bool _isFly = false;
 
     private float _fbInput;
     private float _lrInput;
