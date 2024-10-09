@@ -53,9 +53,9 @@ public class portal : MonoBehaviour
             case 3:
                 movementScript._isGrav = false;
                 break;
-            /*case 4:
+            case 4:
                 movementScript._isFly = false;
-                break;*/
+                break;
             default:
                 Debug.Log("invalid passes array");
                 break;
@@ -76,9 +76,9 @@ public class portal : MonoBehaviour
             case 3:
                 movementScript._isGrav = true;
                 break;
-            /*case 4:
+            case 4:
                 movementScript._isFly = true;
-                break;*/
+                break;
             default:
                 Debug.Log("invalid passes array");
                 break;
