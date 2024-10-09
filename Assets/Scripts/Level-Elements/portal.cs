@@ -35,6 +35,9 @@ public class portal : MonoBehaviour
             Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
+            movementScript.gravityDirection = Vector3.down;
+            Quaternion rotation = Quaternion.FromToRotation(-collision.gameObject.transform.up, movementScript.gravityDirection);
+            collision.gameObject.transform.rotation = rotation * collision.gameObject.transform.rotation;
             abilitiesUI.updateIcons(currentPass);
         }
     }
