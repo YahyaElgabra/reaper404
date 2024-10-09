@@ -5,10 +5,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    // ability boolean flags
     public bool _isRunWallJump = false;
     public bool _isTP = false;
     public bool _isGrav = false;
     public bool _isFly = false;
+
+    // flying reaper prefab
+    public GameObject flyingReaperPrefab;
 
     private float _fbInput;
     private float _lrInput;
@@ -117,6 +121,12 @@ public class PlayerMovement : MonoBehaviour
         else if (_isGrav && (Input.GetKeyDown(KeyCode.X) || Input.GetButtonUp("Fire5")))
         {
             gravityControl.RotateGravity(1);
+        }
+
+        // check for flying reaper switch
+        if (_isFly)
+        {
+            SwitchToFlyingReaper();
         }
     }
 
@@ -232,5 +242,17 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         _prevNormalizedWallJumpHori = Vector3.zero;
+    }
+
+    void SwitchToFlyingReaper()
+    {
+        // get current position and rotation of the normal Reaper
+        Vector3 currentPosition = transform.position;
+        Quaternion currentRotation = transform.rotation;
+
+        GameObject flyingReaper = Instantiate(flyingReaperPrefab, currentPosition, currentRotation);
+
+        // destroy the current Reaper object
+        Destroy(gameObject);
     }
 }
