@@ -162,6 +162,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (_userJumped)
         {
+            Debug.Log("jumped!");
             _rigidbody.AddForce(transform.up * JumpScale, ForceMode.VelocityChange);
 
             // capping vertical speed
