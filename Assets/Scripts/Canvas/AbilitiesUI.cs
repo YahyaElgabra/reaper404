@@ -9,7 +9,6 @@ public class AbilitiesUI : MonoBehaviour
     public GameObject iconPrefab;
     public Sprite[] icons;
     int[] abilities;
-    private int offset = 120;
     List<GameObject> iconObjects;
 
     void Start()
@@ -17,14 +16,19 @@ public class AbilitiesUI : MonoBehaviour
         abilities = GameObject.FindGameObjectWithTag("Finish").GetComponent<portal>().passes;
         iconObjects = new List<GameObject>();
         RectTransform rect = GetComponent<RectTransform>();
+        VerticalLayoutGroup layout = GetComponent<VerticalLayoutGroup>();
+        float offset = iconPrefab.GetComponent<RectTransform>().rect.height + layout.spacing;
+        rect.sizeDelta = new Vector2(rect.sizeDelta.x, rect.sizeDelta.y + offset * abilities.Length + layout.padding.top + layout.padding.bottom);
+
         foreach (int ability in abilities)
         {
             GameObject icon = Instantiate(iconPrefab, gameObject.transform);
             icon.GetComponent<Image>().sprite = icons[ability];
-            rect.sizeDelta = new Vector2(rect.sizeDelta.x, rect.sizeDelta.y + offset);
-            rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, rect.anchoredPosition.y - offset / 2);
+            //rect.sizeDelta = new Vector2(rect.sizeDelta.x, rect.sizeDelta.y + offset);
+            //rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, rect.anchoredPosition.y - offset / 2);
             iconObjects.Add(icon);
         }
+        rect.sizeDelta = new Vector2(rect.sizeDelta.x, rect.sizeDelta.y + GetComponent<VerticalLayoutGroup>().spacing);
         updateIcons(0);
     }
 
