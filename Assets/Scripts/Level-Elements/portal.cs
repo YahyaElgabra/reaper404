@@ -11,14 +11,18 @@ public class portal : MonoBehaviour
     int currentPass = 0;
     int currentAbility = -1;
     PlayerMovement movementScript;
-    AbilitiesUI abilitiesUI;
+    AbilitiesUI abilitiesUI = null;
 
     void Start()
     {
         GameObject player = GameObject.FindWithTag("Player");
         startingPosition = player.transform.position;
         movementScript = player.GetComponent<PlayerMovement>();
-        abilitiesUI = GameObject.FindGameObjectWithTag("AbilitiesUI").GetComponent<AbilitiesUI>();
+        GameObject abilitiesObject = GameObject.FindGameObjectWithTag("AbilitiesUI");
+        if (abilitiesObject != null)
+        {
+            abilitiesUI = abilitiesObject.GetComponent<AbilitiesUI>();
+        }
         ChangeAbility();
     }
 
@@ -29,16 +33,22 @@ public class portal : MonoBehaviour
             if (currentPass == passes.Length - 1) {
                 winScreen.SetActive(true);
             }
-            currentPass++;
-            ChangeAbility();
-            collision.gameObject.transform.position = startingPosition;
-            Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            movementScript.gravityDirection = Vector3.down;
-            Quaternion rotation = Quaternion.FromToRotation(-collision.gameObject.transform.up, movementScript.gravityDirection);
-            collision.gameObject.transform.rotation = rotation * collision.gameObject.transform.rotation;
-            abilitiesUI.updateIcons(currentPass);
+            else
+            {
+                currentPass++;
+                ChangeAbility();
+                collision.gameObject.transform.position = startingPosition;
+                Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+                movementScript.gravityDirection = Vector3.down;
+                Quaternion rotation = Quaternion.FromToRotation(-collision.gameObject.transform.up, movementScript.gravityDirection);
+                collision.gameObject.transform.rotation = rotation * collision.gameObject.transform.rotation;
+                if (abilitiesUI != null)
+                {
+                    abilitiesUI.updateIcons(currentPass);
+                }
+            }
         }
     }
 
@@ -68,12 +78,12 @@ public class portal : MonoBehaviour
         }
 
         // next, enable new ability
-        if (currentPass == passes.Length - 2)
+        if (currentPass == passes.Length)
         {
             return;
         }
-
         currentAbility = passes[currentPass];
+        Debug.Log(currentAbility);
         switch (currentAbility)
         {
             case 0:
