@@ -13,10 +13,13 @@ public class portal : MonoBehaviour
     PlayerMovement movementScript;
     AbilitiesUI abilitiesUI = null;
 
+    Quaternion startingRotation;
+
     void Start()
     {
         GameObject player = GameObject.FindWithTag("Player");
         startingPosition = player.transform.position;
+        startingRotation = player.transform.rotation;
         movementScript = player.GetComponent<PlayerMovement>();
         GameObject abilitiesObject = GameObject.FindGameObjectWithTag("AbilitiesUI");
         if (abilitiesObject != null)
@@ -36,14 +39,15 @@ public class portal : MonoBehaviour
             else
             {
                 currentPass++;
-                ChangeAbility();
                 collision.gameObject.transform.position = startingPosition;
                 Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
                 rb.velocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
                 movementScript.gravityDirection = Vector3.down;
                 Quaternion rotation = Quaternion.FromToRotation(-collision.gameObject.transform.up, movementScript.gravityDirection);
-                collision.gameObject.transform.rotation = rotation * collision.gameObject.transform.rotation;
+                // collision.gameObject.transform.rotation = rotation * collision.gameObject.transform.rotation;
+                collision.gameObject.transform.rotation = startingRotation;
+                ChangeAbility();
                 if (abilitiesUI != null)
                 {
                     abilitiesUI.updateIcons(currentPass);
