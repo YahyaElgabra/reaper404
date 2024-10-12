@@ -24,8 +24,6 @@ public class AbilitiesUI : MonoBehaviour
         {
             GameObject icon = Instantiate(iconPrefab, gameObject.transform);
             icon.GetComponent<Image>().sprite = icons[ability];
-            //rect.sizeDelta = new Vector2(rect.sizeDelta.x, rect.sizeDelta.y + offset);
-            //rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, rect.anchoredPosition.y - offset / 2);
             iconObjects.Add(icon);
         }
         rect.sizeDelta = new Vector2(rect.sizeDelta.x, rect.sizeDelta.y + GetComponent<VerticalLayoutGroup>().spacing);
