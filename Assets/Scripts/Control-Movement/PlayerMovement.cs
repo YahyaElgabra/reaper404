@@ -87,7 +87,6 @@ public class PlayerMovement : MonoBehaviour
             _yaw = 0.0f;
         }
         
-        // if ((Input.GetKey(KeyCode.LeftShift) || Input.GetButton("Fire2")))
         if ((Input.GetKey(KeyCode.LeftShift) || Input.GetButton("Fire2")) && _isRunWallJump)
         {
             _running = true;
@@ -96,7 +95,6 @@ public class PlayerMovement : MonoBehaviour
         {
             _running = false;
         }
-        // Debug.Log(_rigidbody.velocity.z);
         
         float targetFOV = _running ? sprintFOV : defaultFOV;
         playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, Time.deltaTime * fovTransitionSpeed);
@@ -172,7 +170,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (_userJumped)
         {
-            Debug.Log("jumped!");
             _rigidbody.AddForce(transform.up * JumpScale, ForceMode.VelocityChange);
 
             // capping vertical speed

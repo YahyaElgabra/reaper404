@@ -5,12 +5,16 @@ using UnityEngine;
 public class portal : MonoBehaviour
 {
     Vector3 startingPosition;
-    public GameObject winScreen;
+    GameObject winScreen;
     // will assume that 0 means no special abilities, 1 means run+wall jump, 2 means tp, 3 means gravity, 4 means fly
     public int[] passes;
     int currentPass = 0;
     int currentAbility = -1;
+    public int[] charges;
+    int chargeIndex = 0;
     PlayerMovement movementScript;
+    Throwing throwingScript;
+    GravityControl gravityScript;
     AbilitiesUI abilitiesUI = null;
 
     Quaternion startingRotation;
@@ -21,12 +25,23 @@ public class portal : MonoBehaviour
         startingPosition = player.transform.position;
         startingRotation = player.transform.rotation;
         movementScript = player.GetComponent<PlayerMovement>();
+        throwingScript = player.GetComponent<Throwing>();
+        gravityScript = player.GetComponent<GravityControl>();
         GameObject abilitiesObject = GameObject.FindGameObjectWithTag("AbilitiesUI");
         if (abilitiesObject != null)
         {
             abilitiesUI = abilitiesObject.GetComponent<AbilitiesUI>();
+            abilitiesUI.updateCharges(charges[chargeIndex]);
         }
-        ChangeAbility();
+        GameObject canvas = GameObject.FindWithTag("Canvas");
+        foreach (Transform child in canvas.transform)
+        {
+            if (child.CompareTag("WinScreen"))
+            {
+                winScreen = child.gameObject;
+            }
+        }
+         ChangeAbility();
     }
 
     void OnCollisionEnter(Collision collision)
@@ -44,13 +59,12 @@ public class portal : MonoBehaviour
                 rb.velocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
                 movementScript.gravityDirection = Vector3.down;
-                Quaternion rotation = Quaternion.FromToRotation(-collision.gameObject.transform.up, movementScript.gravityDirection);
-                // collision.gameObject.transform.rotation = rotation * collision.gameObject.transform.rotation;
                 collision.gameObject.transform.rotation = startingRotation;
                 ChangeAbility();
                 if (abilitiesUI != null)
                 {
                     abilitiesUI.updateIcons(currentPass);
+                    abilitiesUI.updateCharges(charges[chargeIndex]);
                 }
             }
         }
@@ -87,7 +101,6 @@ public class portal : MonoBehaviour
             return;
         }
         currentAbility = passes[currentPass];
-        Debug.Log(currentAbility);
         switch (currentAbility)
         {
             case 0:
@@ -97,9 +110,25 @@ public class portal : MonoBehaviour
                 break;
             case 2:
                 movementScript._isTP = true;
+                if (chargeIndex < charges.Length)
+                {
+                    throwingScript.charges = charges[chargeIndex];
+                }
+                if (chargeIndex < charges.Length - 1)
+                {
+                    chargeIndex++;
+                }
                 break;
             case 3:
                 movementScript._isGrav = true;
+                if (chargeIndex < charges.Length)
+                {
+                    gravityScript.charges = charges[chargeIndex];
+                }
+                if (chargeIndex < charges.Length - 1)
+                {
+                    chargeIndex++;
+                }
                 break;
             case 4:
                 movementScript._isFly = true;

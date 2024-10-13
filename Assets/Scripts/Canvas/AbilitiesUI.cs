@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 
 public class AbilitiesUI : MonoBehaviour
@@ -10,8 +11,9 @@ public class AbilitiesUI : MonoBehaviour
     public Sprite[] icons;
     int[] abilities;
     List<GameObject> iconObjects;
+    int current;
 
-    void Start()
+    void Awake()
     {
         abilities = GameObject.FindGameObjectWithTag("Finish").GetComponent<portal>().passes;
         iconObjects = new List<GameObject>();
@@ -30,8 +32,9 @@ public class AbilitiesUI : MonoBehaviour
         updateIcons(0);
     }
 
-    public void updateIcons(int current)
+    public void updateIcons(int next)
     {
+        current = next;
         for (int i = 0; i < iconObjects.Count; i++)
         {
             Image iconImage = iconObjects[i].GetComponent<Image>();
@@ -39,11 +42,22 @@ public class AbilitiesUI : MonoBehaviour
             if (i == current)
             {
                 iconImage.color = new Color(1, 1, 1, 1);
+                if (abilities[current] == 2 || abilities[current] == 3)
+                {
+                    iconImage.transform.GetChild(0).gameObject.SetActive(true);
+                }
             }
             else
             {
                 iconImage.color = new Color(1, 1, 1, 0.5f);
+                iconImage.transform.GetChild(0).gameObject.SetActive(false);
             }
         }
+    }
+
+    public void updateCharges(int charges)
+    {
+        Transform textMesh = iconObjects[current].transform.GetChild(0);
+        textMesh.GetComponent<TextMeshProUGUI>().text = charges.ToString();
     }
 }

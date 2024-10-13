@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 2859682843183043496}
   m_Layer: 5
   m_Name: Win
-  m_TagString: Untagged
+  m_TagString: WinScreen
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -311,7 +311,7 @@ GameObject:
   - component: {fileID: 5785087686135953742}
   m_Layer: 5
   m_Name: CanvasUnited
-  m_TagString: Untagged
+  m_TagString: Canvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
