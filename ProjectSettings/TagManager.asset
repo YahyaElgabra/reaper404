@@ -12,6 +12,8 @@ TagManager:
   - Goal
   - death
   - AbilitiesUI
+  - WinScreen
+  - Canvas
   layers:
   - Default
   - TransparentFX
