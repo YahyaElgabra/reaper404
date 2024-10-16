@@ -31,7 +31,10 @@ public class portal : MonoBehaviour
         if (abilitiesObject != null)
         {
             abilitiesUI = abilitiesObject.GetComponent<AbilitiesUI>();
-            abilitiesUI.updateCharges(charges[chargeIndex]);
+            if (charges.Length > 0)
+            {
+                abilitiesUI.updateCharges(charges[chargeIndex]);
+            }
         }
         GameObject canvas = GameObject.FindWithTag("Canvas");
         foreach (Transform child in canvas.transform)
@@ -64,7 +67,10 @@ public class portal : MonoBehaviour
                 if (abilitiesUI != null)
                 {
                     abilitiesUI.updateIcons(currentPass);
-                    abilitiesUI.updateCharges(charges[chargeIndex]);
+                    if (charges.Length > 0)
+                    {
+                        abilitiesUI.updateCharges(charges[chargeIndex]);
+                    }
                 }
             }
         }
