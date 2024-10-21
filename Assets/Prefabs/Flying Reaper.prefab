@@ -107,9 +107,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33498c13407604f93aa5b9cb081fab08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isSecondRun: 0
+  _isRunWallJump: 0
   _isTP: 0
   _isGrav: 0
+  _isFly: 0
+  flyingReaperPrefab: {fileID: 0}
   playerCamera: {fileID: 0}
   defaultFOV: 70
   sprintFOV: 100
@@ -306,7 +308,6 @@ GameObject:
   - component: {fileID: 7211251353941022483}
   - component: {fileID: 9210081523587499303}
   - component: {fileID: 4985190982221229680}
-  - component: {fileID: 6461953194191349086}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -401,15 +402,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedV: 2
---- !u!45 &6461953194191349086
-Skybox:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3575886694796016357}
-  m_Enabled: 1
-  m_CustomSkybox: {fileID: 2100000, guid: 85bdd529a7fbcc344b810462de0c2b46, type: 2}
+  minPitch: -45
+  maxPitch: 45
 --- !u!1 &8925322201038088779
 GameObject:
   m_ObjectHideFlags: 0
