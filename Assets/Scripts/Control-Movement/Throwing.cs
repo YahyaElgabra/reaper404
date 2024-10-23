@@ -175,7 +175,20 @@ public class Throwing : MonoBehaviour
             Vector3 pointPosition = startPos + t * startVelocity;
             pointPosition.y = startPos.y + (startVelocity.y * t) + (0.5f * Physics.gravity.y * t * t);
 
-            trajectoryLine.SetPosition(i, pointPosition);
+            // trajectoryLine.SetPosition(i, pointPosition);
+            
+            Vector3 previousPoint = startPos;
+            if (Physics.Raycast(previousPoint, pointPosition - previousPoint, out RaycastHit hit, (pointPosition - previousPoint).magnitude))
+            {
+                trajectoryLine.SetPosition(i, hit.point);
+                trajectoryLine.positionCount = i + 1;
+                break;
+            }
+            else
+            {
+                trajectoryLine.SetPosition(i, pointPosition);
+            }
+            previousPoint = pointPosition;
         }
     }
     

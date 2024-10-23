@@ -519,6 +519,10 @@ PrefabInstance:
       propertyPath: iconPrefab
       value: 
       objectReference: {fileID: 7978772824193728303, guid: 69845243a604150439848a1875620e16, type: 3}
+    - target: {fileID: 842346462436300752, guid: 5afb74f02efc4634d94f8d75a1539b63, type: 3}
+      propertyPath: containerPrefab
+      value: 
+      objectReference: {fileID: 4536344431279751472, guid: 0765c7bdfd9756b4b9c2910dd34f1e22, type: 3}
     - target: {fileID: 4015120478549773148, guid: 5afb74f02efc4634d94f8d75a1539b63, type: 3}
       propertyPath: m_Name
       value: Abilities

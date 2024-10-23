@@ -15,6 +15,11 @@ public class walljumpHitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider trigger)
     {
+        if (trigger.CompareTag("Soul"))
+        {
+            return;
+        }
+        
         if (trigger.name != _previousTouched) {
             _previousTouched = trigger.name;
             _closest = trigger.ClosestPoint(transform.position);
@@ -25,7 +30,10 @@ public class walljumpHitbox : MonoBehaviour
 
     private void OnTriggerExit(Collider trigger)
     {
-        player.SetIsOnWall(false, _closest - transform.position);
+        if (!trigger.CompareTag("Soul"))
+        {
+            player.SetIsOnWall(false, _closest - transform.position);
+        }
     }
 
     private IEnumerator WipePrevious()
