@@ -42,6 +42,9 @@ public class SoulHit : MonoBehaviour
         if (trigger.gameObject.tag == "Player" && !isCollected)
         {
             isCollected = true;
+            
+            GetComponent<Collider>().enabled = false;
+            
             scorer.score += 1;
             StartCoroutine(SpinAndDisappear());
         }
