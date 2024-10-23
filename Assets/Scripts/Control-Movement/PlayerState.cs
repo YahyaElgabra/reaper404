@@ -39,7 +39,8 @@ public class PlayerState : MonoBehaviour
             
             if (_isGrounded && Input.GetButton("Jump"))
             {
-                StartCoroutine(SwitchToPrefabForDuration(jumpPrefab, 0.633f));
+                // StartCoroutine(SwitchToPrefabForDuration(jumpPrefab, 0.633f));
+                StartCoroutine(SwitchToPrefabForDuration(jumpPrefab, 0.967f));
             }
             else if (_isGrounded && _velocity > 3f)
             {
