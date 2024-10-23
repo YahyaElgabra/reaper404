@@ -67,13 +67,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 01bbf025c60eb53468e642217a3964d7, type: 3}
       propertyPath: m_Name
       value: soul
-<<<<<<< HEAD
-=======
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 01bbf025c60eb53468e642217a3964d7, type: 3}
       propertyPath: m_TagString
       value: Soul
->>>>>>> d0d203cca7d45c1f8cb2464c5f3cc176c2bf363a
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -90,11 +87,7 @@ PrefabInstance:
       addedObject: {fileID: 7562565533956039891}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 01bbf025c60eb53468e642217a3964d7, type: 3}
       insertIndex: -1
-<<<<<<< HEAD
-      addedObject: {fileID: -2423232837335779987}
-=======
       addedObject: {fileID: 7967889812211025113}
->>>>>>> d0d203cca7d45c1f8cb2464c5f3cc176c2bf363a
   m_SourcePrefab: {fileID: 100100000, guid: 01bbf025c60eb53468e642217a3964d7, type: 3}
 --- !u!1 &2271105996404928376 stripped
 GameObject:
@@ -201,11 +194,7 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
-<<<<<<< HEAD
---- !u!114 &-2423232837335779987
-=======
 --- !u!114 &7967889812211025113
->>>>>>> d0d203cca7d45c1f8cb2464c5f3cc176c2bf363a
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

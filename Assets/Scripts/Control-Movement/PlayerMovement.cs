@@ -133,7 +133,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rigidbody.AddForce(gravityDirection * _gravityStrength, ForceMode.Acceleration);
+        if (Vector3.Dot(_rigidbody.velocity, gravityDirection) < 20)
+        {
+            _rigidbody.AddForce(gravityDirection * _gravityStrength, ForceMode.Acceleration);
+        }
 
         Quaternion userRot = Quaternion.AngleAxis(_yaw, transform.up);
         transform.rotation = userRot * transform.rotation;
@@ -165,7 +168,14 @@ public class PlayerMovement : MonoBehaviour
         }
         if (!_running)
         {
-            _rigidbody.AddForce(_normalizedInputDirection * MoveScale, ForceMode.Force);
+            if (_isGrounded)
+            {
+                _rigidbody.AddForce(_normalizedInputDirection * MoveScale * 2, ForceMode.Force);
+            }
+            else
+            {
+                _rigidbody.AddForce(_normalizedInputDirection * MoveScale, ForceMode.Force);
+            }
         }
         else {
             _rigidbody.AddForce(_normalizedInputDirection * RunScale, ForceMode.Force);
