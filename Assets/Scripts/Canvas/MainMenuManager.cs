@@ -10,6 +10,8 @@ public class MainMenuManager : MonoBehaviour
         if (Input.GetButton("Cancel"))
         {
             SceneManager.LoadScene("MainMenu");
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 

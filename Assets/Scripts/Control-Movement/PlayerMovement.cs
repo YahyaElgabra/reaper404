@@ -59,6 +59,9 @@ public class PlayerMovement : MonoBehaviour
         playerCamera = GetComponentInChildren<Camera>();
         playerCamera.fieldOfView = defaultFOV;
         gravityControl = GetComponent<GravityControl>();
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void SetIsGrounded(bool grounded)
