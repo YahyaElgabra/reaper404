@@ -37,7 +37,8 @@ public class Throwing : MonoBehaviour
     private Camera playerCamera;
     private MonoBehaviour cameraController;
 
-    private int inventoryCount = 3;
+    AbilitiesUI abilitiesUI;
+    public int charges;
 
     private PlayerMovement playerMovement;
     
@@ -51,12 +52,17 @@ public class Throwing : MonoBehaviour
         cameraController = playerCamera.GetComponent<MonoBehaviour>();
         
         playerMovement = playerObject.GetComponent<PlayerMovement>();
+        GameObject abilitiesObject = GameObject.FindGameObjectWithTag("AbilitiesUI");
+        if (abilitiesObject != null)
+        {
+            abilitiesUI = abilitiesObject.GetComponent<AbilitiesUI>();
+        }
     }
     
     void Update()
     {
         if ((Input.GetKeyDown(KeyCode.C) || Input.GetButtonDown("Fire3")) && 
-            !isHeld && inventoryCount > 0 && !isThrown && playerMovement._isTP)
+            !isHeld && charges > 0 && !isThrown && playerMovement._isTP)
         {
             SpawnThrowableObject();
         }
@@ -79,7 +85,7 @@ public class Throwing : MonoBehaviour
     
     private void SpawnThrowableObject()
     {
-        if (inventoryCount > 0)
+        if (charges > 0)
         {
             currentThrowable = Instantiate(throwablePrefab, playerTransform.position + playerTransform.rotation * offset, Quaternion.identity);
 
@@ -93,7 +99,11 @@ public class Throwing : MonoBehaviour
             isHeld = true;
             isThrown = false;
             
-            inventoryCount--;
+            charges--;
+            if (abilitiesUI != null)
+            {
+                abilitiesUI.updateCharges(charges);
+            }
         }
     }
     
@@ -165,7 +175,20 @@ public class Throwing : MonoBehaviour
             Vector3 pointPosition = startPos + t * startVelocity;
             pointPosition.y = startPos.y + (startVelocity.y * t) + (0.5f * Physics.gravity.y * t * t);
 
-            trajectoryLine.SetPosition(i, pointPosition);
+            // trajectoryLine.SetPosition(i, pointPosition);
+            
+            Vector3 previousPoint = startPos;
+            if (Physics.Raycast(previousPoint, pointPosition - previousPoint, out RaycastHit hit, (pointPosition - previousPoint).magnitude))
+            {
+                trajectoryLine.SetPosition(i, hit.point);
+                trajectoryLine.positionCount = i + 1;
+                break;
+            }
+            else
+            {
+                trajectoryLine.SetPosition(i, pointPosition);
+            }
+            previousPoint = pointPosition;
         }
     }
     

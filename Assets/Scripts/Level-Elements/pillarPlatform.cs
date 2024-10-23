@@ -7,11 +7,15 @@ public class pillarPlatform : MonoBehaviour
     public GameObject pillarPrefab;
     private GameObject _spawnedPillar;
     private bool _alreadyTriggered = false;
+    private Vector3 _absoluteDir;
+    private Rigidbody rb;
+    public float growthTarget = 3f;
+    private bool _growing = false;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -20,26 +24,37 @@ public class pillarPlatform : MonoBehaviour
 
     }
 
+    void FixedUpdate()
+    {
+        if (_growing)
+        {
+            Vector3 growthFactor = Vector3.up * 0.01f;
+            _spawnedPillar.transform.localScale += growthFactor;
+            Vector3 newPosition = rb.position - transform.TransformDirection(growthFactor * 2.5f);
+            rb.MovePosition(newPosition);
+            
+        }
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player") && !_alreadyTriggered)
         {
-            _spawnedPillar = Instantiate(pillarPrefab, transform.position - new Vector3(0f, 5f, 0f), Quaternion.identity, this.transform);
+            _spawnedPillar = Instantiate(pillarPrefab, transform.position - transform.up*2.5f, transform.rotation, this.transform);
+            _spawnedPillar.transform.localScale = new Vector3(1, 1, 1) - Vector3.up * 0.99f;
+            rb = _spawnedPillar.GetComponent<Rigidbody>();
             _alreadyTriggered = true;
+            _growing = true;
             StartCoroutine(expand());
         }
     }
 
     IEnumerator expand()
     {
-        Vector3 growthFactor = new Vector3(0f, 2.8f, 0f) * 0.1f;
-        float growthTarget = 3f;
-
-        while (_spawnedPillar.transform.localScale.y < growthTarget)
+        while (Vector3.Project(_spawnedPillar.transform.localScale, Vector3.up).magnitude < growthTarget)
         {
-            _spawnedPillar.transform.localScale += growthFactor * Time.deltaTime;
-            _spawnedPillar.transform.position -= (growthFactor*5f/2f) * Time.deltaTime;
             yield return null;
         }
+        _growing = false;
     }
 }

@@ -9,6 +9,8 @@ public class GravityControl : MonoBehaviour
 
     private float _rotDuration = 0.5f;
     private float _lastRotTime;
+    public int charges;
+    AbilitiesUI abilitiesUI;
 
     private AudioSource[] _audioSources;
 
@@ -18,27 +20,40 @@ public class GravityControl : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         _audioSources = GetComponents<AudioSource>();
         _lastRotTime = Time.time - _rotDuration;
+        GameObject abilitiesObject = GameObject.FindGameObjectWithTag("AbilitiesUI");
+        if (abilitiesObject != null)
+        {
+            abilitiesUI = abilitiesObject.GetComponent<AbilitiesUI>();
+        }
     }
 
     public void RotateGravity(int side)
     {
-        if (Time.time - _lastRotTime < _rotDuration)
+        if (charges > 0)
         {
-            return;
-        }
+            if (Time.time - _lastRotTime < _rotDuration)
+            {
+                return;
+            }
 
-        _lastRotTime = Time.time;
+            _lastRotTime = Time.time;
 
-        if (side == 1)
-        {
-            playerMovement.gravityDirection = FindSide(1);
+            if (side == 1)
+            {
+                playerMovement.gravityDirection = FindSide(1);
+            }
+            else
+            {
+                playerMovement.gravityDirection = FindSide(-1);
+            }
+            FlipCharacterModel();
+            PlayGravityAudio();
+            charges--;
+            if (abilitiesUI != null)
+            {
+                abilitiesUI.updateCharges(charges);
+            }
         }
-        else
-        {
-            playerMovement.gravityDirection = FindSide(-1);
-        }
-        FlipCharacterModel();
-        PlayGravityAudio();
     }
 
     private void FlipCharacterModel()
@@ -90,7 +105,7 @@ public class GravityControl : MonoBehaviour
 
         return closestDirection;
     }
-    public void PlayGravityAudio()
+    private void PlayGravityAudio()
     {
         _audioSources[1].Play();
     }

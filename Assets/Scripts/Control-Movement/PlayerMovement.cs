@@ -5,9 +5,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public bool _isSecondRun = false;
+    // ability boolean flags
+    public bool _isRunWallJump = false;
     public bool _isTP = false;
     public bool _isGrav = false;
+    public bool _isFly = false;
+
+    // flying reaper prefab
+    public GameObject flyingReaperPrefab;
 
     private float _fbInput;
     private float _lrInput;
@@ -54,6 +59,9 @@ public class PlayerMovement : MonoBehaviour
         playerCamera = GetComponentInChildren<Camera>();
         playerCamera.fieldOfView = defaultFOV;
         gravityControl = GetComponent<GravityControl>();
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void SetIsGrounded(bool grounded)
@@ -82,8 +90,7 @@ public class PlayerMovement : MonoBehaviour
             _yaw = 0.0f;
         }
         
-        // if ((Input.GetKey(KeyCode.LeftShift) || Input.GetButton("Fire2")))
-        if ((Input.GetKey(KeyCode.LeftShift) || Input.GetButton("Fire2")) && _isSecondRun)
+        if ((Input.GetKey(KeyCode.LeftShift) || Input.GetButton("Fire2")) && _isRunWallJump)
         {
             _running = true;
         }
@@ -91,7 +98,6 @@ public class PlayerMovement : MonoBehaviour
         {
             _running = false;
         }
-        // Debug.Log(_rigidbody.velocity.z);
         
         float targetFOV = _running ? sprintFOV : defaultFOV;
         playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, Time.deltaTime * fovTransitionSpeed);
@@ -102,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
                 _userJumped = true;
                 _isGrounded = false;
             }
-            else if (_isOnWall && _isSecondRun && !_userJumped) 
+            else if (_isOnWall && _isRunWallJump && !_userJumped) 
             {
                 _userWallJumped = true;
                 _isOnWall = false;
@@ -117,11 +123,17 @@ public class PlayerMovement : MonoBehaviour
         {
             gravityControl.RotateGravity(1);
         }
+
+        // check for flying reaper switch
+        if (_isFly)
+        {
+            SwitchToFlyingReaper();
+        }
     }
 
     private void FixedUpdate()
     {
-        _rigidbody.AddForce(-transform.up * _gravityStrength, ForceMode.Acceleration);
+        _rigidbody.AddForce(gravityDirection * _gravityStrength, ForceMode.Acceleration);
 
         Quaternion userRot = Quaternion.AngleAxis(_yaw, transform.up);
         transform.rotation = userRot * transform.rotation;
@@ -201,11 +213,25 @@ public class PlayerMovement : MonoBehaviour
             {
                 _normalizedVectorToWall.z = 0;
             }
-            _prevNormalizedWallJumpHori = _normalizedVectorToWall;
+            // _prevNormalizedWallJumpHori = _normalizedVectorToWall;
             Vector3 velocity = _rigidbody.velocity;
             float upVelocity = Vector3.Dot(velocity, -gravityDirection);
-            Vector3 _final = (transform.up * (WallJumpVertScale - upVelocity )) - (_normalizedVectorToWall * WallJumpHoriScale);
-            _rigidbody.AddForce(_final, ForceMode.VelocityChange);
+            
+            // Vector3 _final = (transform.up * (WallJumpVertScale - upVelocity )) - (_normalizedVectorToWall * WallJumpHoriScale);
+            // _rigidbody.AddForce(_final, ForceMode.VelocityChange);
+            
+            float angleToWall = Vector3.Angle(transform.forward, -_normalizedVectorToWall);
+            if (angleToWall > 155f)
+            {
+                _rigidbody.AddForce(transform.up * (WallJumpVertScale * 1.2f - upVelocity), ForceMode.VelocityChange);
+            }
+            else
+            {
+                _prevNormalizedWallJumpHori = _normalizedVectorToWall;
+                Vector3 _final = (transform.up * (WallJumpVertScale - upVelocity)) - (_normalizedVectorToWall * WallJumpHoriScale);
+                _rigidbody.AddForce(_final, ForceMode.VelocityChange);
+            }
+            
             velocity = _rigidbody.velocity;
             upVelocity = Vector3.Dot(velocity, -gravityDirection);
             if (upVelocity > maxVerticalSpeed)
@@ -230,5 +256,17 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         _prevNormalizedWallJumpHori = Vector3.zero;
+    }
+
+    void SwitchToFlyingReaper()
+    {
+        // get current position and rotation of the normal Reaper
+        Vector3 currentPosition = transform.position;
+        Quaternion currentRotation = transform.rotation;
+
+        GameObject flyingReaper = Instantiate(flyingReaperPrefab, currentPosition, currentRotation);
+
+        // destroy the current Reaper object
+        Destroy(gameObject);
     }
 }
