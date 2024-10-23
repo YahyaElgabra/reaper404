@@ -133,7 +133,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rigidbody.AddForce(gravityDirection * _gravityStrength, ForceMode.Acceleration);
+        if (Vector3.Dot(_rigidbody.velocity, gravityDirection) < 20)
+        {
+            _rigidbody.AddForce(gravityDirection * _gravityStrength, ForceMode.Acceleration);
+        }
 
         Quaternion userRot = Quaternion.AngleAxis(_yaw, transform.up);
         transform.rotation = userRot * transform.rotation;
