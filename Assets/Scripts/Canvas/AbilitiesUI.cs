@@ -8,6 +8,7 @@ using TMPro;
 public class AbilitiesUI : MonoBehaviour
 {
     public GameObject iconPrefab;
+    public GameObject containerPrefab;
     public Sprite[] icons;
     int[] abilities;
     List<GameObject> iconObjects;
@@ -19,13 +20,24 @@ public class AbilitiesUI : MonoBehaviour
         iconObjects = new List<GameObject>();
         RectTransform rect = GetComponent<RectTransform>();
         VerticalLayoutGroup layout = GetComponent<VerticalLayoutGroup>();
-        float offset = iconPrefab.GetComponent<RectTransform>().rect.height + layout.spacing;
+        float offset = containerPrefab.GetComponent<RectTransform>().rect.height + layout.spacing;
         rect.sizeDelta = new Vector2(rect.sizeDelta.x, rect.sizeDelta.y + offset * abilities.Length + layout.padding.top + layout.padding.bottom);
 
-        foreach (int ability in abilities)
+        /*foreach (int ability in abilities)
         {
             GameObject icon = Instantiate(iconPrefab, gameObject.transform);
             icon.GetComponent<Image>().sprite = icons[ability];
+            iconObjects.Add(icon);
+        }*/
+        for (int i = 0; i < abilities.Length; i++)
+        {
+            GameObject container = Instantiate(containerPrefab, gameObject.transform);
+            container.transform.SetParent(gameObject.transform);
+            TextMeshProUGUI run = container.transform.Find("run").GetComponent<TextMeshProUGUI>();
+            run.text = "Run " + (i + 1);
+
+            GameObject icon = container.transform.Find("Icon").gameObject;
+            icon.GetComponent<Image>().sprite = icons[abilities[i]];
             iconObjects.Add(icon);
         }
         rect.sizeDelta = new Vector2(rect.sizeDelta.x, rect.sizeDelta.y + GetComponent<VerticalLayoutGroup>().spacing);
@@ -57,7 +69,10 @@ public class AbilitiesUI : MonoBehaviour
 
     public void updateCharges(int charges)
     {
-        Transform textMesh = iconObjects[current].transform.GetChild(0);
-        textMesh.GetComponent<TextMeshProUGUI>().text = charges.ToString();
+        if (current < iconObjects.Count)
+        {
+            Transform textMesh = iconObjects[current].transform.GetChild(0);
+            textMesh.GetComponent<TextMeshProUGUI>().text = charges.ToString();
+        }
     }
 }
