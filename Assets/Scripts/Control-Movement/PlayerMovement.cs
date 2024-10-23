@@ -213,11 +213,25 @@ public class PlayerMovement : MonoBehaviour
             {
                 _normalizedVectorToWall.z = 0;
             }
-            _prevNormalizedWallJumpHori = _normalizedVectorToWall;
+            // _prevNormalizedWallJumpHori = _normalizedVectorToWall;
             Vector3 velocity = _rigidbody.velocity;
             float upVelocity = Vector3.Dot(velocity, -gravityDirection);
-            Vector3 _final = (transform.up * (WallJumpVertScale - upVelocity )) - (_normalizedVectorToWall * WallJumpHoriScale);
-            _rigidbody.AddForce(_final, ForceMode.VelocityChange);
+            
+            // Vector3 _final = (transform.up * (WallJumpVertScale - upVelocity )) - (_normalizedVectorToWall * WallJumpHoriScale);
+            // _rigidbody.AddForce(_final, ForceMode.VelocityChange);
+            
+            float angleToWall = Vector3.Angle(transform.forward, -_normalizedVectorToWall);
+            if (angleToWall > 155f)
+            {
+                _rigidbody.AddForce(transform.up * (WallJumpVertScale * 1.2f - upVelocity), ForceMode.VelocityChange);
+            }
+            else
+            {
+                _prevNormalizedWallJumpHori = _normalizedVectorToWall;
+                Vector3 _final = (transform.up * (WallJumpVertScale - upVelocity)) - (_normalizedVectorToWall * WallJumpHoriScale);
+                _rigidbody.AddForce(_final, ForceMode.VelocityChange);
+            }
+            
             velocity = _rigidbody.velocity;
             upVelocity = Vector3.Dot(velocity, -gravityDirection);
             if (upVelocity > maxVerticalSpeed)
