@@ -6,6 +6,33 @@
   <component name="ChangeListManager">
     <list default="true" id="5580101a-c1c3-49c0-ae75-68e3344bbe3a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.reaper404/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.reaper404/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imports.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imports/Base_Plat.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imports/Base_Plat.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imports/Block_Destroy.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imports/Block_Destroy.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imports/ReaperJump_Unity_v01.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imports/ReaperJump_Unity_v01.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imports/ReaperWalk_Unity_v01.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imports/ReaperWalk_Unity_v01.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imports/Reaper_Idle_Ani.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imports/Reaper_Idle_Ani.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imports/Reaper_Run_Ani.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imports/Reaper_Run_Ani.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imports/ReaperfLY_Unity_v01.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imports/ReaperfLY_Unity_v01.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Outdated/JumpPrefab.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Outdated/JumpPrefab.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Outdated/RunPrefab.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Outdated/RunPrefab.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/soul.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/soul.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level1.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Level-Elements/GravitySwitch.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Level-Elements/GravitySwitch.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Level-Elements/SoulAnimOffset.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Level-Elements/SoulAnimOffset.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SpawnPointRingMovement.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SpawnPointRingMovement.cs.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +133,7 @@
       <workItem from="1729687703663" duration="6280000" />
       <workItem from="1729719841566" duration="3977000" />
       <workItem from="1729729258286" duration="188000" />
-      <workItem from="1730624098708" duration="3079000" />
+      <workItem from="1730624098708" duration="4961000" />
     </task>
     <servers />
   </component>
