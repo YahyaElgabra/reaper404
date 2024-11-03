@@ -191,10 +191,22 @@ public class Throwing : MonoBehaviour
                 trajectoryLine.SetPosition(i, hit.point);
                 trajectoryLine.positionCount = i + 1;
                 
-                if (endpointInstance != null)
+                float surfaceAngle = Vector3.Angle(hit.normal, Vector3.up);
+            
+                if (surfaceAngle < 45f)
                 {
-                    endpointInstance.transform.position = hit.point + Vector3.up * 0.5f;
-                    endpointInstance.SetActive(true);
+                    if (endpointInstance != null)
+                    {
+                        endpointInstance.transform.position = hit.point + Vector3.up * 0.5f;
+                        endpointInstance.SetActive(true); 
+                    }
+                }
+                else
+                {
+                    if (endpointInstance != null)
+                    {
+                        endpointInstance.SetActive(false);
+                    }
                 }
                 
                 break;

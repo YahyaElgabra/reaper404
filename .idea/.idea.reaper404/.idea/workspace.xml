@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5580101a-c1c3-49c0-ae75-68e3344bbe3a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.reaper404/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.reaper404/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Control-Movement/Throwing.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Control-Movement/Throwing.cs" afterDir="false" />
-    </list>
+    <list default="true" id="5580101a-c1c3-49c0-ae75-68e3344bbe3a" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
