@@ -6144,6 +6144,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: pillarPlatform (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 8856373896228793128, guid: e33ac5af0b49cb34b8ddf753dc961da7, type: 3}
+      propertyPath: pillarPrefab
+      value: 
+      objectReference: {fileID: 8810621965784684173, guid: 31d6ce9139858ca44ac0be32867e1576, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
