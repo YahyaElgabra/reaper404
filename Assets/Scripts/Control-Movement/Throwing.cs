@@ -42,6 +42,9 @@ public class Throwing : MonoBehaviour
 
     private PlayerMovement playerMovement;
     
+    public GameObject endpointPrefab;
+    private GameObject endpointInstance;
+    
     void Start()
     {
         playerTransform = this.transform;
@@ -56,6 +59,12 @@ public class Throwing : MonoBehaviour
         if (abilitiesObject != null)
         {
             abilitiesUI = abilitiesObject.GetComponent<AbilitiesUI>();
+        }
+        
+        if (endpointPrefab != null)
+        {
+            endpointInstance = Instantiate(endpointPrefab);
+            endpointInstance.SetActive(false);
         }
     }
     
@@ -169,24 +178,47 @@ public class Throwing : MonoBehaviour
         Vector3 startPos = playerTransform.position + playerTransform.rotation * offset;
         Vector3 startVelocity = aimDirection * throwForce;
 
+        Vector3 previousPoint = startPos;
+
         for (int i = 0; i < trajectoryPointsCount; i++)
         {
             float t = i * timeBetweenPoints;
             Vector3 pointPosition = startPos + t * startVelocity;
             pointPosition.y = startPos.y + (startVelocity.y * t) + (0.5f * Physics.gravity.y * t * t);
-
-            // trajectoryLine.SetPosition(i, pointPosition);
             
-            Vector3 previousPoint = startPos;
             if (Physics.Raycast(previousPoint, pointPosition - previousPoint, out RaycastHit hit, (pointPosition - previousPoint).magnitude))
             {
                 trajectoryLine.SetPosition(i, hit.point);
                 trajectoryLine.positionCount = i + 1;
+                
+                float surfaceAngle = Vector3.Angle(hit.normal, Vector3.up);
+            
+                if (surfaceAngle < 45f)
+                {
+                    if (endpointInstance != null)
+                    {
+                        endpointInstance.transform.position = hit.point + Vector3.up * 0.5f;
+                        endpointInstance.SetActive(true); 
+                    }
+                }
+                else
+                {
+                    if (endpointInstance != null)
+                    {
+                        endpointInstance.SetActive(false);
+                    }
+                }
+                
                 break;
             }
             else
             {
                 trajectoryLine.SetPosition(i, pointPosition);
+                
+                if (endpointInstance != null)
+                {
+                    endpointInstance.SetActive(false);
+                }
             }
             previousPoint = pointPosition;
         }
@@ -201,6 +233,9 @@ public class Throwing : MonoBehaviour
             isAiming = false;
             
             trajectoryLine.positionCount = 0;
+            
+            if (endpointInstance != null)
+                endpointInstance.SetActive(false);
             
             if (cameraController != null)
                 cameraController.enabled = true;
