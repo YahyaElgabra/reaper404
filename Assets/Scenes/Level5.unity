@@ -241,7 +241,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1480410238911608721, guid: 4d8599562b94ea74d8b68d1af871f8ff, type: 3}
       propertyPath: charges.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1480410238911608721, guid: 4d8599562b94ea74d8b68d1af871f8ff, type: 3}
       propertyPath: passes.Array.data[0]
@@ -253,6 +253,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1480410238911608721, guid: 4d8599562b94ea74d8b68d1af871f8ff, type: 3}
       propertyPath: charges.Array.data[0]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1480410238911608721, guid: 4d8599562b94ea74d8b68d1af871f8ff, type: 3}
+      propertyPath: charges.Array.data[1]
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3867711864387483906, guid: 4d8599562b94ea74d8b68d1af871f8ff, type: 3}
@@ -6296,7 +6300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15d195205013fc04ab8815315b955219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  passes: 030000000400000002000000
+  passes: 020000000300000004000000
   charges: 0500000003000000
 --- !u!4 &592070749 stripped
 Transform:
@@ -10764,6 +10768,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Reaper (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8382266911799084885, guid: 0736b0b87617c45f8a99def77ac8bafe, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 63172349f8e3f496987e823aa69dad28, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
