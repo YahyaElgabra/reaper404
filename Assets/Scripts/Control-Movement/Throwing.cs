@@ -179,23 +179,12 @@ public class Throwing : MonoBehaviour
         Vector3 startVelocity = aimDirection * throwForce;
 
         Vector3 previousPoint = startPos;
-        float previousDistance = Vector3.Distance(previousPoint, playerTransform.position);
 
         for (int i = 0; i < trajectoryPointsCount; i++)
         {
             float t = i * timeBetweenPoints;
             Vector3 pointPosition = startPos + t * startVelocity;
             pointPosition.y = startPos.y + (startVelocity.y * t) + (0.5f * Physics.gravity.y * t * t);
-            
-            float currentDistance = Vector3.Distance(pointPosition, playerTransform.position);
-            if (currentDistance < previousDistance)
-            {
-                // Debug.LogWarning("Trajectory calculation ended early to avoid snapping issue.");
-                trajectoryLine.positionCount = i;
-                break;
-            }
-            
-            previousDistance = currentDistance;
             
             if (Physics.Raycast(previousPoint, pointPosition - previousPoint, out RaycastHit hit, (pointPosition - previousPoint).magnitude))
             {
