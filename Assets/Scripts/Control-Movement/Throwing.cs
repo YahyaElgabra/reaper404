@@ -42,8 +42,8 @@ public class Throwing : MonoBehaviour
 
     private PlayerMovement playerMovement;
     
-    public GameObject endpointPrefab;  // #CHANGE: Prefab for the translucent endpoint
-    private GameObject endpointInstance;  // #CHANGE: Instance of the endpoint
+    public GameObject endpointPrefab;
+    private GameObject endpointInstance;
     
     void Start()
     {
@@ -61,7 +61,6 @@ public class Throwing : MonoBehaviour
             abilitiesUI = abilitiesObject.GetComponent<AbilitiesUI>();
         }
         
-        // #CHANGE: Instantiate the endpoint but keep it inactive initially
         if (endpointPrefab != null)
         {
             endpointInstance = Instantiate(endpointPrefab);
@@ -179,21 +178,30 @@ public class Throwing : MonoBehaviour
         Vector3 startPos = playerTransform.position + playerTransform.rotation * offset;
         Vector3 startVelocity = aimDirection * throwForce;
 
+        Vector3 previousPoint = startPos;
+        float previousDistance = Vector3.Distance(previousPoint, playerTransform.position);
+
         for (int i = 0; i < trajectoryPointsCount; i++)
         {
             float t = i * timeBetweenPoints;
             Vector3 pointPosition = startPos + t * startVelocity;
             pointPosition.y = startPos.y + (startVelocity.y * t) + (0.5f * Physics.gravity.y * t * t);
-
-            // trajectoryLine.SetPosition(i, pointPosition);
             
-            Vector3 previousPoint = startPos;
+            float currentDistance = Vector3.Distance(pointPosition, playerTransform.position);
+            if (currentDistance < previousDistance)
+            {
+                // Debug.LogWarning("Trajectory calculation ended early to avoid snapping issue.");
+                trajectoryLine.positionCount = i;
+                break;
+            }
+            
+            previousDistance = currentDistance;
+            
             if (Physics.Raycast(previousPoint, pointPosition - previousPoint, out RaycastHit hit, (pointPosition - previousPoint).magnitude))
             {
                 trajectoryLine.SetPosition(i, hit.point);
                 trajectoryLine.positionCount = i + 1;
                 
-                // #CHANGE: Position the endpoint prefab at the hit point and make it visible
                 if (endpointInstance != null)
                 {
                     endpointInstance.transform.position = hit.point + Vector3.up * 0.5f;
@@ -206,7 +214,6 @@ public class Throwing : MonoBehaviour
             {
                 trajectoryLine.SetPosition(i, pointPosition);
                 
-                // #CHANGE: Hide the endpoint if no hit occurs
                 if (endpointInstance != null)
                 {
                     endpointInstance.SetActive(false);
@@ -226,7 +233,6 @@ public class Throwing : MonoBehaviour
             
             trajectoryLine.positionCount = 0;
             
-            // #CHANGE: Hide the endpoint when throwing
             if (endpointInstance != null)
                 endpointInstance.SetActive(false);
             
