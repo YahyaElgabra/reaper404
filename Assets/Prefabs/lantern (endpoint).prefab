@@ -22,15 +22,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2ec9eb426655d8a4b9249c68a4adc891, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -37.28
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2ec9eb426655d8a4b9249c68a4adc891, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 17.522
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2ec9eb426655d8a4b9249c68a4adc891, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -46.38
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2ec9eb426655d8a4b9249c68a4adc891, type: 3}
       propertyPath: m_LocalRotation.w
@@ -98,7 +98,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 7b979a5d57a21a040800b7f3f9892e80, type: 2}
     - target: {fileID: 919132149155446097, guid: 2ec9eb426655d8a4b9249c68a4adc891, type: 3}
       propertyPath: m_Name
-      value: L_Low
+      value: lantern (endpoint)
       objectReference: {fileID: 0}
     - target: {fileID: 1849404190285422215, guid: 2ec9eb426655d8a4b9249c68a4adc891, type: 3}
       propertyPath: m_Materials.Array.data[0]

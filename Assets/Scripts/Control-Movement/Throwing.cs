@@ -42,6 +42,9 @@ public class Throwing : MonoBehaviour
 
     private PlayerMovement playerMovement;
     
+    public GameObject endpointPrefab;  // #CHANGE: Prefab for the translucent endpoint
+    private GameObject endpointInstance;  // #CHANGE: Instance of the endpoint
+    
     void Start()
     {
         playerTransform = this.transform;
@@ -56,6 +59,13 @@ public class Throwing : MonoBehaviour
         if (abilitiesObject != null)
         {
             abilitiesUI = abilitiesObject.GetComponent<AbilitiesUI>();
+        }
+        
+        // #CHANGE: Instantiate the endpoint but keep it inactive initially
+        if (endpointPrefab != null)
+        {
+            endpointInstance = Instantiate(endpointPrefab);
+            endpointInstance.SetActive(false);
         }
     }
     
@@ -182,11 +192,25 @@ public class Throwing : MonoBehaviour
             {
                 trajectoryLine.SetPosition(i, hit.point);
                 trajectoryLine.positionCount = i + 1;
+                
+                // #CHANGE: Position the endpoint prefab at the hit point and make it visible
+                if (endpointInstance != null)
+                {
+                    endpointInstance.transform.position = hit.point + Vector3.up * 0.5f;
+                    endpointInstance.SetActive(true);
+                }
+                
                 break;
             }
             else
             {
                 trajectoryLine.SetPosition(i, pointPosition);
+                
+                // #CHANGE: Hide the endpoint if no hit occurs
+                if (endpointInstance != null)
+                {
+                    endpointInstance.SetActive(false);
+                }
             }
             previousPoint = pointPosition;
         }
@@ -201,6 +225,10 @@ public class Throwing : MonoBehaviour
             isAiming = false;
             
             trajectoryLine.positionCount = 0;
+            
+            // #CHANGE: Hide the endpoint when throwing
+            if (endpointInstance != null)
+                endpointInstance.SetActive(false);
             
             if (cameraController != null)
                 cameraController.enabled = true;
