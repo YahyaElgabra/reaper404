@@ -28,6 +28,10 @@ public class CameraControl : MonoBehaviour
         Quaternion rotation = Quaternion.Euler(pitch, 0, 0);
         transform.localPosition = rotation * startVector;
         transform.LookAt(transform.parent);
+        Vector3 adjustedRotation = transform.localEulerAngles;
+        adjustedRotation.y = 0;
+        adjustedRotation.z = 0;
+        transform.localEulerAngles = adjustedRotation;
     }
 }
 
