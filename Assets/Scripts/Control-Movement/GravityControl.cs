@@ -27,6 +27,11 @@ public class GravityControl : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        // todo: arrows
+    }
+
     public void RotateGravity(int side)
     {
         if (charges > 0)
@@ -53,6 +58,7 @@ public class GravityControl : MonoBehaviour
             {
                 abilitiesUI.updateCharges(charges);
             }
+            _rigidbody.velocity = Vector3.zero;
         }
     }
 
