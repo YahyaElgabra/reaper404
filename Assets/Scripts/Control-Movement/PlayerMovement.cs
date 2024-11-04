@@ -30,10 +30,10 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody _rigidbody;
 
-    private const float MoveScale = 40f;
-    private const float maxSpeed = 11.5f;
-    private const float RunScale = 40f;
-    private const float maxRunningSpeed = 13f;
+    private const float MoveScale = 70f;
+    private const float maxSpeed = 12f;
+    private const float RunScale = 70f;
+    private const float maxRunningSpeed = 16f;
     private const float _fakeDrag = 30f;
     private const float _groundMultiplier = 1f;
     private const float _groundDragMultiplier = 1f;
@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
 
     private const float RotScale = 2f;
     private const float WallJumpVertScale = 40f;
-    private const float WallJumpHoriScale = 20f;
+    private const float WallJumpHoriScale = 15f;
 
     private const float JumpScale = 40f;
     private const float maxVerticalSpeed = 0.2f;
@@ -65,6 +65,8 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 gravityDirection = Vector3.down;
 
     private Vector3 _baseVelocity = Vector3.zero;
+
+    private bool _checkVel = false;
 
     GravityControl gravityControl;
 
@@ -190,6 +192,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (_checkVel)
+        {
+            _checkVel = false;
+            Debug.Log(_rigidbody.velocity);
+        }
         
 
         Quaternion userRot = Quaternion.AngleAxis(_yaw, transform.up);
@@ -272,15 +279,20 @@ public class PlayerMovement : MonoBehaviour
 
             Vector3 _vertToWall = gravityDirection * Vector3.Dot(_vectorToWall, gravityDirection);
             Vector3 _horiNormalToWall = Vector3.Normalize(_vectorToWall - _vertToWall);
+            Debug.Log(_horiNormalToWall.ToString());
 
             Vector3 velocity = _rigidbody.velocity;
             float upVelocity = Vector3.Dot(velocity, -gravityDirection);
 
             _prevNormalizedWallJumpHori = _horiNormalToWall;
             //Player will be unable to move in this ^ direction for a short period of time, see RegainFullHoriControl
-
-            _rigidbody.AddForce(-1*(_horiNormalToWall * WallJumpHoriScale), ForceMode.VelocityChange);
-            _rigidbody.AddForce(transform.up * Math.Max((WallJumpVertScale - upVelocity), 0), ForceMode.VelocityChange);
+            Vector3 finalHori = -1 * (_horiNormalToWall * WallJumpHoriScale);
+            Debug.Log(_rigidbody.velocity.ToString());
+            Debug.Log(finalHori.ToString());
+            _checkVel = true;
+            _rigidbody.AddForce(finalHori, ForceMode.VelocityChange);
+            
+            _rigidbody.AddForce(-gravityDirection * Math.Max((WallJumpVertScale - upVelocity), 0), ForceMode.VelocityChange);
             _jumpDisabled = true;
             StartCoroutine(RegainJump());
             StartCoroutine(RegainFullHoriControl());
@@ -290,7 +302,8 @@ public class PlayerMovement : MonoBehaviour
     void ApplyFakeDrag(Vector3 input)
     {
         Vector3 horizontal = GetHorizontalVel();
-        Vector3 drag = (horizontal - (input * Vector3.Dot(horizontal, input))) * (_fakeDrag);
+        Vector3 withoutInput = (horizontal - (input * Vector3.Dot(horizontal, input)));
+        Vector3 drag = (withoutInput - (_prevNormalizedWallJumpHori * Vector3.Dot(withoutInput, _prevNormalizedWallJumpHori))) * (_fakeDrag);
         if (_isGrounded)
         {
 
@@ -327,7 +340,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator RegainFullHoriControl()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.4f);
         _prevNormalizedWallJumpHori = Vector3.zero;
     }
 
