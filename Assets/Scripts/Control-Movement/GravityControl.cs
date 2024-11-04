@@ -14,6 +14,8 @@ public class GravityControl : MonoBehaviour
 
     private AudioSource[] _audioSources;
 
+    private bool _isGravDisabled;
+
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -25,16 +27,31 @@ public class GravityControl : MonoBehaviour
         {
             abilitiesUI = abilitiesObject.GetComponent<AbilitiesUI>();
         }
+        _isGravDisabled = false;
+    }
+
+    private void Update()
+    {
+        //Transform arrow = transform.Find("arrow2 1 (1)");
+        //arrow.Rotate(Vector3.right, 100 * Time.deltaTime);
+        // todo: arrow rotation
+
+        if (playerMovement.GetIsGrounded())
+        {
+            _isGravDisabled = false;
+        }
     }
 
     public void RotateGravity(int side)
     {
-        if (charges > 0)
+        if (charges > 0 && !_isGravDisabled)
         {
             if (Time.time - _lastRotTime < _rotDuration)
             {
                 return;
             }
+
+            _isGravDisabled = true;
 
             _lastRotTime = Time.time;
 
@@ -53,6 +70,7 @@ public class GravityControl : MonoBehaviour
             {
                 abilitiesUI.updateCharges(charges);
             }
+            _rigidbody.velocity = Vector3.zero;
         }
     }
 

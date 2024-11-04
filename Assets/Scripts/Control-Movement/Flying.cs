@@ -21,6 +21,8 @@ public class Flying : MonoBehaviour
     private bool _isBoosting = false;
     private bool _isBraking = false;
 
+    private bool _canMove = false; // for movement delay at start
+
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -30,10 +32,21 @@ public class Flying : MonoBehaviour
 
         // start at normal forward speed
         _currentSpeed = forwardSpeed;
+
+        // delay movement
+        StartCoroutine(DelayMovement());
+    }
+
+    private IEnumerator DelayMovement()
+    {
+        yield return new WaitForSeconds(2.5f);
+        _canMove = true;
     }
 
     private void Update()
     {
+        if(!_canMove) return;
+
         // get input for vertical/horizontal movement
         _verticalInput = Input.GetAxisRaw("Vertical"); // left/right <-> A/D | left/right arrow keys | joystick left/right
         _horizontalInput = Input.GetAxisRaw("Horizontal"); // up/down <-> W/S | up/down arrow keys | joystick up/down
@@ -67,6 +80,8 @@ public class Flying : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(!_canMove) return;
+
         // apply constant forward movement
         Vector3 forwardMovement = transform.forward * _currentSpeed * Time.fixedDeltaTime;
         
