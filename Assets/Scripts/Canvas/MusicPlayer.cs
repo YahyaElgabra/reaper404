@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MusicPlayer : MonoBehaviour
 {
     private static MusicPlayer musicPlayer;
+    public Slider volumeSlider;
 
     void Start()
     {
+        LoadVolume();
         if (musicPlayer == null)
         {
             musicPlayer = this;
@@ -27,5 +30,29 @@ public class MusicPlayer : MonoBehaviour
             }
         }
         
+    }
+
+    public void SetVolume()
+    {
+        AudioListener.volume = volumeSlider.value;
+        PlayerPrefs.SetFloat("volume", volumeSlider.value);
+    }
+
+    public void LoadVolume()
+    {
+        if (volumeSlider == null)
+        {
+            return;
+        }
+
+        if (PlayerPrefs.HasKey("volume"))
+        {
+            volumeSlider.value = PlayerPrefs.GetFloat("volume");
+        }
+        else
+        {
+            PlayerPrefs.SetFloat("volume", 1);
+            volumeSlider.value = PlayerPrefs.GetFloat("volume");
+        }
     }
 }
