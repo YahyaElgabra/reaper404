@@ -21,7 +21,7 @@ public class jumpHitbox : MonoBehaviour
         {
             _previousTouched = trigger.name;
             player.SetIsGrounded(true);
-            //Debug.Log("Ground");
+            Debug.Log("Ground");
             
             _latest.Add(trigger.name);
             _previousTouched = "";
@@ -47,7 +47,7 @@ public class jumpHitbox : MonoBehaviour
         }
         if (_latest.Count == 0) { 
             player.SetIsGrounded(false);
-            //Debug.Log("Air");
+            Debug.Log("Air");
         }
         if (trigger.tag == "MovingPlatform")
         {
