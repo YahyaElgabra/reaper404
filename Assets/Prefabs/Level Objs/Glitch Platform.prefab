@@ -66,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: affa3c1795baa88449e7847fd525ab08, type: 2}
     - target: {fileID: 919132149155446097, guid: 0a091372d509df34b8160b7e82babf73, type: 3}
       propertyPath: m_Name
-      value: Glitch_Plataform_Low
+      value: Glitch Platform
       objectReference: {fileID: 0}
     - target: {fileID: 2521637650811823045, guid: 0a091372d509df34b8160b7e82babf73, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -112,7 +112,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1099028762069469935}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 4f084f8faef653b4fbfd8d77ef30cfa8, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
