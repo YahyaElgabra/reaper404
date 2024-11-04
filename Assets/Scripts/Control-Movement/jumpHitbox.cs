@@ -33,9 +33,15 @@ public class jumpHitbox : MonoBehaviour
     {
         if (trigger.tag == "MovingPlatform" && trigger.GetComponent<Rigidbody>().velocity != baseVel)
         {
-            baseVel = trigger.GetComponent<Rigidbody>().velocity;
-            player.SetBaseVelocity(trigger.GetComponent<Rigidbody>().velocity);
-            //Debug.Log(trigger.GetComponent<Rigidbody>().velocity);
+            if (trigger.GetComponent<movingPlatform>()._moving == true) {
+                baseVel = trigger.GetComponent<Rigidbody>().velocity;
+                player.SetBaseVelocity(trigger.GetComponent<Rigidbody>().velocity);
+                //Debug.Log(trigger.GetComponent<Rigidbody>().velocity);
+            }
+            else
+            {
+                player.RemoveBaseVelocity();
+            }
         }
     }
 
