@@ -34,7 +34,9 @@ public class PlayerMovement : MonoBehaviour
     private const float maxSpeed = 12f;
     private const float RunScale = 40f;
     private const float maxRunningSpeed = 16f;
-    private const float _fakeDrag = 30f;
+    //private const float _fakeDrag = 30f;
+    // Value for force-based drag. We are not using that, we are using velocity-based drag instead. For that, drag must be between 0 and 1.
+    private const float _fakeDrag = 0.8f;
     private const float _groundMultiplier = 1f;
     private const float _groundDragMultiplier = 1f;
 
@@ -65,9 +67,6 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 gravityDirection = Vector3.down;
 
     private Vector3 _baseVelocity = Vector3.zero;
-
-    private bool _checkVel = false;
-    private bool _checkLoss = false;
 
     GravityControl gravityControl;
 
@@ -193,11 +192,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_checkVel)
-        {
-            //_checkVel = false;
-            Debug.Log("post-velocity: " + _rigidbody.velocity);
-        }
         
 
         Quaternion userRot = Quaternion.AngleAxis(_yaw, transform.up);
@@ -244,16 +238,6 @@ public class PlayerMovement : MonoBehaviour
         Vector3 _lossFromRecentWallJump = _prevNormalizedWallJumpHori * Vector3.Dot(_normalizedInputDirection, _prevNormalizedWallJumpHori);
         Vector3 _finalDirection = _normalizedInputDirection - _lossFromRecentWallJump;
 
-        if (_checkLoss)
-        {
-            Debug.Log("Input: " + _normalizedInputDirection.ToString());
-            //_checkLoss = false;
-            Debug.Log("loss: " + _lossFromRecentWallJump.ToString());
-            Debug.Log("final: " + _finalDirection.ToString());
-            Debug.Log("\n");
-
-        }
-
         if (!_running)
         {
             if (_isGrounded)
@@ -285,13 +269,11 @@ public class PlayerMovement : MonoBehaviour
 
         if (_userWallJumped)
         {
-            Debug.Log("\n\n\n\n\n\n\n\n");
             _userWallJumped = false;
             _isOnWall = false;
 
             Vector3 _vertToWall = gravityDirection * Vector3.Dot(_vectorToWall, gravityDirection);
             Vector3 _horiNormalToWall = Vector3.Normalize(_vectorToWall - _vertToWall);
-            //Debug.Log(_horiNormalToWall.ToString());
 
             Vector3 velocity = _rigidbody.velocity;
             float upVelocity = Vector3.Dot(velocity, -gravityDirection);
@@ -299,10 +281,6 @@ public class PlayerMovement : MonoBehaviour
             _prevNormalizedWallJumpHori = _horiNormalToWall;
             //Player will be unable to move in this ^ direction for a short period of time, see RegainFullHoriControl
             Vector3 finalHori = -1 * (_horiNormalToWall * WallJumpHoriScale);
-            //Debug.Log("current velocity: " + _rigidbody.velocity.ToString());
-            //Debug.Log("adding: " + finalHori.ToString());
-            _checkVel = false;
-            _checkLoss = false;
             
             _rigidbody.AddForce(finalHori, ForceMode.VelocityChange);
             _rigidbody.AddForce(-GetHorizontalVel(), ForceMode.VelocityChange);
@@ -322,33 +300,15 @@ public class PlayerMovement : MonoBehaviour
         }
         Vector3 horizontal = GetHorizontalVel();
         Vector3 withoutInput = (horizontal - (input * Vector3.Dot(horizontal, input)));
-        if (_checkLoss)
-        {
-            Debug.Log("Input at Drag stage: " + input);
-            Debug.Log("Horizontal speed: " + horizontal);
-            Debug.Log("Horizontal speed without input: " + withoutInput);
-        }
 
-        Vector3 wallJumpDragCompensation = (_prevNormalizedWallJumpHori * Vector3.Dot(withoutInput, _prevNormalizedWallJumpHori));
-        //Vector3 drag = (withoutInput - wallJumpDragCompensation) * (_fakeDrag) * -1;
         Vector3 drag = withoutInput * (_fakeDrag) * -1;
-        if (_checkLoss)
-        {
-            Debug.Log("Wall jump anti-drag (will be subtracted from pre): " + wallJumpDragCompensation);
-        }
         if (_isGrounded)
         {
-
-            _rigidbody.AddForce(drag * _groundDragMultiplier, ForceMode.Force);
+            _rigidbody.AddForce(drag * _groundDragMultiplier, ForceMode.VelocityChange);
         }
         else 
         {
-            _rigidbody.AddForce(drag, ForceMode.Force);
-            if (_checkLoss)
-            {
-                Debug.Log("Drag (as force): " + (drag));
-            }
-            
+            _rigidbody.AddForce(drag, ForceMode.VelocityChange);
         }
 
     }
@@ -379,8 +339,6 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(0.4f);
         _prevNormalizedWallJumpHori = Vector3.zero;
-        _checkLoss = false;
-        _checkVel = false;
     }
 
     void SwitchToFlyingReaper()
