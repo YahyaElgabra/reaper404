@@ -6,7 +6,7 @@ public class Throwing : MonoBehaviour
 {
     public Transform playerTransform;
     private bool isHeld = false;
-    private Vector3 offset = new Vector3(1f, 2f, -1f);
+    private Vector3 offset = new Vector3(1f, 2f, 1f);
     
     private Rigidbody rb;
     private Collider objectCollider;
@@ -29,8 +29,8 @@ public class Throwing : MonoBehaviour
     
     private float _maxAimAngleX = 45f;
     private float _minAimAngleX = -45f;
-    private float _maxAimAngleY = 75f;
-    private float _minAimAngleY = 0f;
+    private float _maxAimAngleY = 85f;
+    private float _minAimAngleY = -25f;
     private float _aimSensX = 0.05f;
     private float _aimSensY = 0.1f;
     
@@ -184,7 +184,7 @@ public class Throwing : MonoBehaviour
         {
             float t = i * timeBetweenPoints;
             Vector3 pointPosition = startPos + t * startVelocity;
-            pointPosition.y = startPos.y + (startVelocity.y * t) + (0.5f * Physics.gravity.y * t * t);
+            pointPosition.y = startPos.y + (startVelocity.y * t) + (0.5f * (Physics.gravity.y - 0.1f) * t * t);
             
             if (Physics.Raycast(previousPoint, pointPosition - previousPoint, out RaycastHit hit, (pointPosition - previousPoint).magnitude))
             {
