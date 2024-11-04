@@ -21,7 +21,7 @@ public class jumpHitbox : MonoBehaviour
         {
             _previousTouched = trigger.name;
             player.SetIsGrounded(true);
-            Debug.Log("Ground");
+            //Debug.Log("Ground");
             
             _latest.Add(trigger.name);
             _previousTouched = "";
@@ -33,9 +33,15 @@ public class jumpHitbox : MonoBehaviour
     {
         if (trigger.tag == "MovingPlatform" && trigger.GetComponent<Rigidbody>().velocity != baseVel)
         {
-            baseVel = trigger.GetComponent<Rigidbody>().velocity;
-            player.SetBaseVelocity(trigger.GetComponent<Rigidbody>().velocity);
-            Debug.Log(trigger.GetComponent<Rigidbody>().velocity);
+            if (trigger.GetComponent<movingPlatform>()._moving == true) {
+                baseVel = trigger.GetComponent<Rigidbody>().velocity;
+                player.SetBaseVelocity(trigger.GetComponent<Rigidbody>().velocity);
+                //Debug.Log(trigger.GetComponent<Rigidbody>().velocity);
+            }
+            else
+            {
+                player.RemoveBaseVelocity();
+            }
         }
     }
 
@@ -47,7 +53,7 @@ public class jumpHitbox : MonoBehaviour
         }
         if (_latest.Count == 0) { 
             player.SetIsGrounded(false);
-            Debug.Log("Air");
+            //Debug.Log("Air");
         }
         if (trigger.tag == "MovingPlatform")
         {

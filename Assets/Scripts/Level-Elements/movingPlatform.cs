@@ -11,7 +11,7 @@ public class movingPlatform : MonoBehaviour
     private GameObject _spawnedPillar;
     private Vector3 _initialLocation;
     private bool _alreadyTriggered = false;
-    private bool _moving = false;
+    public bool _moving = false;
     private LineRenderer lr;
     private Vector3 displacementFactor;
 
