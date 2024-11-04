@@ -30,9 +30,9 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody _rigidbody;
 
-    private const float MoveScale = 70f;
+    private const float MoveScale = 40f;
     private const float maxSpeed = 12f;
-    private const float RunScale = 70f;
+    private const float RunScale = 40f;
     private const float maxRunningSpeed = 16f;
     private const float _fakeDrag = 30f;
     private const float _groundMultiplier = 1f;
