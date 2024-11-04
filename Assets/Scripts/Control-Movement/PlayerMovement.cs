@@ -85,6 +85,11 @@ public class PlayerMovement : MonoBehaviour
         _isGrounded = grounded;
     }
 
+    public bool GetIsGrounded()
+    {
+        return _isGrounded;
+    }
+
     public void SetIsOnWall(bool onWall, Vector3 closestPointOnWall)
     {
         _isOnWall = onWall;
