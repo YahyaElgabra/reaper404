@@ -246,10 +246,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.47696877
+  m_Radius: 0.3
   m_Height: 2
   m_Direction: 2
-  m_Center: {x: -0, y: 1.2, z: 0}
+  m_Center: {x: -0, y: 1.6, z: 0}
 --- !u!114 &8109041904042729174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,13 +344,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3575886694796016357}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.19547677, y: -0, z: -0, w: 0.9807083}
-  m_LocalPosition: {x: 0, y: 1.769, z: -3.52}
+  m_LocalRotation: {x: 0.120350815, y: -0, z: -0, w: 0.9927315}
+  m_LocalPosition: {x: 0, y: 2.77, z: -2.89}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2193036276828911836}
-  m_LocalEulerAnglesHint: {x: 22.545, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 13.825, y: 0, z: 0}
 --- !u!20 &7211251353941022483
 Camera:
   m_ObjectHideFlags: 0
@@ -384,7 +384,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 70
+  field of view: 95
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -417,7 +417,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3575886694796016357}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: acc62da2a48fc484a87b69f855651bd4, type: 3}
   m_Name: 
