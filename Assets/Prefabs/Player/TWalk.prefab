@@ -76,6 +76,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TWalk
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 791801d4658b24a6d92754038a560f22, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1042744115741867719, guid: 791801d4658b24a6d92754038a560f22, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

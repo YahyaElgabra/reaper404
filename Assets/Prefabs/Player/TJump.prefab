@@ -76,6 +76,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TJump
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8033c4f124a3d464b8b4f052e03753af, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1042744115741867719, guid: 8033c4f124a3d464b8b4f052e03753af, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

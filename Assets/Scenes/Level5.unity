@@ -6391,7 +6391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15d195205013fc04ab8815315b955219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  passes: 040000000200000003000000
+  passes: 030000000200000004000000
   charges: 0300000005000000
 --- !u!4 &592070749 stripped
 Transform:

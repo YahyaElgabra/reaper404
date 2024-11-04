@@ -10,9 +10,9 @@ public class AbilitiesUI : MonoBehaviour
     public GameObject iconPrefab;
     public GameObject containerPrefab;
     public Sprite[] icons;
-    int[] abilities;
+    public int[] abilities;
     List<GameObject> iconObjects;
-    int current;
+    public int current;
 
     void Awake()
     {

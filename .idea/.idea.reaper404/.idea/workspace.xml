@@ -6,84 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="5580101a-c1c3-49c0-ae75-68e3344bbe3a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.reaper404/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.reaper404/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/Flying.controller" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/Flying.controller.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/Jump.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/Jump.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Materials.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Materials/shadow.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Materials/shadow.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Shadow.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Shadow.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Fly.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Fly.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_cape_BaseColor.1005.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_cape_BaseColor.1005.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_cape_Height.1005.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_cape_Height.1005.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_cape_Metallic.1005.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_cape_Metallic.1005.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_cape_Normal.1005.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_cape_Normal.1005.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_cape_Roughness.1005.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_cape_Roughness.1005.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_coat_BaseColor.1004.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_coat_BaseColor.1004.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_coat_Height.1004.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_coat_Height.1004.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_coat_Metallic.1004.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_coat_Metallic.1004.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_coat_Normal.1004.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_coat_Normal.1004.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_coat_Roughness.1004.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_coat_Roughness.1004.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_lambert11_BaseColor.1002_Raw_ACEScg.png.tx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_lambert11_BaseColor.1002_Raw_ACEScg.png.tx.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_lambert11_Metallic.1002.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_lambert11_Metallic.1002.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_lambert11_Normal.1002_Raw_ACEScg.png.tx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_lambert11_Normal.1002_Raw_ACEScg.png.tx.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_lambert11_Roughness.1002.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_lambert11_Roughness.1002.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_lambert6_BaseColor.1003.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_lambert6_BaseColor.1003.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_lambert6_Height.1003.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_lambert6_Height.1003.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_lambert6_Metallic.1003.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_lambert6_Metallic.1003.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_lambert6_Normal.1003.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_lambert6_Normal.1003.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_lambert6_Roughness.1003.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Grav/reaper_for_substance_lambert6_Roughness.1003.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Teleport.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/WallJump.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/WallJump.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/metashadow.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/metashadow.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/shadow 1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/shadow 1.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/shadow.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/shadow.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/accessories.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/accessories.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/body.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/body.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/boots.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/boots.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/cape.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/cape.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/coat.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/coat.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/shorts.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/shorts.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Reaper Idle.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Reaper Idle.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Reaper Jump.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Reaper Jump.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Reaper Walk.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Reaper Walk.prefab.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Reaper.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Reaper.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level4.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level4.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/SIdle.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/SIdle.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/TJump.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/TJump.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/TWalk.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/TWalk.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level5.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level5.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Tutorial.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Tutorial.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Canvas/AbilitiesUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Canvas/AbilitiesUI.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Control-Movement/PlayerState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Control-Movement/PlayerState.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -186,7 +115,7 @@
       <workItem from="1729719841566" duration="3977000" />
       <workItem from="1729729258286" duration="188000" />
       <workItem from="1730624098708" duration="12874000" />
-      <workItem from="1730698130063" duration="10409000" />
+      <workItem from="1730698130063" duration="15718000" />
     </task>
     <servers />
   </component>
