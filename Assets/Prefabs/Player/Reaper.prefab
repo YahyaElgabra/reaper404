@@ -610,6 +610,7 @@ MonoBehaviour:
   _isGrav: 0
   _isFly: 0
   flyingReaperPrefab: {fileID: 1987009039392981272, guid: cb63cb17ae369924bb47cfd890941257, type: 3}
+  _running: 0
   playerCamera: {fileID: 0}
   defaultFOV: 70
   sprintFOV: 100
@@ -639,6 +640,7 @@ MonoBehaviour:
   wallJumpIdlePrefab: {fileID: 6369932604747566006}
   wallJumpWalkPrefab: {fileID: 6339868746878197873}
   wallJumpJumpPrefab: {fileID: 6572468643875567517}
+  wallJumpRunPrefab: {fileID: 7754325759881185200}
 --- !u!114 &6887982572358488480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1579,6 +1581,11 @@ PrefabInstance:
 --- !u!4 &6978106197128862986 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5871110768166326411, guid: dcd4d82d1971b4a7198ffd49bd111153, type: 3}
+  m_PrefabInstance: {fileID: 3579612653969411457}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7754325759881185200 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6499169867767614001, guid: dcd4d82d1971b4a7198ffd49bd111153, type: 3}
   m_PrefabInstance: {fileID: 3579612653969411457}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4521486156842093283

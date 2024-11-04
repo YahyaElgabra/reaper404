@@ -6,8 +6,8 @@ public class PlayerState : MonoBehaviour
     public GameObject standardIdlePrefab, standardWalkPrefab, standardJumpPrefab;
     public GameObject gravIdlePrefab, gravWalkPrefab, gravJumpPrefab;
     public GameObject teleportIdlePrefab, teleportWalkPrefab, teleportJumpPrefab;
-    public GameObject wallJumpIdlePrefab, wallJumpWalkPrefab, wallJumpJumpPrefab;
-
+    public GameObject wallJumpIdlePrefab, wallJumpWalkPrefab, wallJumpJumpPrefab, wallJumpRunPrefab;
+    
     private bool _isGrounded = false;
     private float _groundCheckDistance = 0.5f;
     private float _rayOffset = 0.9f;
@@ -23,6 +23,8 @@ public class PlayerState : MonoBehaviour
     
     private AbilitiesUI abilitiesUI;
     private int[] abilities;
+    
+    private PlayerMovement playerMovement;
 
     void Start()
     {
@@ -30,6 +32,8 @@ public class PlayerState : MonoBehaviour
 
         abilitiesUI = FindObjectOfType<AbilitiesUI>();
         abilities = abilitiesUI ? abilitiesUI.abilities : new int[0];
+        
+        playerMovement = GetComponent<PlayerMovement>();
         
         SetAbilityPrefabs();
         SetActivePrefab(standardIdlePrefab);
@@ -50,6 +54,12 @@ public class PlayerState : MonoBehaviour
             {
                 GameObject jumpPrefab = GetCurrentAbilityPrefab("Jump");
                 StartCoroutine(SwitchToPrefabForDuration(jumpPrefab, 0.967f));
+            }
+            else if (_isGrounded && playerMovement._running && _velocity > 3f)
+            {
+                GameObject runPrefab = GetCurrentAbilityPrefab("Run");
+                SetActivePrefab(runPrefab);
+                PlayWalkAudio();
             }
             else if (_isGrounded && _velocity > 3f)
             {
@@ -88,6 +98,7 @@ public class PlayerState : MonoBehaviour
             case 1: // Wall Jump
                 return actionType == "Idle" ? wallJumpIdlePrefab
                      : actionType == "Walk" ? wallJumpWalkPrefab
+                     : actionType == "Run" ? wallJumpRunPrefab
                      : wallJumpJumpPrefab;
 
             default: // Standard
