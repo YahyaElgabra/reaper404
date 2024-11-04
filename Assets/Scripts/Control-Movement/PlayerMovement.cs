@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _userWallJumped;
     private bool _isHoggingJump = false;
     private bool _jumpDisabled = false;
-    private bool _running = false;
+    public bool _running = false;
     private Vector3 _vectorToWall;
     private Vector3 _prevNormalizedWallJumpHori = Vector3.zero;
 
@@ -58,8 +58,8 @@ public class PlayerMovement : MonoBehaviour
     
 
     public Camera playerCamera;
-    public float defaultFOV = 70f;
-    public float sprintFOV = 100f;
+    private float defaultFOV = 65f;
+    private float sprintFOV = 80f;
     public float fovTransitionSpeed = 1f;
 
     public Vector3 gravityDirection = Vector3.down;
