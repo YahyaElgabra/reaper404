@@ -5,6 +5,7 @@ using UnityEngine;
 public class movingPlatform : MonoBehaviour
 {
     public float moveTarget;
+    public float moveSpeed = 3f;
     public Material lineMaterial;
     private Rigidbody rb;
     private GameObject _spawnedPillar;
@@ -23,7 +24,7 @@ public class movingPlatform : MonoBehaviour
         lr.material = lineMaterial;
         lr.SetPosition(0, transform.position);
         lr.SetPosition(1, transform.position + transform.forward * moveTarget);
-        displacementFactor = transform.forward * 3f;
+        displacementFactor = transform.forward * moveSpeed;
 
 
     }
