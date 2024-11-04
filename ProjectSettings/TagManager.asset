@@ -15,6 +15,7 @@ TagManager:
   - WinScreen
   - Canvas
   - Soul
+  - MovingPlatform
   layers:
   - Default
   - TransparentFX

@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _isOnWall;
     private bool _userJumped;
     private bool _userWallJumped;
+    private bool _isHoggingJump = false;
     private bool _jumpDisabled = false;
     private bool _running = false;
     private Vector3 _vectorToWall;
@@ -29,19 +30,32 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody _rigidbody;
 
-    private const float MoveScale = 25f;
-    private const float RunScale = 35f;
+    private const float MoveScale = 40f;
+    private const float maxSpeed = 11.5f;
+    private const float RunScale = 40f;
+    private const float maxRunningSpeed = 13f;
+    private const float _fakeDrag = 30f;
+    private const float _groundMultiplier = 1f;
+    private const float _groundDragMultiplier = 1f;
+
+
     private const float RotScale = 2f;
-    private const float JumpScale = 22f;
-    private const float WallJumpVertScale = 25f;
-    private const float WallJumpHoriScale = 12f;
-    
+    private const float WallJumpVertScale = 40f;
+    private const float WallJumpHoriScale = 20f;
+
+    private const float JumpScale = 40f;
+    private const float maxVerticalSpeed = 0.2f;
+    private float _gravityStrength = 80f;
+    private float _maxFallingSpeed = 40f;
+
     private Vector3 _normalizedInputDirection;
 
-    private const float maxSpeed = 8f;
-    private const float maxRunningSpeed = 12f;
+
+    private const float _rayLength = 10f;
+    
+    
     float speedH = 2.0f;
-    private const float maxVerticalSpeed = 9.81f;
+    
 
     public Camera playerCamera;
     public float defaultFOV = 70f;
@@ -49,7 +63,9 @@ public class PlayerMovement : MonoBehaviour
     public float fovTransitionSpeed = 1f;
 
     public Vector3 gravityDirection = Vector3.down;
-    private float _gravityStrength = 28f;
+
+    private Vector3 _baseVelocity = Vector3.zero;
+
     GravityControl gravityControl;
 
     void Start()
@@ -73,6 +89,22 @@ public class PlayerMovement : MonoBehaviour
     {
         _isOnWall = onWall;
         _vectorToWall = closestPointOnWall;
+    }
+
+    public void SetBaseVelocity(Vector3 baseVel)
+    {
+        _baseVelocity = baseVel;
+        float currentRelativeSpeed = Vector3.Dot(_rigidbody.velocity, baseVel) / (baseVel.magnitude * baseVel.magnitude);
+        Debug.Log(currentRelativeSpeed);
+        if (currentRelativeSpeed != 1) 
+        {
+            _rigidbody.AddForce(((1 - (currentRelativeSpeed))/baseVel.magnitude)*baseVel, ForceMode.VelocityChange);
+        }
+    }
+
+    public void RemoveBaseVelocity()
+    {
+        _baseVelocity = Vector3.zero;
     }
 
     void Update()
@@ -102,17 +134,23 @@ public class PlayerMovement : MonoBehaviour
         float targetFOV = _running ? sprintFOV : defaultFOV;
         playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, Time.deltaTime * fovTransitionSpeed);
         
-        if (Input.GetButton("Jump") && !_jumpDisabled){
+        if (Input.GetButton("Jump") && !_jumpDisabled && !_isHoggingJump){
             if (_isGrounded && !_userWallJumped)
             {
+                _isHoggingJump = true;
                 _userJumped = true;
                 _isGrounded = false;
             }
             else if (_isOnWall && _isRunWallJump && !_userJumped) 
             {
+                _isHoggingJump = true;
                 _userWallJumped = true;
                 _isOnWall = false;
             }
+        }
+        if (!Input.GetButton("Jump"))
+        {
+            _isHoggingJump = false;
         }
 
         if (_isGrav && (Input.GetKeyDown(KeyCode.Z) || Input.GetButtonUp("Fire4")))
@@ -133,21 +171,22 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Vector3.Dot(_rigidbody.velocity, gravityDirection) < 20)
-        {
-            _rigidbody.AddForce(gravityDirection * _gravityStrength, ForceMode.Acceleration);
-        }
+        
 
         Quaternion userRot = Quaternion.AngleAxis(_yaw, transform.up);
         transform.rotation = userRot * transform.rotation;
 
         _yaw = 0.0f;
 
-        _normalizedInputDirection = Vector3.Normalize(Vector3.Normalize(transform.forward * _fbInput + transform.right * _lrInput) - _prevNormalizedWallJumpHori);
-        
-        Vector3 _currentMovementWithoutVertical = new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z);
-        float _currentMax = _running ? maxRunningSpeed : maxSpeed;
-        if (_currentMax <= _currentMovementWithoutVertical.magnitude)
+
+        Vector3 _normalizedInputDirection = Vector3.Normalize(transform.forward * _fbInput + transform.right * _lrInput); 
+        ApplyFakeDrag(_normalizedInputDirection);
+        ApplyFakeGrav();
+
+
+        Vector3 _currentMovementWithoutVertical = GetHorizontalVel();
+        float _currentMaxHorizontalSpeed = _running ? maxRunningSpeed : maxSpeed;
+        if (_currentMaxHorizontalSpeed <= _currentMovementWithoutVertical.magnitude)
         {
             if (_rigidbody.velocity.x > 0)
             {
@@ -156,6 +195,14 @@ public class PlayerMovement : MonoBehaviour
             if (_rigidbody.velocity.x < 0)
             {
                 _normalizedInputDirection.x = Mathf.Max(_normalizedInputDirection.x, 0);
+            }
+            if (_rigidbody.velocity.y > 0)
+            {
+                _normalizedInputDirection.y = Mathf.Min(_normalizedInputDirection.y, 0);
+            }
+            if (_rigidbody.velocity.y < 0)
+            {
+                _normalizedInputDirection.y = Mathf.Max(_normalizedInputDirection.y, 0);
             }
             if (_rigidbody.velocity.z > 0)
             {
@@ -166,94 +213,91 @@ public class PlayerMovement : MonoBehaviour
                 _normalizedInputDirection.z = Mathf.Max(_normalizedInputDirection.z, 0);
             }
         }
+
+        Vector3 _lossFromRecentWallJump = _prevNormalizedWallJumpHori * Vector3.Dot(_normalizedInputDirection, _prevNormalizedWallJumpHori);
+        Vector3 _finalDirection = _normalizedInputDirection - _lossFromRecentWallJump;
+
         if (!_running)
         {
             if (_isGrounded)
             {
-                _rigidbody.AddForce(_normalizedInputDirection * MoveScale * 2, ForceMode.Force);
+                _rigidbody.AddForce(_finalDirection * MoveScale * _groundMultiplier, ForceMode.Force);
             }
             else
             {
-                _rigidbody.AddForce(_normalizedInputDirection * MoveScale, ForceMode.Force);
+                _rigidbody.AddForce(_finalDirection * MoveScale, ForceMode.Force);
             }
         }
         else {
-            _rigidbody.AddForce(_normalizedInputDirection * RunScale, ForceMode.Force);
+            _rigidbody.AddForce(_finalDirection * RunScale, ForceMode.Force);
         }
 
         if (_userJumped)
         {
-            _rigidbody.AddForce(transform.up * JumpScale, ForceMode.VelocityChange);
-
-            // capping vertical speed
             Vector3 velocity = _rigidbody.velocity;
             float upVelocity = Vector3.Dot(velocity, -gravityDirection);
-            if (upVelocity > maxVerticalSpeed)
-            {
-                float difference = upVelocity - maxVerticalSpeed;
-                velocity = velocity - difference * -gravityDirection;
-                _rigidbody.velocity = velocity;
-            }
+            
+
+            _rigidbody.AddForce(transform.up * Math.Max((JumpScale-upVelocity), 0), ForceMode.VelocityChange);
 
             _userJumped = false;
             _isGrounded = false;
             _jumpDisabled = true;
             StartCoroutine(RegainJump());
         }
-        //Vector3 velocity1 = _rigidbody.velocity;
-        //float upVelocity1 = Vector3.Dot(velocity1, -_gravityDirection);
-        //if (0 < upVelocity1 && upVelocity1 < 0.5)
-        //{
-         //   _rigidbody.AddForce(transform.up * JumpScale * -0.8f, ForceMode.VelocityChange);
-        //}
+
         if (_userWallJumped)
         {
             _userWallJumped = false;
             _isOnWall = false;
-            Vector3 _normalizedVectorToWall = Vector3.Normalize(_vectorToWall);
-            if (gravityDirection.x != 0)
-            {
-                _normalizedVectorToWall.x = 0;
-            }
-            else if (gravityDirection.y != 0)
-            {
-                _normalizedVectorToWall.y = 0;
-            }
-            else if (gravityDirection.z != 0)
-            {
-                _normalizedVectorToWall.z = 0;
-            }
-            // _prevNormalizedWallJumpHori = _normalizedVectorToWall;
+
+            Vector3 _vertToWall = gravityDirection * Vector3.Dot(_vectorToWall, gravityDirection);
+            Vector3 _horiNormalToWall = Vector3.Normalize(_vectorToWall - _vertToWall);
+
             Vector3 velocity = _rigidbody.velocity;
             float upVelocity = Vector3.Dot(velocity, -gravityDirection);
-            
-            // Vector3 _final = (transform.up * (WallJumpVertScale - upVelocity )) - (_normalizedVectorToWall * WallJumpHoriScale);
-            // _rigidbody.AddForce(_final, ForceMode.VelocityChange);
-            
-            float angleToWall = Vector3.Angle(transform.forward, -_normalizedVectorToWall);
-            if (angleToWall > 155f)
-            {
-                _rigidbody.AddForce(transform.up * (WallJumpVertScale * 1.2f - upVelocity), ForceMode.VelocityChange);
-            }
-            else
-            {
-                _prevNormalizedWallJumpHori = _normalizedVectorToWall;
-                Vector3 _final = (transform.up * (WallJumpVertScale - upVelocity)) - (_normalizedVectorToWall * WallJumpHoriScale);
-                _rigidbody.AddForce(_final, ForceMode.VelocityChange);
-            }
-            
-            velocity = _rigidbody.velocity;
-            upVelocity = Vector3.Dot(velocity, -gravityDirection);
-            if (upVelocity > maxVerticalSpeed)
-            {
-                float difference = upVelocity - maxVerticalSpeed;
-                velocity = velocity - difference * -gravityDirection;
-                _rigidbody.velocity = velocity;
-            }
+
+            _prevNormalizedWallJumpHori = _horiNormalToWall;
+            //Player will be unable to move in this ^ direction for a short period of time, see RegainFullHoriControl
+
+            _rigidbody.AddForce(-1*(_horiNormalToWall * WallJumpHoriScale), ForceMode.VelocityChange);
+            _rigidbody.AddForce(transform.up * Math.Max((WallJumpVertScale - upVelocity), 0), ForceMode.VelocityChange);
             _jumpDisabled = true;
             StartCoroutine(RegainJump());
             StartCoroutine(RegainFullHoriControl());
         }
+    }
+
+    void ApplyFakeDrag(Vector3 input)
+    {
+        Vector3 horizontal = GetHorizontalVel();
+        Vector3 drag = (horizontal - (input * Vector3.Dot(horizontal, input))) * (_fakeDrag);
+        if (_isGrounded)
+        {
+
+            _rigidbody.AddForce(drag * -1 * _groundDragMultiplier, ForceMode.Force);
+        }
+        else 
+        {
+            _rigidbody.AddForce(drag * -1, ForceMode.Force);
+        }
+
+    }
+
+    void ApplyFakeGrav()
+    {
+        if (Vector3.Dot(_rigidbody.velocity, gravityDirection) < _maxFallingSpeed)
+        {
+            _rigidbody.AddForce(gravityDirection * _gravityStrength, ForceMode.Acceleration);
+        }
+    }
+
+    Vector3 GetHorizontalVel()
+    {
+        Vector3 velocity = _rigidbody.velocity - _baseVelocity;
+        Vector3 vertical = gravityDirection * Vector3.Dot(velocity, gravityDirection);
+        Vector3 horizontal = velocity - vertical;
+        return horizontal;
     }
     
     private IEnumerator RegainJump()

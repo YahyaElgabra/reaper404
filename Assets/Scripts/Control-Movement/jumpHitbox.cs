@@ -7,6 +7,7 @@ public class jumpHitbox : MonoBehaviour
     public PlayerMovement player;
     private string _previousTouched;
     private HashSet<string> _latest;
+    private Vector3 baseVel;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,11 +21,21 @@ public class jumpHitbox : MonoBehaviour
         {
             _previousTouched = trigger.name;
             player.SetIsGrounded(true);
-            Debug.Log("Ground");
+            //Debug.Log("Ground");
             
             _latest.Add(trigger.name);
             _previousTouched = "";
-            //StartCoroutine(WipePrevious());
+            //StartCoroutine(WipePrevious());s
+        }
+    }
+
+    private void OnTriggerStay(Collider trigger)
+    {
+        if (trigger.tag == "MovingPlatform" && trigger.GetComponent<Rigidbody>().velocity != baseVel)
+        {
+            baseVel = trigger.GetComponent<Rigidbody>().velocity;
+            player.SetBaseVelocity(trigger.GetComponent<Rigidbody>().velocity);
+            Debug.Log(trigger.GetComponent<Rigidbody>().velocity);
         }
     }
 
@@ -36,7 +47,12 @@ public class jumpHitbox : MonoBehaviour
         }
         if (_latest.Count == 0) { 
             player.SetIsGrounded(false);
-            Debug.Log("Air");
+            //Debug.Log("Air");
+        }
+        if (trigger.tag == "MovingPlatform")
+        {
+            baseVel = Vector3.zero;
+            player.RemoveBaseVelocity();
         }
     }
 
