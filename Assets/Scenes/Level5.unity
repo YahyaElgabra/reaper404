@@ -632,6 +632,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Reaper Fly
       objectReference: {fileID: 0}
+    - target: {fileID: 1508314999187046418, guid: 91de11e549c7e4ada84584f852d7f608, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2280312540565101224, guid: 91de11e549c7e4ada84584f852d7f608, type: 3}
       propertyPath: m_LocalPosition.x
       value: -23.411
@@ -6387,8 +6391,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15d195205013fc04ab8815315b955219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  passes: 04000000
-  charges: 
+  passes: 040000000200000003000000
+  charges: 0300000005000000
 --- !u!4 &592070749 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3867711864387483906, guid: 4d8599562b94ea74d8b68d1af871f8ff, type: 3}
@@ -9806,6 +9810,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ad0efe232f269147ab5e564b323cd59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  volumeSlider: {fileID: 0}
 --- !u!82 &1698251639
 AudioSource:
   m_ObjectHideFlags: 0
