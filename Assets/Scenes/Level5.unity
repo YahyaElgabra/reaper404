@@ -6330,8 +6330,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15d195205013fc04ab8815315b955219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  passes: 0300000004000000
-  charges: 05000000
+  passes: 030000000200000004000000
+  charges: 0500000003000000
 --- !u!4 &592070749 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3867711864387483906, guid: 4d8599562b94ea74d8b68d1af871f8ff, type: 3}
