@@ -9,7 +9,22 @@ public class MainMenuManager : MonoBehaviour
     {
         if (Input.GetButton("Cancel"))
         {
-            SceneManager.LoadScene("MainMenu");
+            if (SceneManager.GetActiveScene().name == "LevelSelect")
+            {
+                SceneManager.LoadScene("MainMenu");
+            }
+            else if (SceneManager.GetActiveScene().name == "MainMenu") 
+            {
+                SceneManager.LoadScene("SplashScreen");
+            }
+            else if (SceneManager.GetActiveScene().name == "SplashScreen")
+            {
+                return;
+            }
+            else
+            {
+                SceneManager.LoadScene("LevelSelect");
+            }
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }

@@ -4,19 +4,14 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
-    float startY = 5;
-    float startZ = 10;
     float speedV = 2.0f;
     float minPitch = -45.0f;
     float maxPitch = 89.99f;
-    private float pitch = 0.0f;
-    Vector3 startVector;
+    private float pitch = 25f;
+    Vector3 startVector = new Vector3(0, 0, -12f);
 
     private void Start()
     {
-        startVector = new Vector3(0, 5, -10);
-        maxPitch = Mathf.Atan2(startZ, startY) * Mathf.Rad2Deg - 0.01f;
-        minPitch = maxPitch - 135;
         transform.localPosition = startVector;
         transform.LookAt(transform.parent);
     }
