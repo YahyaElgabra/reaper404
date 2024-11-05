@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Throwing : MonoBehaviour
 {
+    private PlayerInputActions _inputActions;
+    
     public Transform playerTransform;
     private bool isHeld = false;
     private Vector3 offset = new Vector3(1f, 2f, 1f);
@@ -45,6 +48,21 @@ public class Throwing : MonoBehaviour
     public GameObject endpointPrefab;
     private GameObject endpointInstance;
     
+    void Awake()
+    {
+        _inputActions = new PlayerInputActions();
+    }
+
+    void OnEnable()
+    {
+        _inputActions.Gameplay.Enable();
+    }
+
+    void OnDisable()
+    {
+        _inputActions.Gameplay.Disable();
+    }
+    
     void Start()
     {
         playerTransform = this.transform;
@@ -70,7 +88,7 @@ public class Throwing : MonoBehaviour
     
     void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.C) || Input.GetButtonDown("Fire3")) && 
+        if (_inputActions.Gameplay.ThrowHold.IsPressed() && 
             !isHeld && charges > 0 && !isThrown && playerMovement._isTP)
         {
             SpawnThrowableObject();
@@ -80,18 +98,34 @@ public class Throwing : MonoBehaviour
         {
             currentThrowable.transform.position = playerTransform.position + playerTransform.rotation * offset;
             
-            if (Input.GetKey(KeyCode.C) || Input.GetButton("Fire3"))
+            if (_inputActions.Gameplay.ThrowHold.IsPressed())
             {
                 EnterAimMode();
             }
             
-            if ((Input.GetKeyUp(KeyCode.C) || Input.GetButtonUp("Fire3")) && isAiming)
+            if (_inputActions.Gameplay.ThrowRelease.WasPerformedThisFrame() && isAiming)
             {
                 ThrowObject();
+                if (charges == 0)
+                {
+                    StartCoroutine(OutOfCharge());
+                }
             }
         }
     }
     
+    IEnumerator OutOfCharge()
+    {
+        float elapsedTime = 0f;
+
+        while (5.5f > elapsedTime)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
     private void SpawnThrowableObject()
     {
         if (charges > 0)
@@ -248,7 +282,7 @@ public class Throwing : MonoBehaviour
     
     public void TeleportPlayerAndDestroy(GameObject throwable)
     {
-        playerTransform.position = throwable.transform.position;
+        playerTransform.position = throwable.transform.position + Vector3.up * 0.5f;
 
         Destroy(throwable);
         isThrown = false;

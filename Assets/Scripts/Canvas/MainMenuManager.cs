@@ -5,9 +5,26 @@ using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
 {
+    private PlayerInputActions _inputActions;
+    
+    void Awake()
+    {
+        _inputActions = new PlayerInputActions();
+    }
+
+    void OnEnable()
+    {
+        _inputActions.Gameplay.Enable();
+    }
+
+    void OnDisable()
+    {
+        _inputActions.Gameplay.Disable();
+    }
+    
     private void Update()
     {
-        if (Input.GetButton("Cancel"))
+        if (_inputActions.Gameplay.Escape.IsPressed())
         {
             if (SceneManager.GetActiveScene().name == "LevelSelect")
             {

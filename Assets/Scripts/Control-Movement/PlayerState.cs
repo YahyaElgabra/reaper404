@@ -3,14 +3,16 @@ using UnityEngine;
 
 public class PlayerState : MonoBehaviour
 {
+    private PlayerInputActions _inputActions;
+    
     public GameObject standardIdlePrefab, standardWalkPrefab, standardJumpPrefab;
     public GameObject gravIdlePrefab, gravWalkPrefab, gravJumpPrefab;
     public GameObject teleportIdlePrefab, teleportWalkPrefab, teleportJumpPrefab;
     public GameObject wallJumpIdlePrefab, wallJumpWalkPrefab, wallJumpJumpPrefab, wallJumpRunPrefab;
     
-    private bool _isGrounded = false;
-    private float _groundCheckDistance = 0.5f;
-    private float _rayOffset = 0.9f;
+    // private bool _isGrounded = false;
+    // private float _groundCheckDistance = 0.5f;
+    // private float _rayOffset = 0.9f;
 
     private Rigidbody _playerRigidbody;
     private GameObject _currentActivePrefab;
@@ -26,6 +28,21 @@ public class PlayerState : MonoBehaviour
     
     private PlayerMovement playerMovement;
 
+    void Awake()
+    {
+        _inputActions = new PlayerInputActions();
+    }
+
+    void OnEnable()
+    {
+        _inputActions.Gameplay.Enable();
+    }
+
+    void OnDisable()
+    {
+        _inputActions.Gameplay.Disable();
+    }
+    
     void Start()
     {
         _playerRigidbody = GetComponent<Rigidbody>();
@@ -42,7 +59,7 @@ public class PlayerState : MonoBehaviour
 
     void Update()
     {
-        CheckGrounded();
+        // CheckGrounded();
 
         if (!_isActionInProgress)
         {
@@ -50,18 +67,18 @@ public class PlayerState : MonoBehaviour
 
             _velocity = _playerRigidbody.velocity.magnitude;
 
-            if (_isGrounded && Input.GetButton("Jump"))
+            if (playerMovement._isGrounded && _inputActions.Gameplay.Jump.IsPressed())
             {
                 GameObject jumpPrefab = GetCurrentAbilityPrefab("Jump");
                 StartCoroutine(SwitchToPrefabForDuration(jumpPrefab, 0.967f));
             }
-            else if (_isGrounded && playerMovement._running && _velocity > 3f)
+            else if (playerMovement._isGrounded && playerMovement._running && _velocity > 3f)
             {
                 GameObject runPrefab = GetCurrentAbilityPrefab("Run");
                 SetActivePrefab(runPrefab);
                 PlayWalkAudio();
             }
-            else if (_isGrounded && _velocity > 3f)
+            else if (playerMovement._isGrounded && _velocity > 3f)
             {
                 GameObject walkPrefab = GetCurrentAbilityPrefab("Walk");
                 SetActivePrefab(walkPrefab);
@@ -142,18 +159,18 @@ public class PlayerState : MonoBehaviour
         }
     }
 
-    private void CheckGrounded()
-    {
-        _isGrounded = Physics.Raycast(transform.position - _rayOffset * transform.up,
-            -transform.up, _groundCheckDistance);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position - _rayOffset * transform.up,
-            (transform.position - _rayOffset * transform.up) + -transform.up * _groundCheckDistance);
-    }
+    // private void CheckGrounded()
+    // {
+    //     _isGrounded = Physics.Raycast(transform.position - _rayOffset * transform.up,
+    //         -transform.up, _groundCheckDistance);
+    // }
+    //
+    // private void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawLine(transform.position - _rayOffset * transform.up,
+    //         (transform.position - _rayOffset * transform.up) + -transform.up * _groundCheckDistance);
+    // }
 
     private void PlayWalkAudio()
     {

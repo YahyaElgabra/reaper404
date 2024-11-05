@@ -9,12 +9,12 @@ public class SpawnPointRingMovement : MonoBehaviour
     public float delay = 0f; // modify in each ring (diff values) to create pulsating effect
     // public float emissionIntensity = 20f; 
 
-    private Vector3 startPosition; 
+    private Vector3 localStartPosition; 
     // private Material ringMaterial; 
 
     void Start()
     {
-        startPosition = transform.position;
+        localStartPosition = transform.localPosition;
         // ringMaterial = GetComponent<Renderer>().material;
         // ringMaterial.EnableKeyword("_EMISSION");
     }
@@ -23,7 +23,7 @@ public class SpawnPointRingMovement : MonoBehaviour
     {
         // update Y (sin wave and delay)
         float newY = Mathf.Sin(Time.time * speed + delay) * amplitude;
-        transform.position = new Vector3(startPosition.x, startPosition.y + newY, startPosition.z);
+        transform.localPosition = new Vector3(localStartPosition.x, localStartPosition.y + newY, localStartPosition.z);
 
         // adjust emission based on Y
         // float emissionValue = Mathf.Abs(Mathf.Sin(Time.time * speed + delay)) * emissionIntensity;

@@ -1,32 +1,33 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class PlatformTrigger : MonoBehaviour
+public class dirDisintegratingPlatform : MonoBehaviour
 {
-    public GameObject platformObject;
+    public GameObject platformObject; // assign platform (to shake)
+    public GameObject triggerObject; // assign trigger
     public float shakeDuration = 1f;
-    public float timeLeft;
     public float shakeMagnitude = 0.1f;
+    public bool steppedOn = false;
 
     private Vector3 originalPosition;
     private bool isShaking = false;
 
-    private void Start()
+    void Start()
     {
-        timeLeft = shakeDuration;
         if (platformObject != null)
         {
             originalPosition = platformObject.transform.position;
         }
         else
         {
-            Debug.LogWarning("platform object not assigned");
+            Debug.LogWarning("Platform object not assigned.");
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    void Update()
     {
-        if (collision.gameObject.CompareTag("Player") && !isShaking && platformObject != null)
+        if (steppedOn && !isShaking)
         {
             StartCoroutine(ShakeAndDestroyPlatform());
         }
@@ -35,8 +36,9 @@ public class PlatformTrigger : MonoBehaviour
     private IEnumerator ShakeAndDestroyPlatform()
     {
         isShaking = true;
+        float elapsedTime = 0f;
 
-        while (timeLeft > 0)
+        while (elapsedTime < shakeDuration)
         {
             Vector3 shakeOffset = new Vector3(
                 Random.Range(-shakeMagnitude, shakeMagnitude),
@@ -46,12 +48,12 @@ public class PlatformTrigger : MonoBehaviour
 
             platformObject.transform.position = originalPosition + shakeOffset;
 
-            timeLeft -= Time.deltaTime;
+            elapsedTime += Time.deltaTime;
             yield return null;
         }
 
         platformObject.transform.position = originalPosition;
-
+        Destroy(triggerObject); 
         Destroy(platformObject);
         Destroy(gameObject);
     }

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private PlayerInputActions _inputActions;
+    
     // ability boolean flags
     public bool _isRunWallJump = false;
     public bool _isTP = false;
@@ -18,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private float _lrInput;
     private float _yaw;
     
-    private bool _isGrounded;
+    public bool _isGrounded;
     private bool _isOnWall;
     private bool _userJumped;
     private bool _userWallJumped;
@@ -33,16 +35,17 @@ public class PlayerMovement : MonoBehaviour
     private const float MoveScale = 40f;
     private const float maxSpeed = 12f;
     private const float RunScale = 40f;
-    private const float maxRunningSpeed = 16f;
+    private const float maxRunningSpeed = 18f;
     //private const float _fakeDrag = 30f;
     // Value for force-based drag. We are not using that, we are using velocity-based drag instead. For that, drag must be between 0 and 1.
-    private const float _fakeDrag = 0.8f;
+    private const float _groundDrag = 0.8f;
+    private const float _airDrag = 0.05f;
     private const float _groundMultiplier = 1f;
-    private const float _groundDragMultiplier = 1f;
+    private const float _minimumSpeedForAirDrag = 0.5f;
 
 
     private const float RotScale = 2f;
-    private const float WallJumpVertScale = 40f;
+    private const float WallJumpVertScale = 45f;
     private const float WallJumpHoriScale = 15f;
 
     private const float JumpScale = 40f;
@@ -69,7 +72,22 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _baseVelocity = Vector3.zero;
 
     GravityControl gravityControl;
+    
+    void Awake()
+    {
+        _inputActions = new PlayerInputActions();
+    }
 
+    void OnEnable()
+    {
+        _inputActions.Gameplay.Enable();
+    }
+
+    void OnDisable()
+    {
+        _inputActions.Gameplay.Disable();
+    }
+    
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -129,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
             _yaw = 0.0f;
         }
         
-        if ((Input.GetKey(KeyCode.LeftShift) || Input.GetButton("Fire2")) && _isRunWallJump)
+        if (_inputActions.Gameplay.Run.IsPressed() && _isRunWallJump)
         {
             _running = true;
         }
@@ -141,7 +159,7 @@ public class PlayerMovement : MonoBehaviour
         float targetFOV = _running ? sprintFOV : defaultFOV;
         playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, Time.deltaTime * fovTransitionSpeed);
         
-        if (Input.GetButton("Jump") && !_jumpDisabled && !_isHoggingJump){
+        if (_inputActions.Gameplay.Jump.IsPressed() && !_jumpDisabled && !_isHoggingJump){
             if (_isGrounded && !_userWallJumped)
             {
                 _isHoggingJump = true;
@@ -155,16 +173,16 @@ public class PlayerMovement : MonoBehaviour
                 _isOnWall = false;
             }
         }
-        if (!Input.GetButton("Jump"))
+        if (!_inputActions.Gameplay.Jump.IsPressed())
         {
             _isHoggingJump = false;
         }
 
-        if (_isGrav && (Input.GetKeyDown(KeyCode.Z) || Input.GetButtonUp("Fire4")))
+        if (_isGrav && _inputActions.Gameplay.GravLeft.IsPressed())
         {
             gravityControl.RotateGravity(0);
         }
-        else if (_isGrav && (Input.GetKeyDown(KeyCode.X) || Input.GetButtonUp("Fire5")))
+        else if (_isGrav && _inputActions.Gameplay.GravRight.IsPressed())
         {
             gravityControl.RotateGravity(1);
         }
@@ -269,6 +287,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (_userWallJumped)
         {
+            Debug.Log("wj");
             _userWallJumped = false;
             _isOnWall = false;
 
@@ -301,14 +320,17 @@ public class PlayerMovement : MonoBehaviour
         Vector3 horizontal = GetHorizontalVel();
         Vector3 withoutInput = (horizontal - (input * Vector3.Dot(horizontal, input)));
 
-        Vector3 drag = withoutInput * (_fakeDrag) * -1;
+        Vector3 drag = withoutInput * -1;
         if (_isGrounded)
         {
-            _rigidbody.AddForce(drag * _groundDragMultiplier, ForceMode.VelocityChange);
+            _rigidbody.AddForce(drag * _groundDrag, ForceMode.VelocityChange);
         }
-        else 
+        else if (drag.magnitude > _minimumSpeedForAirDrag)
         {
-            _rigidbody.AddForce(drag, ForceMode.VelocityChange);
+
+            _rigidbody.AddForce(drag * _airDrag, ForceMode.VelocityChange);
+            //Debug.Log("velocity: " + horizontal.ToString());
+            //Debug.Log(drag);
         }
 
     }
@@ -337,7 +359,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator RegainFullHoriControl()
     {
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.32f);
         _prevNormalizedWallJumpHori = Vector3.zero;
     }
 
