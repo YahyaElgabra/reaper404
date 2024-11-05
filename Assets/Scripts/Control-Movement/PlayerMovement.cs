@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private PlayerInputActions _inputActions;
+    
     // ability boolean flags
     public bool _isRunWallJump = false;
     public bool _isTP = false;
@@ -69,6 +71,21 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _baseVelocity = Vector3.zero;
 
     GravityControl gravityControl;
+    
+    void Awake()
+    {
+        _inputActions = new PlayerInputActions();
+    }
+
+    void OnEnable()
+    {
+        _inputActions.Gameplay.Enable();
+    }
+    
+    void OnDisable()
+    {
+        _inputActions.Gameplay.Disable();
+    }
 
     void Start()
     {
@@ -141,7 +158,7 @@ public class PlayerMovement : MonoBehaviour
         float targetFOV = _running ? sprintFOV : defaultFOV;
         playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, Time.deltaTime * fovTransitionSpeed);
         
-        if (Input.GetButton("Jump") && !_jumpDisabled && !_isHoggingJump){
+        if (_inputActions.Gameplay.Jump.IsPressed() && !_jumpDisabled && !_isHoggingJump){
             if (_isGrounded && !_userWallJumped)
             {
                 _isHoggingJump = true;
@@ -155,7 +172,7 @@ public class PlayerMovement : MonoBehaviour
                 _isOnWall = false;
             }
         }
-        if (!Input.GetButton("Jump"))
+        if (!_inputActions.Gameplay.Jump.IsPressed())
         {
             _isHoggingJump = false;
         }
