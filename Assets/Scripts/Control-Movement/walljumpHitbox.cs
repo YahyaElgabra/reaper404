@@ -7,6 +7,8 @@ public class walljumpHitbox : MonoBehaviour
     public PlayerMovement player;
     private Vector3 _closest;
     private string _previousTouched;
+    private Collider touching;
+    private bool _isTouching = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +27,19 @@ public class walljumpHitbox : MonoBehaviour
             _closest = trigger.ClosestPoint(transform.position);
             player.SetIsOnWall(true, _closest - transform.position);
             StartCoroutine(WipePrevious());
+            _isTouching = true;
+            touching = trigger;
+        }
+        Debug.Log(trigger.name);
+    }
+
+    void FixedUpdate()
+    {
+        if (_isTouching && (touching == null))
+        {
+            player.SetIsOnWall(false, _closest - transform.position);
+            _isTouching = false;
+            Debug.Log("bro died");
         }
     }
 
@@ -34,6 +49,7 @@ public class walljumpHitbox : MonoBehaviour
         {
             player.SetIsOnWall(false, _closest - transform.position);
         }
+        Debug.Log("left");
     }
 
     private IEnumerator WipePrevious()
