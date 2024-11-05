@@ -9,12 +9,13 @@ public class SoulHit : MonoBehaviour
     public float spinSpeed = 50f;
     public float bounceSpeed = 2f;
     public float bounceHeight = 0.5f;
-    public float disappearDuration = 1f;
+    private float disappearDuration = 1.1f;
 
     private Vector3 startPosition;
     private bool isCollected = false;
     private Renderer soulRenderer;
     private Light soulLight;
+    private AudioSource audioSource;
 
     void Start()
     {
@@ -22,6 +23,7 @@ public class SoulHit : MonoBehaviour
         startPosition = transform.position;
         soulRenderer = GetComponent<Renderer>();
         soulLight = GetComponentInChildren<Light>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -44,6 +46,12 @@ public class SoulHit : MonoBehaviour
             isCollected = true;
             
             GetComponent<Collider>().enabled = false;
+            
+            // sfx
+            if (audioSource != null)
+            {
+                audioSource.Play();
+            }
             
             scorer.score += 1;
             StartCoroutine(SpinAndDisappear());
