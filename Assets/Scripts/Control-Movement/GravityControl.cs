@@ -11,8 +11,7 @@ public class GravityControl : MonoBehaviour
     private float _lastRotTime;
     public int charges;
     AbilitiesUI abilitiesUI;
-    GameObject leftArrow;
-    GameObject rightArrow;
+    public GameObject arrow;
 
     private AudioSource[] _audioSources;
 
@@ -34,16 +33,19 @@ public class GravityControl : MonoBehaviour
 
     private void Update()
     {
-        //Transform arrow = transform.Find("arrow2 1 (1)");
-        //arrow.Rotate(Vector3.right, 100 * Time.deltaTime);
-        // todo: arrow rotation
+        Vector3 lookDirection = FindSide(0); // Forward direction
+        Vector3 rightDirection = FindSide(1); // Right direction
+
+        // Calculate the up direction based on the right and forward directions
+        Vector3 upDirection = Vector3.Cross(rightDirection, lookDirection).normalized;
+
+        // Set the arrow's rotation using a quaternion
+        arrow.transform.rotation = Quaternion.LookRotation(lookDirection, upDirection);
 
         if (playerMovement.GetIsGrounded() && Time.time - _lastRotTime > _rotDuration)
         {
-            Debug.Log("grounded");
             _isGravDisabled = false;
         }
-        else Debug.Log("ungrounded");
     }
 
     public void RotateGravity(int side)
@@ -110,13 +112,28 @@ public class GravityControl : MonoBehaviour
         Vector3 closestDirection = Vector3.zero;
         float closestAngle = float.MaxValue;
 
-        foreach (Vector3 dir in directions)
+        if (scalar == 0)
         {
-            float angle = Vector3.Angle(scalar * transform.right, dir);
-            if (angle < closestAngle)
+            foreach (Vector3 dir in directions)
             {
-                closestAngle = angle;
-                closestDirection = dir;
+                float angle = Vector3.Angle(transform.forward, dir);
+                if (angle < closestAngle)
+                {
+                    closestAngle = angle;
+                    closestDirection = dir;
+                }
+            }
+        }
+        else
+        {
+            foreach (Vector3 dir in directions)
+            {
+                float angle = Vector3.Angle(scalar * transform.right, dir);
+                if (angle < closestAngle)
+                {
+                    closestAngle = angle;
+                    closestDirection = dir;
+                }
             }
         }
 

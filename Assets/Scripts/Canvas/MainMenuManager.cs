@@ -6,10 +6,14 @@ using UnityEngine.UI;
 public class MainMenuManager : MonoBehaviour
 {
     private PlayerInputActions _inputActions;
-    
+    public GameObject help;
     void Awake()
     {
         _inputActions = new PlayerInputActions();
+        if (help != null)
+        {
+            help.SetActive(false);
+        }
     }
 
     void OnEnable()
@@ -44,6 +48,13 @@ public class MainMenuManager : MonoBehaviour
             }
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+        }
+        if (_inputActions.Gameplay.Help.WasPressedThisFrame())
+        {
+            if (help != null)
+            {
+                help.SetActive(!help.activeSelf);
+            }
         }
     }
 

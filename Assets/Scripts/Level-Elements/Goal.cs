@@ -16,6 +16,7 @@ public class portal : MonoBehaviour
     Throwing throwingScript;
     GravityControl gravityScript;
     AbilitiesUI abilitiesUI = null;
+    Rigidbody rb;
 
     Quaternion startingRotation;
 
@@ -27,6 +28,7 @@ public class portal : MonoBehaviour
         movementScript = player.GetComponent<PlayerMovement>();
         throwingScript = player.GetComponent<Throwing>();
         gravityScript = player.GetComponent<GravityControl>();
+        rb = player.GetComponent<Rigidbody>();
         GameObject abilitiesObject = GameObject.FindGameObjectWithTag("AbilitiesUI");
         if (abilitiesObject != null)
         {
@@ -53,6 +55,8 @@ public class portal : MonoBehaviour
         {
             if (currentPass == passes.Length - 1) {
                 winScreen.SetActive(true);
+                rb.isKinematic = true;
+                ScoreTracker.stopTime = true;
             }
             else
             {

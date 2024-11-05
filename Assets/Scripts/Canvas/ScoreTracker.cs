@@ -6,7 +6,7 @@ public class ScoreTracker : MonoBehaviour
 {
     public int score;
     public float time;
-    public bool stopTime;
+    public static bool stopTime = false;
     private static ScoreTracker _instance;
     public static ScoreTracker Instance
     {
