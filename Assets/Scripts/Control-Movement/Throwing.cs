@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Throwing : MonoBehaviour
 {
@@ -88,10 +89,26 @@ public class Throwing : MonoBehaviour
             if ((Input.GetKeyUp(KeyCode.C) || Input.GetButtonUp("Fire3")) && isAiming)
             {
                 ThrowObject();
+                if (charges == 0)
+                {
+                    StartCoroutine(OutOfCharge());
+                }
             }
         }
     }
     
+    IEnumerator OutOfCharge()
+    {
+        float elapsedTime = 0f;
+
+        while (5.5f > elapsedTime)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
     private void SpawnThrowableObject()
     {
         if (charges > 0)
