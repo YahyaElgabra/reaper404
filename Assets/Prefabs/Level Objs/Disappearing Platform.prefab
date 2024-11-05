@@ -102,7 +102,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 3, y: 3, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 2699746686974753153}
   m_Layer: 0
   m_Name: Hitbox (Static)
-  m_TagString: Untagged
+  m_TagString: DisappearingPlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -241,6 +241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformObject: {fileID: 1521548780057466358}
   shakeDuration: 1
+  timeLeft: 0
   shakeMagnitude: 0.1
 --- !u!1 &6817382012594760200
 GameObject:
@@ -253,7 +254,7 @@ GameObject:
   - component: {fileID: 8260354913946434505}
   m_Layer: 0
   m_Name: Disappearing Platform
-  m_TagString: Untagged
+  m_TagString: DisappearingPlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
