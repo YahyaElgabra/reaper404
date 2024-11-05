@@ -36,8 +36,8 @@ public class Throwing : MonoBehaviour
     private float _minAimAngleX = -45f;
     private float _maxAimAngleY = 85f;
     private float _minAimAngleY = -25f;
-    private float _aimSensX = 0.05f;
-    private float _aimSensY = 0.1f;
+    private float _aimSensX = 0.01f;
+    private float _aimSensY = 0.01f;
     
     private Camera playerCamera;
     private MonoBehaviour cameraController;

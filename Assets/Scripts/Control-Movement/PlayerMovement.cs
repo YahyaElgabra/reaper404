@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private float _rlInput;
     // private float _udInput;
     private float _ewInput;
-    private float speedH = 3.0f;
+    private float speedH = 1.5f;
     
     // ability boolean flags
     public bool _isRunWallJump = false;
@@ -165,7 +165,8 @@ public class PlayerMovement : MonoBehaviour
         float targetFOV = _running ? sprintFOV : defaultFOV;
         playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, Time.deltaTime * fovTransitionSpeed);
         
-        if (_inputActions.Gameplay.Jump.IsPressed() && !_jumpDisabled && !_isHoggingJump){
+        if (_inputActions.Gameplay.Jump.IsPressed() && !_jumpDisabled && !_isHoggingJump && !Throwing.isAiming)
+        {
             if (_isGrounded && !_userWallJumped)
             {
                 _isHoggingJump = true;
@@ -261,6 +262,10 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 _lossFromRecentWallJump = _prevNormalizedWallJumpHori * Vector3.Dot(_normalizedInputDirection, _prevNormalizedWallJumpHori);
         Vector3 _finalDirection = _normalizedInputDirection - _lossFromRecentWallJump;
+        if (Throwing.isAiming)
+        {
+            _finalDirection *= 0.1f;
+        }
 
         if (!_running)
         {

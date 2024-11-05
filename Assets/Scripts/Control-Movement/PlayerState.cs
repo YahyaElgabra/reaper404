@@ -67,7 +67,7 @@ public class PlayerState : MonoBehaviour
 
             _velocity = _playerRigidbody.velocity.magnitude;
 
-            if (playerMovement._isGrounded && _inputActions.Gameplay.Jump.IsPressed())
+            if (playerMovement._isGrounded && _inputActions.Gameplay.Jump.IsPressed() && !Throwing.isAiming)
             {
                 GameObject jumpPrefab = GetCurrentAbilityPrefab("Jump");
                 StartCoroutine(SwitchToPrefabForDuration(jumpPrefab, 0.967f));

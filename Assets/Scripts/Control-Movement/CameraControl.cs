@@ -7,7 +7,7 @@ public class CameraControl : MonoBehaviour
     private PlayerInputActions _inputActions;
     private float _udInput;
     // private float _ewInput;
-    private float speedV = 2.0f;
+    private float speedV = 1.0f;
     
     float minPitch = -45.0f;
     float maxPitch = 89.99f;
