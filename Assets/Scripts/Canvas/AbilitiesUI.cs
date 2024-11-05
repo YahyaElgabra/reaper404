@@ -12,12 +12,13 @@ public class AbilitiesUI : MonoBehaviour
     public Sprite[] icons;
     public int[] abilities;
     List<GameObject> iconObjects;
+    List<GameObject> containers;
     public int current;
-
     void Awake()
     {
         abilities = GameObject.FindGameObjectWithTag("Finish").GetComponent<portal>().passes;
         iconObjects = new List<GameObject>();
+        containers = new List<GameObject>();
         RectTransform rect = GetComponent<RectTransform>();
         VerticalLayoutGroup layout = GetComponent<VerticalLayoutGroup>();
         float offset = containerPrefab.GetComponent<RectTransform>().rect.height + layout.spacing;
@@ -35,10 +36,32 @@ public class AbilitiesUI : MonoBehaviour
             container.transform.SetParent(gameObject.transform);
             TextMeshProUGUI run = container.transform.Find("run").GetComponent<TextMeshProUGUI>();
             run.text = "Run " + (i + 1);
-
+            TextMeshProUGUI abilityName = container.transform.Find("ability name").GetComponent<TextMeshProUGUI>();
+            switch (abilities[i])
+            {
+                case 0:
+                    abilityName.text = "WALK";
+                    break;
+                case 1:
+                    abilityName.text = "WALLJUMP & RUN";
+                    break;
+                case 2:
+                    abilityName.text = "TELEPORT";
+                    break;
+                case 3:
+                    abilityName.text = "GRAVITY";
+                    break;
+                case 4:
+                    abilityName.text = "FLY";
+                    break;
+                default:
+                    abilityName.text = "";
+                    break;
+            }
             GameObject icon = container.transform.Find("Icon").gameObject;
             icon.GetComponent<Image>().sprite = icons[abilities[i]];
             iconObjects.Add(icon);
+            containers.Add(container);
         }
         rect.sizeDelta = new Vector2(rect.sizeDelta.x, rect.sizeDelta.y + GetComponent<VerticalLayoutGroup>().spacing);
         updateIcons(0);
@@ -54,15 +77,10 @@ public class AbilitiesUI : MonoBehaviour
             if (i == current)
             {
                 iconImage.color = new Color(1, 1, 1, 1);
-                if (abilities[current] == 2 || abilities[current] == 3)
-                {
-                    iconImage.transform.GetChild(0).gameObject.SetActive(true);
-                }
             }
             else
             {
                 iconImage.color = new Color(1, 1, 1, 0.5f);
-                iconImage.transform.GetChild(0).gameObject.SetActive(false);
             }
         }
     }
@@ -71,8 +89,10 @@ public class AbilitiesUI : MonoBehaviour
     {
         if (current < iconObjects.Count)
         {
-            Transform textMesh = iconObjects[current].transform.GetChild(0);
-            textMesh.GetComponent<TextMeshProUGUI>().text = charges.ToString();
+            TextMeshProUGUI text = containers[current].transform.Find("charges").GetComponent<TextMeshProUGUI>();
+            text.text = "Charges: " + charges;
+            //Transform textMesh = iconObjects[current].transform.GetChild(0);
+            //textMesh.GetComponent<TextMeshProUGUI>().text = charges.ToString();
         }
     }
 }

@@ -7,7 +7,7 @@ public class GravityControl : MonoBehaviour
     private Rigidbody _rigidbody;
     private PlayerMovement playerMovement;
 
-    private float _rotDuration = 0.5f;
+    private float _rotDuration = 0.2f;
     private float _lastRotTime;
     public int charges;
     AbilitiesUI abilitiesUI;
@@ -36,21 +36,18 @@ public class GravityControl : MonoBehaviour
         //arrow.Rotate(Vector3.right, 100 * Time.deltaTime);
         // todo: arrow rotation
 
-        if (playerMovement.GetIsGrounded())
+        if (playerMovement.GetIsGrounded() && Time.time - _lastRotTime > _rotDuration)
         {
+            Debug.Log("grounded");
             _isGravDisabled = false;
         }
+        else Debug.Log("ungrounded");
     }
 
     public void RotateGravity(int side)
     {
         if (charges > 0 && !_isGravDisabled)
         {
-            if (Time.time - _lastRotTime < _rotDuration)
-            {
-                return;
-            }
-
             _isGravDisabled = true;
 
             _lastRotTime = Time.time;
