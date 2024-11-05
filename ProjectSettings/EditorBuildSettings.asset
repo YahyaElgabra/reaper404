@@ -38,5 +38,20 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LevelN1.unity
     guid: 5f12715c84bca09469fb2951e59101de
+  - enabled: 1
+    path: Assets/Scenes/_DONE_easy2.unity
+    guid: 51c21642861088d4cbfe0e56271dc319
+  - enabled: 1
+    path: Assets/Scenes/_DONE_easy3.unity
+    guid: 602969473dc50074b94c17e11a9368e9
+  - enabled: 1
+    path: Assets/Scenes/_DONE_tut1.unity
+    guid: 191197ddac62ab64e89e9d7791533359
+  - enabled: 1
+    path: Assets/Scenes/_DONE_tut2.unity
+    guid: f61742deeb5a90242945701240152180
+  - enabled: 1
+    path: Assets/Scenes/_DONE_tut3.unity
+    guid: 1dfd6bb2f6388144785f745559d9b8d8
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: e3b388c9c22aff94c94fa10d9c6a93cf, type: 2}
