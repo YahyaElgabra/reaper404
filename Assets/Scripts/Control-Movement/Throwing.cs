@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class Throwing : MonoBehaviour
 {
     private PlayerInputActions _inputActions;
+    private float _udInput;
+    private float _ewInput;
     
     public Transform playerTransform;
     private bool isHeld = false;
@@ -173,8 +175,13 @@ public class Throwing : MonoBehaviour
     
     private void UpdateAimDirection()
     {
-        aimHorizontal = Input.GetAxis("RJoy X") + Input.GetAxis("Mouse X");
-        aimVertical = Input.GetAxis("RJoy Y") - Input.GetAxis("Mouse Y");
+        Vector2 _lookInput = _inputActions.Gameplay.Look.ReadValue<Vector2>();
+        
+        _udInput = _lookInput.y;
+        _ewInput = _lookInput.x;
+        
+        aimHorizontal = - - _ewInput;
+        aimVertical = - _udInput;
         
         Vector3 right = playerTransform.right;
         Vector3 up = playerTransform.up;

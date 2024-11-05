@@ -5,12 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class Flying : MonoBehaviour
 {
+    private PlayerInputActions _inputActions;
+    
     public float forwardSpeed = 10f; // forward speed
-    public float movementSpeed = 5f; // up/down/left/right speed
-    public float boostedSpeed = 20f; // boosting (shift) speed
-    public float brakingSpeed = 5f; // braking (ctrl) speed
-    public float accelerationRate = 5f; // boosting acceleration
-    public float decelerationRate = 5f; // after boosting/braking deceleration
+    private float movementSpeed = 10f; // up/down/left/right speed
+    private float boostedSpeed = 10f; // boosting (shift) speed
+    private float brakingSpeed = 2f; // braking (ctrl) speed
+    private float accelerationRate = 5f; // boosting acceleration
+    private float decelerationRate = 5f; // after boosting/braking deceleration
     private float _verticalInput;
     private float _horizontalInput;
     private Rigidbody _rigidbody;
@@ -23,6 +25,21 @@ public class Flying : MonoBehaviour
 
     private bool _canMove = false; // for movement delay at start
 
+    void Awake()
+    {
+        _inputActions = new PlayerInputActions();
+    }
+
+    void OnEnable()
+    {
+        _inputActions.Gameplay.Enable();
+    }
+
+    void OnDisable()
+    {
+        _inputActions.Gameplay.Disable();
+    }
+    
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -48,8 +65,10 @@ public class Flying : MonoBehaviour
         if(!_canMove) return;
 
         // get input for vertical/horizontal movement
-        _verticalInput = Input.GetAxisRaw("Vertical"); // left/right <-> A/D | left/right arrow keys | joystick left/right
-        _horizontalInput = Input.GetAxisRaw("Horizontal"); // up/down <-> W/S | up/down arrow keys | joystick up/down
+        Vector2 _moveInput = _inputActions.Gameplay.Move.ReadValue<Vector2>();
+        
+        _verticalInput = _moveInput.y; // left/right <-> A/D | left/right arrow keys | joystick left/right
+        _horizontalInput = _moveInput.x; // up/down <-> W/S | up/down arrow keys | joystick up/down
 
         // check for boosting (shift) and braking (ctrl)
         _isBoosting = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
@@ -83,10 +102,10 @@ public class Flying : MonoBehaviour
         if(!_canMove) return;
 
         // apply constant forward movement
-        Vector3 forwardMovement = transform.forward * _currentSpeed * Time.fixedDeltaTime;
+        Vector3 forwardMovement = transform.forward * (_currentSpeed * Time.fixedDeltaTime);
         
         // apply controlled vertical/horizontal movement (up/down, right/left)
-        Vector3 controlledMovement = (transform.up * _verticalInput + transform.right * _horizontalInput) * movementSpeed * Time.fixedDeltaTime;
+        Vector3 controlledMovement = (transform.up * _verticalInput + transform.right * _horizontalInput) * (movementSpeed * Time.fixedDeltaTime);
         
         // move player (combine forward and controlled movement)
         _rigidbody.MovePosition(_rigidbody.position + forwardMovement + controlledMovement);
