@@ -36,13 +36,14 @@ public class PlayerMovement : MonoBehaviour
     private const float maxRunningSpeed = 16f;
     //private const float _fakeDrag = 30f;
     // Value for force-based drag. We are not using that, we are using velocity-based drag instead. For that, drag must be between 0 and 1.
-    private const float _fakeDrag = 0.8f;
+    private const float _groundDrag = 0.8f;
+    private const float _airDrag = 0.05f;
     private const float _groundMultiplier = 1f;
-    private const float _groundDragMultiplier = 1f;
+    private const float _minimumSpeedForAirDrag = 0.5f;
 
 
     private const float RotScale = 2f;
-    private const float WallJumpVertScale = 40f;
+    private const float WallJumpVertScale = 45f;
     private const float WallJumpHoriScale = 15f;
 
     private const float JumpScale = 40f;
@@ -269,6 +270,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (_userWallJumped)
         {
+            Debug.Log("wj");
             _userWallJumped = false;
             _isOnWall = false;
 
@@ -301,14 +303,17 @@ public class PlayerMovement : MonoBehaviour
         Vector3 horizontal = GetHorizontalVel();
         Vector3 withoutInput = (horizontal - (input * Vector3.Dot(horizontal, input)));
 
-        Vector3 drag = withoutInput * (_fakeDrag) * -1;
+        Vector3 drag = withoutInput * -1;
         if (_isGrounded)
         {
-            _rigidbody.AddForce(drag * _groundDragMultiplier, ForceMode.VelocityChange);
+            _rigidbody.AddForce(drag * _groundDrag, ForceMode.VelocityChange);
         }
-        else 
+        else if (drag.magnitude > _minimumSpeedForAirDrag)
         {
-            _rigidbody.AddForce(drag, ForceMode.VelocityChange);
+
+            _rigidbody.AddForce(drag * _airDrag, ForceMode.VelocityChange);
+            //Debug.Log("velocity: " + horizontal.ToString());
+            //Debug.Log(drag);
         }
 
     }
