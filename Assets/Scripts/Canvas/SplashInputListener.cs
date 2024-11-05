@@ -7,8 +7,26 @@ using UnityEngine.SceneManagement;
 
 public class splashInputListener : MonoBehaviour
 {
+    private PlayerInputActions _inputActions;
+    
     public TextMeshProUGUI textMeshPro;
     public float fadeDuration = 1.0f;
+    
+    void Awake()
+    {
+        _inputActions = new PlayerInputActions();
+    }
+
+    void OnEnable()
+    {
+        _inputActions.Gameplay.Enable();
+    }
+
+    void OnDisable()
+    {
+        _inputActions.Gameplay.Disable();
+    }
+    
     void Start()
     {
         if (textMeshPro == null) return;
@@ -19,7 +37,7 @@ public class splashInputListener : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetButtonDown("Jump") || Input.GetMouseButtonDown(0))
+        if (_inputActions.Gameplay.Enter.IsPressed())
         {
             SceneManager.LoadScene("MainMenu");
         }

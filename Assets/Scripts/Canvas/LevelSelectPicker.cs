@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class LevelSelectPicker : MonoBehaviour
 {
+    private PlayerInputActions _inputActions;
+    
     public GridLayoutGroup gridLayoutGroup;
     public GameObject picker;
     int curr = 0;
@@ -13,6 +15,21 @@ public class LevelSelectPicker : MonoBehaviour
     picker pickerScript;
     bool inputAvailable = false;
 
+    void Awake()
+    {
+        _inputActions = new PlayerInputActions();
+    }
+
+    void OnEnable()
+    {
+        _inputActions.Gameplay.Enable();
+    }
+
+    void OnDisable()
+    {
+        _inputActions.Gameplay.Disable();
+    }
+    
     void Start()
     {
         buttons = new List<Button>();
@@ -29,28 +46,30 @@ public class LevelSelectPicker : MonoBehaviour
     }
     void Update()
     {
-        float x = Input.GetAxis("DHor");
-        float y = Input.GetAxis("DVer");
+        Vector2 _menuCursor = _inputActions.Gameplay.MenuCursor.ReadValue<Vector2>();
+        
+        float x = _menuCursor.x;
+        float y = _menuCursor.y;
 
         bool left = false;
         bool right = false;
         bool up = false;
         bool down = false;
 
-        if (x < -0.5f || Input.GetKeyDown(KeyCode.A))
+        if (x < -0.5f)
         {
             left = true;
         }
-        else if (x > 0.5f || Input.GetKeyDown(KeyCode.D))
+        else if (x > 0.5f)
         {
             right = true;
         }
 
-        if (y < -0.5f || Input.GetKeyDown(KeyCode.S))
+        if (y < -0.5f)
         {
             down = true;
         }
-        else if (y > 0.5f || Input.GetKeyDown(KeyCode.W))
+        else if (y > 0.5f)
         {
             up = true;
         }
@@ -86,7 +105,7 @@ public class LevelSelectPicker : MonoBehaviour
             inputAvailable = false;
         }
 
-        if (Input.GetButtonDown("Jump") || Input.GetMouseButtonDown(0))
+        if (_inputActions.Gameplay.Enter.IsPressed())
         {
             buttons[curr].onClick.Invoke();
         }
