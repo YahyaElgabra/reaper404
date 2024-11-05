@@ -29,11 +29,11 @@ public class PillarStacker : MonoBehaviour
             pillarHeight = 1f;
         }
 
-        // linerenderer
+        // line renderer
         lineRenderer = gameObject.AddComponent<LineRenderer>();
         lineRenderer.material = lineMaterial;
-        lineRenderer.startWidth = 0.05f;
-        lineRenderer.endWidth = 0.05f;
+        lineRenderer.startWidth = 0.3f;
+        lineRenderer.endWidth = 0.3f;
         lineRenderer.positionCount = 2; // start and end points
         lineRenderer.useWorldSpace = true;
 
@@ -42,15 +42,15 @@ public class PillarStacker : MonoBehaviour
 
     private void SetLineToFinalPosition()
     {
-        Vector3 start = transform.position;
-        Vector3 localDown = -transform.up;
+    Vector3 start = transform.position;
+    Vector3 localDown = -transform.up;
 
-        // calculate final position
-        Vector3 offset = localDown * (pillarHeight + gapBetweenPillars) * pillarsToSpawn;
-        Vector3 end = start + offset;
+    // calculate final position to the middle of the last pillar
+    Vector3 offset = localDown * (pillarHeight + gapBetweenPillars) * pillarsToSpawn;
+    Vector3 end = start + offset + (localDown * pillarHeight / 2);
 
-        lineRenderer.SetPosition(0, start);
-        lineRenderer.SetPosition(1, end);
+    lineRenderer.SetPosition(0, start);
+    lineRenderer.SetPosition(1, end);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -81,7 +81,7 @@ public class PillarStacker : MonoBehaviour
             ScalePillarToMatchOriginal(newPillar);
             yield return StartCoroutine(MovePillarIntoPosition(newPillar, targetPosition));
 
-            // Update spawn position to the last pillar's final position for the next iteration
+            // update next pillar spawn position to the last pillar's final position
             spawnPosition = targetPosition;
         }
     }
