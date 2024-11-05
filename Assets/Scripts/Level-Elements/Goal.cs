@@ -51,6 +51,12 @@ public class portal : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            // if (throwingScript != null && throwingScript.justTeleported)
+            // {
+            //     // If the player just teleported, skip this collision to avoid unexpected pass increment
+            //     return;
+            // }
+            
             if (currentPass == passes.Length - 1) {
                 winScreen.SetActive(true);
             }
