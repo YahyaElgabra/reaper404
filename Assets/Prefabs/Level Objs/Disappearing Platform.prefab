@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6463684592228729391}
   - component: {fileID: 7693423718110230411}
   - component: {fileID: 3907989010585510662}
-  - component: {fileID: 8177408954997781608}
   m_Layer: 0
   m_Name: Disappearing Platform
   m_TagString: Untagged
@@ -123,21 +122,6 @@ MonoBehaviour:
   _data:
     _json: '{"declarations":{"Kind":"Object","collection":{"$content":[],"$version":"A"},"$version":"A"}}'
     _objectReferences: []
---- !u!114 &8177408954997781608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5538345959646175950}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ef625fb37da16644b8e6ffe68aafa2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  platformObject: {fileID: 0}
-  shakeDuration: 1
-  shakeIntensity: 0.5
 --- !u!1 &5998518626092022652
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,4 +242,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformObject: {fileID: 5538345959646175950}
   shakeDuration: 1
-  shakeIntensity: 0.1
+  shakeMagnitude: 0.1
