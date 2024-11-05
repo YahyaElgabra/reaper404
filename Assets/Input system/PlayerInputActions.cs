@@ -46,13 +46,67 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""FB Move"",
-                    ""type"": ""Value"",
-                    ""id"": ""e27ed884-7cdb-4442-a814-d5fb92baba4b"",
+                    ""name"": ""GravLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""121eb68d-4eff-4c17-ae3d-e9c50a4fc573"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GravRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""f89972d6-d34b-44a9-a065-a68272fc0e4d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ThrowHold"",
+                    ""type"": ""Button"",
+                    ""id"": ""83997757-cc49-4d58-8d03-02e27839fdbc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ThrowRelease"",
+                    ""type"": ""Button"",
+                    ""id"": ""fcbe8fcd-e57c-4208-a3f2-7cbd11d5dfde"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=1)"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Escape"",
+                    ""type"": ""Button"",
+                    ""id"": ""e72db62c-7c8b-4d2f-aa6d-0496f6aeffa5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Enter"",
+                    ""type"": ""Button"",
+                    ""id"": ""f74eb5c0-40a9-4495-b567-1bfebed10886"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Help"",
+                    ""type"": ""Button"",
+                    ""id"": ""e0311a56-de44-41ae-b093-ba7cd800d5ef"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -81,7 +135,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""7f33a3a3-1055-4689-9845-d8d0fda0fd1b"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -91,12 +145,166 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""bc881fb8-e0f5-4b97-b5d7-7f269a20aa42"",
-                    ""path"": """",
+                    ""id"": ""3cbde05f-86e1-4cf4-b400-3c8010401eab"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""FB Move"",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""621ede1a-9ff9-403a-81db-60a65b39463f"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GravLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d7f4c013-2ace-4488-9188-973270dd9095"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GravLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1d8bba32-3902-4501-a73c-2de09629ab1f"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GravRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""11feebcf-ec72-4420-b671-c8a26b404624"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GravRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""127ef05a-e79d-4fed-bc47-fc0b83a6e308"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ThrowHold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""374dbd02-f6c1-42db-83aa-f39ed66e2f98"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ThrowHold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f4b8de55-9580-4f87-99be-994d9eb00171"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ThrowRelease"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b5c0f777-9c51-493e-8886-e7ab6c42e304"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ThrowRelease"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ac3467e2-0584-40b7-8a27-0e8c35986dda"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e32aa481-3cb5-48a8-90bd-7ba1cd4ff970"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c2076a35-f4c8-4911-b318-ef10ebf59cab"",
+                    ""path"": ""<Keyboard>/h"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Help"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f124e544-c057-48d6-8fed-6c1312426ae9"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Help"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""45ecd366-e6f1-473e-960e-49bff4e7155e"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Enter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5238b272-ac48-48a5-90b1-15f20e18f9fc"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Enter"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -109,7 +317,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
         m_Gameplay_Run = m_Gameplay.FindAction("Run", throwIfNotFound: true);
-        m_Gameplay_FBMove = m_Gameplay.FindAction("FB Move", throwIfNotFound: true);
+        m_Gameplay_GravLeft = m_Gameplay.FindAction("GravLeft", throwIfNotFound: true);
+        m_Gameplay_GravRight = m_Gameplay.FindAction("GravRight", throwIfNotFound: true);
+        m_Gameplay_ThrowHold = m_Gameplay.FindAction("ThrowHold", throwIfNotFound: true);
+        m_Gameplay_ThrowRelease = m_Gameplay.FindAction("ThrowRelease", throwIfNotFound: true);
+        m_Gameplay_Escape = m_Gameplay.FindAction("Escape", throwIfNotFound: true);
+        m_Gameplay_Enter = m_Gameplay.FindAction("Enter", throwIfNotFound: true);
+        m_Gameplay_Help = m_Gameplay.FindAction("Help", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -173,14 +387,26 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
     private readonly InputAction m_Gameplay_Jump;
     private readonly InputAction m_Gameplay_Run;
-    private readonly InputAction m_Gameplay_FBMove;
+    private readonly InputAction m_Gameplay_GravLeft;
+    private readonly InputAction m_Gameplay_GravRight;
+    private readonly InputAction m_Gameplay_ThrowHold;
+    private readonly InputAction m_Gameplay_ThrowRelease;
+    private readonly InputAction m_Gameplay_Escape;
+    private readonly InputAction m_Gameplay_Enter;
+    private readonly InputAction m_Gameplay_Help;
     public struct GameplayActions
     {
         private @PlayerInputActions m_Wrapper;
         public GameplayActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
         public InputAction @Run => m_Wrapper.m_Gameplay_Run;
-        public InputAction @FBMove => m_Wrapper.m_Gameplay_FBMove;
+        public InputAction @GravLeft => m_Wrapper.m_Gameplay_GravLeft;
+        public InputAction @GravRight => m_Wrapper.m_Gameplay_GravRight;
+        public InputAction @ThrowHold => m_Wrapper.m_Gameplay_ThrowHold;
+        public InputAction @ThrowRelease => m_Wrapper.m_Gameplay_ThrowRelease;
+        public InputAction @Escape => m_Wrapper.m_Gameplay_Escape;
+        public InputAction @Enter => m_Wrapper.m_Gameplay_Enter;
+        public InputAction @Help => m_Wrapper.m_Gameplay_Help;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -196,9 +422,27 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Run.started += instance.OnRun;
             @Run.performed += instance.OnRun;
             @Run.canceled += instance.OnRun;
-            @FBMove.started += instance.OnFBMove;
-            @FBMove.performed += instance.OnFBMove;
-            @FBMove.canceled += instance.OnFBMove;
+            @GravLeft.started += instance.OnGravLeft;
+            @GravLeft.performed += instance.OnGravLeft;
+            @GravLeft.canceled += instance.OnGravLeft;
+            @GravRight.started += instance.OnGravRight;
+            @GravRight.performed += instance.OnGravRight;
+            @GravRight.canceled += instance.OnGravRight;
+            @ThrowHold.started += instance.OnThrowHold;
+            @ThrowHold.performed += instance.OnThrowHold;
+            @ThrowHold.canceled += instance.OnThrowHold;
+            @ThrowRelease.started += instance.OnThrowRelease;
+            @ThrowRelease.performed += instance.OnThrowRelease;
+            @ThrowRelease.canceled += instance.OnThrowRelease;
+            @Escape.started += instance.OnEscape;
+            @Escape.performed += instance.OnEscape;
+            @Escape.canceled += instance.OnEscape;
+            @Enter.started += instance.OnEnter;
+            @Enter.performed += instance.OnEnter;
+            @Enter.canceled += instance.OnEnter;
+            @Help.started += instance.OnHelp;
+            @Help.performed += instance.OnHelp;
+            @Help.canceled += instance.OnHelp;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -209,9 +453,27 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Run.started -= instance.OnRun;
             @Run.performed -= instance.OnRun;
             @Run.canceled -= instance.OnRun;
-            @FBMove.started -= instance.OnFBMove;
-            @FBMove.performed -= instance.OnFBMove;
-            @FBMove.canceled -= instance.OnFBMove;
+            @GravLeft.started -= instance.OnGravLeft;
+            @GravLeft.performed -= instance.OnGravLeft;
+            @GravLeft.canceled -= instance.OnGravLeft;
+            @GravRight.started -= instance.OnGravRight;
+            @GravRight.performed -= instance.OnGravRight;
+            @GravRight.canceled -= instance.OnGravRight;
+            @ThrowHold.started -= instance.OnThrowHold;
+            @ThrowHold.performed -= instance.OnThrowHold;
+            @ThrowHold.canceled -= instance.OnThrowHold;
+            @ThrowRelease.started -= instance.OnThrowRelease;
+            @ThrowRelease.performed -= instance.OnThrowRelease;
+            @ThrowRelease.canceled -= instance.OnThrowRelease;
+            @Escape.started -= instance.OnEscape;
+            @Escape.performed -= instance.OnEscape;
+            @Escape.canceled -= instance.OnEscape;
+            @Enter.started -= instance.OnEnter;
+            @Enter.performed -= instance.OnEnter;
+            @Enter.canceled -= instance.OnEnter;
+            @Help.started -= instance.OnHelp;
+            @Help.performed -= instance.OnHelp;
+            @Help.canceled -= instance.OnHelp;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -233,6 +495,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnJump(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
-        void OnFBMove(InputAction.CallbackContext context);
+        void OnGravLeft(InputAction.CallbackContext context);
+        void OnGravRight(InputAction.CallbackContext context);
+        void OnThrowHold(InputAction.CallbackContext context);
+        void OnThrowRelease(InputAction.CallbackContext context);
+        void OnEscape(InputAction.CallbackContext context);
+        void OnEnter(InputAction.CallbackContext context);
+        void OnHelp(InputAction.CallbackContext context);
     }
 }

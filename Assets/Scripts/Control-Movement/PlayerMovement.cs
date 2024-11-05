@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private float _lrInput;
     private float _yaw;
     
-    private bool _isGrounded;
+    public bool _isGrounded;
     private bool _isOnWall;
     private bool _userJumped;
     private bool _userWallJumped;
@@ -147,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
             _yaw = 0.0f;
         }
         
-        if ((Input.GetKey(KeyCode.LeftShift) || Input.GetButton("Fire2")) && _isRunWallJump)
+        if (_inputActions.Gameplay.Run.IsPressed() && _isRunWallJump)
         {
             _running = true;
         }
@@ -178,11 +178,11 @@ public class PlayerMovement : MonoBehaviour
             _isHoggingJump = false;
         }
 
-        if (_isGrav && (Input.GetKeyDown(KeyCode.Z) || Input.GetButtonUp("Fire4")))
+        if (_isGrav && _inputActions.Gameplay.GravLeft.IsPressed())
         {
             gravityControl.RotateGravity(0);
         }
-        else if (_isGrav && (Input.GetKeyDown(KeyCode.X) || Input.GetButtonUp("Fire5")))
+        else if (_isGrav && _inputActions.Gameplay.GravRight.IsPressed())
         {
             gravityControl.RotateGravity(1);
         }
