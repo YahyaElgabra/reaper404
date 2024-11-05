@@ -1,16 +1,19 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class PlatformTrigger : MonoBehaviour
+public class dirDisintegratingPlatform : MonoBehaviour
 {
-    public GameObject platformObject;
+    public GameObject platformObject; // assign platform (to shake)
+    public GameObject triggerObject; // assign trigger
     public float shakeDuration = 1f;
     public float shakeMagnitude = 0.1f;
+    public bool steppedOn = false;
 
     private Vector3 originalPosition;
     private bool isShaking = false;
 
-    private void Start()
+    void Start()
     {
         if (platformObject != null)
         {
@@ -18,13 +21,13 @@ public class PlatformTrigger : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("platform object not assigned");
+            Debug.LogWarning("Platform object not assigned.");
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    void Update()
     {
-        if (collision.gameObject.CompareTag("Player") && !isShaking && platformObject != null)
+        if (steppedOn && !isShaking)
         {
             StartCoroutine(ShakeAndDestroyPlatform());
         }
@@ -50,7 +53,7 @@ public class PlatformTrigger : MonoBehaviour
         }
 
         platformObject.transform.position = originalPosition;
-
+        Destroy(triggerObject); 
         Destroy(platformObject);
         Destroy(gameObject);
     }
