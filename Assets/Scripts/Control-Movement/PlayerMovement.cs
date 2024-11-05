@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     private const float MoveScale = 40f;
     private const float maxSpeed = 12f;
     private const float RunScale = 40f;
-    private const float maxRunningSpeed = 16f;
+    private const float maxRunningSpeed = 18f;
     //private const float _fakeDrag = 30f;
     // Value for force-based drag. We are not using that, we are using velocity-based drag instead. For that, drag must be between 0 and 1.
     private const float _groundDrag = 0.8f;
