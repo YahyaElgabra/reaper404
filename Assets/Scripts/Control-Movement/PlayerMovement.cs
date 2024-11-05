@@ -120,7 +120,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _baseVelocity = baseVel;
         float currentRelativeSpeed = Vector3.Dot(_rigidbody.velocity, baseVel) / (baseVel.magnitude * baseVel.magnitude);
-        Debug.Log(currentRelativeSpeed);
+        // Debug.Log(currentRelativeSpeed);
         if (currentRelativeSpeed != 1) 
         {
             _rigidbody.AddForce(((1 - (currentRelativeSpeed))/baseVel.magnitude)*baseVel, ForceMode.VelocityChange);
@@ -298,7 +298,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (_userWallJumped)
         {
-            Debug.Log("wj");
+            // Debug.Log("wj");
             _userWallJumped = false;
             _isOnWall = false;
 

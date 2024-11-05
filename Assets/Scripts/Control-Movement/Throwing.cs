@@ -232,9 +232,12 @@ public class Throwing : MonoBehaviour
                 trajectoryLine.SetPosition(i, hit.point);
                 trajectoryLine.positionCount = i + 1;
                 
+                // Check if the hit surface is valid (flat or tagged as "Finish")
                 float surfaceAngle = Vector3.Angle(hit.normal, Vector3.up);
-            
-                if (surfaceAngle < 45f)
+                bool isFlatSurface = surfaceAngle < 45f;
+                bool isFinishSurface = hit.collider.CompareTag("Finish");
+                
+                if (isFlatSurface || isFinishSurface)
                 {
                     if (endpointInstance != null)
                     {
@@ -290,10 +293,31 @@ public class Throwing : MonoBehaviour
     public void TeleportPlayerAndDestroy(GameObject throwable)
     {
         playerTransform.position = throwable.transform.position + Vector3.up * 0.5f;
-
+    
         Destroy(throwable);
         isThrown = false;
     }
+    
+    // public bool justTeleported = false;
+    //
+    // public void TeleportPlayerAndDestroy(GameObject throwable)
+    // {
+    //     playerTransform.position = throwable.transform.position;
+    //     // playerTransform.position = throwable.transform.position + Vector3.up * 0.5f;
+    //
+    //     Destroy(throwable);
+    //     isThrown = false;
+    //
+    //     // Set the teleport flag and start a coroutine to reset it after a delay
+    //     justTeleported = true;
+    //     StartCoroutine(ResetTeleportFlag());
+    // }
+    //
+    // IEnumerator ResetTeleportFlag()
+    // {
+    //     yield return new WaitForSeconds(0.1f); // Delay to ensure collision has settled
+    //     justTeleported = false;
+    // }
     
     public void OnThrowableHitDeath(GameObject throwable)
     {
