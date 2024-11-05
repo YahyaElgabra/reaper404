@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class Flying : MonoBehaviour
 {
+    private PlayerInputActions _inputActions;
+    
     private float forwardSpeed = 8f; // forward speed
     private float movementSpeed = 10f; // up/down/left/right speed
     private float boostedSpeed = 20f; // boosting (shift) speed
@@ -24,6 +26,21 @@ public class Flying : MonoBehaviour
     private bool _isBraking = false;
     private bool _canMove = false; // for movement delay at start
 
+    void Awake()
+    {
+        _inputActions = new PlayerInputActions();
+    }
+
+    void OnEnable()
+    {
+        _inputActions.Gameplay.Enable();
+    }
+
+    void OnDisable()
+    {
+        _inputActions.Gameplay.Disable();
+    }
+    
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -53,9 +70,10 @@ public class Flying : MonoBehaviour
         if(!_canMove) return;
 
         // get input for vertical/horizontal movement
-        _verticalInput = Input.GetAxisRaw("Vertical"); // up/down <-> W/S | up/down arrow keys | joystick up/down
-        _horizontalInput = Input.GetAxisRaw("Horizontal"); // left/right <-> A/D | left/right arrow keys | joystick left/right
-
+        Vector2 _moveInput = _inputActions.Gameplay.Move.ReadValue<Vector2>();
+        
+        _verticalInput = _moveInput.y; // left/right <-> A/D | left/right arrow keys | joystick left/right
+        _horizontalInput = _moveInput.x; // up/down <-> W/S | up/down arrow keys | joystick up/down
         // check for boosting (shift) and braking (ctrl)
         _isBoosting = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         _isBraking = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
