@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4154478552342334214}
   - component: {fileID: -7750082074917461498}
   m_Layer: 0
-  m_Name: spawnedPillar
+  m_Name: Expander Pillar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 92085df4d48e043efb9b88948672702d, type: 2}
+  - {fileID: 2100000, guid: b55fc77cbf93030478a062308483bed4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
