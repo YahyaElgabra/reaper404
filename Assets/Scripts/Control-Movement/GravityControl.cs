@@ -11,6 +11,8 @@ public class GravityControl : MonoBehaviour
     private float _lastRotTime;
     public int charges;
     AbilitiesUI abilitiesUI;
+    GameObject leftArrow;
+    GameObject rightArrow;
 
     private AudioSource[] _audioSources;
 
