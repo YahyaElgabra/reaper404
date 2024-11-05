@@ -5,6 +5,7 @@ public class PlatformTrigger : MonoBehaviour
 {
     public GameObject platformObject;
     public float shakeDuration = 1f;
+    public float timeLeft;
     public float shakeMagnitude = 0.1f;
 
     private Vector3 originalPosition;
@@ -12,6 +13,7 @@ public class PlatformTrigger : MonoBehaviour
 
     private void Start()
     {
+        timeLeft = shakeDuration;
         if (platformObject != null)
         {
             originalPosition = platformObject.transform.position;
@@ -33,9 +35,8 @@ public class PlatformTrigger : MonoBehaviour
     private IEnumerator ShakeAndDestroyPlatform()
     {
         isShaking = true;
-        float elapsedTime = 0f;
 
-        while (elapsedTime < shakeDuration)
+        while (timeLeft > 0)
         {
             Vector3 shakeOffset = new Vector3(
                 Random.Range(-shakeMagnitude, shakeMagnitude),
@@ -45,7 +46,7 @@ public class PlatformTrigger : MonoBehaviour
 
             platformObject.transform.position = originalPosition + shakeOffset;
 
-            elapsedTime += Time.deltaTime;
+            timeLeft -= Time.deltaTime;
             yield return null;
         }
 

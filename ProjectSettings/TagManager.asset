@@ -16,6 +16,7 @@ TagManager:
   - Canvas
   - Soul
   - MovingPlatform
+  - DisappearingPlatform
   layers:
   - Default
   - TransparentFX
