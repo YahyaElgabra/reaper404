@@ -49,7 +49,7 @@ public class walljumpHitbox : MonoBehaviour
         {
             player.SetIsOnWall(false, _closest - transform.position);
         }
-        Debug.Log("left");
+        // Debug.Log("left");
     }
 
     private IEnumerator WipePrevious()
