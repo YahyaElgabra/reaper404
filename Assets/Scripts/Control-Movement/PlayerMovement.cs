@@ -342,7 +342,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator RegainFullHoriControl()
     {
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.32f);
         _prevNormalizedWallJumpHori = Vector3.zero;
     }
 
