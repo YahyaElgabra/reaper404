@@ -38,11 +38,12 @@ public class Flying : MonoBehaviour
         _currentSpeed = forwardSpeed;
 
         // delay movement
-        StartCoroutine(DelayMovement());
+        StartCoroutine(DelayMovement());        
     }
 
     private IEnumerator DelayMovement()
     {
+        
         yield return new WaitForSeconds(2.5f);
         _canMove = true;
     }
