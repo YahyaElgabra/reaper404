@@ -9,7 +9,7 @@ public class disintegHitbox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        platform = GetComponentInParent<dirDisintegratingPlatform>();
+        
     }
 
     private void OnTriggerEnter(Collider trigger)
