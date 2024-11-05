@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private float _rlInput;
     // private float _udInput;
     private float _ewInput;
-    private float speedH = 3.0f;
+    private float speedH = 1.5f;
     
     // ability boolean flags
     public bool _isRunWallJump = false;
