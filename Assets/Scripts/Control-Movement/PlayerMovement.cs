@@ -6,6 +6,11 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private PlayerInputActions _inputActions;
+    private float _fbInput;
+    private float _rlInput;
+    // private float _udInput;
+    private float _ewInput;
+    private float speedH = 3.0f;
     
     // ability boolean flags
     public bool _isRunWallJump = false;
@@ -15,9 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     // flying reaper prefab
     public GameObject flyingReaperPrefab;
-
-    private float _fbInput;
-    private float _lrInput;
+    
     private float _yaw;
     
     public bool _isGrounded;
@@ -57,9 +60,6 @@ public class PlayerMovement : MonoBehaviour
 
 
     private const float _rayLength = 10f;
-    
-    
-    float speedH = 2.0f;
     
 
     public Camera playerCamera;
@@ -134,13 +134,19 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        _fbInput = Input.GetAxisRaw("Vertical");
-        _lrInput = Input.GetAxisRaw("Horizontal");
-
+        Vector2 _moveInput = _inputActions.Gameplay.Move.ReadValue<Vector2>();
+        
+        _fbInput = _moveInput.y;
+        _rlInput = _moveInput.x;
+        
+        Vector2 _lookInput = _inputActions.Gameplay.Look.ReadValue<Vector2>();
+        
+        // _udInput = _lookInput.y;
+        _ewInput = _lookInput.x;
         
         if (!Throwing.isAiming)
         {
-            _yaw += speedH* (Input.GetAxis("Mouse X") + Input.GetAxis("RJoy X"));
+            _yaw += speedH* _ewInput;
         }
         else
         {
@@ -219,7 +225,7 @@ public class PlayerMovement : MonoBehaviour
         _yaw = 0.0f;
 
 
-        Vector3 _normalizedInputDirection = Vector3.Normalize(transform.forward * _fbInput + transform.right * _lrInput); 
+        Vector3 _normalizedInputDirection = Vector3.Normalize(transform.forward * _fbInput + transform.right * _rlInput); 
         ApplyFakeDrag(_normalizedInputDirection);
         ApplyFakeGrav();
 
