@@ -7,10 +7,12 @@ public class PillarStacker : MonoBehaviour
     public int pillarsToSpawn = 3;
     public float gapBetweenPillars = 0.1f;
     public float spawnSpeed = 10f; 
+    public Material lineMaterial; // Assignable material for the line
 
     private bool isTriggered = false;
     private float pillarHeight;
     private int pillarCounter = 1; // track spawned pillar names
+    private LineRenderer lineRenderer;
 
     void Start()
     {
@@ -26,16 +28,39 @@ public class PillarStacker : MonoBehaviour
             Debug.LogWarning("meshfilter not found on pillar.");
             pillarHeight = 1f;
         }
+
+        // line renderer
+        lineRenderer = gameObject.AddComponent<LineRenderer>();
+        lineRenderer.material = lineMaterial;
+        lineRenderer.startWidth = 0.3f;
+        lineRenderer.endWidth = 0.3f;
+        lineRenderer.positionCount = 2; // start and end points
+        lineRenderer.useWorldSpace = true;
+
+        SetLineToFinalPosition();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void SetLineToFinalPosition()
     {
-        if (!isTriggered && collision.gameObject.CompareTag("Player"))
-        {
-            isTriggered = true;
-            StartCoroutine(SpawnPillars());
-        }
+    Vector3 start = transform.position;
+    Vector3 localDown = -transform.up;
+
+    // calculate final position to the middle of the last pillar
+    Vector3 offset = localDown * (pillarHeight + gapBetweenPillars) * pillarsToSpawn;
+    Vector3 end = start + offset + (localDown * pillarHeight / 2);
+
+    lineRenderer.SetPosition(0, start);
+    lineRenderer.SetPosition(1, end);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+    if (!isTriggered && (other.gameObject.name == "walljumpHitbox" || other.gameObject.name == "jumpHitbox"))
+    {
+        isTriggered = true;
+        StartCoroutine(SpawnPillars());
+    }
+}
 
     private IEnumerator SpawnPillars()
     {
@@ -46,15 +71,18 @@ public class PillarStacker : MonoBehaviour
             // calculate local downward direction for the pillar
             Vector3 localDown = -transform.up;
 
-            // offset and target position for each new pillar
-            Vector3 offset = localDown * (pillarHeight + gapBetweenPillars) * i;
+            // offset the target position for each new pillar
+            Vector3 offset = localDown * (pillarHeight + gapBetweenPillars);
             Vector3 targetPosition = spawnPosition + offset;
 
-            // spawn, scale, and rename the new pillar to match original
+            // spawn, scale, and rename the new pillar
             GameObject newPillar = Instantiate(pillarPrefab, spawnPosition, transform.rotation);
             newPillar.name = "Expanding Pillar (Clone) " + pillarCounter++; // assign unique name
             ScalePillarToMatchOriginal(newPillar);
             yield return StartCoroutine(MovePillarIntoPosition(newPillar, targetPosition));
+
+            // update next pillar spawn position to the last pillar's final position
+            spawnPosition = targetPosition;
         }
     }
 

@@ -6802,7 +6802,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2741110072517107453, guid: bb4c5bebfe646524883113f6290ef2a0, type: 3}
       propertyPath: spawnSpeed
-      value: 50
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 2741110072517107453, guid: bb4c5bebfe646524883113f6290ef2a0, type: 3}
       propertyPath: pillarsToSpawn

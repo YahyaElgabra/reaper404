@@ -121,3 +121,4 @@ MonoBehaviour:
   pillarsToSpawn: 3
   gapBetweenPillars: 0.1
   spawnSpeed: 10
+  lineMaterial: {fileID: 2100000, guid: f723cb2e782113d4badb21526306723c, type: 2}
