@@ -10,6 +10,7 @@ public class PillarStacker : MonoBehaviour
 
     private bool isTriggered = false;
     private float pillarHeight;
+    private int pillarCounter = 1; // track spawned pillar names
 
     void Start()
     {
@@ -49,8 +50,9 @@ public class PillarStacker : MonoBehaviour
             Vector3 offset = localDown * (pillarHeight + gapBetweenPillars) * i;
             Vector3 targetPosition = spawnPosition + offset;
 
-            // spawn and scale the new pillar to match original
+            // spawn, scale, and rename the new pillar to match original
             GameObject newPillar = Instantiate(pillarPrefab, spawnPosition, transform.rotation);
+            newPillar.name = "Expanding Pillar (Clone) " + pillarCounter++; // assign unique name
             ScalePillarToMatchOriginal(newPillar);
             yield return StartCoroutine(MovePillarIntoPosition(newPillar, targetPosition));
         }
@@ -58,7 +60,7 @@ public class PillarStacker : MonoBehaviour
 
     private void ScalePillarToMatchOriginal(GameObject pillar)
     {
-        // Scale the new pillar to match the original pillar's dimensions
+        // scale the new pillar to match the original pillar
         MeshFilter originalMeshFilter = GetComponent<MeshFilter>();
         MeshFilter newMeshFilter = pillar.GetComponent<MeshFilter>();
 
