@@ -18,6 +18,8 @@ public class portal : MonoBehaviour
     AbilitiesUI abilitiesUI = null;
     Rigidbody rb;
 
+    private float latestCollisionTime = 0f;
+
     Quaternion startingRotation;
 
     void Start()
@@ -66,6 +68,11 @@ public class portal : MonoBehaviour
             }
             else
             {
+                if (Time.time - latestCollisionTime < 0.5f)
+                {
+                    return;
+                }
+                latestCollisionTime = Time.time;
                 currentPass++;
                 collision.gameObject.transform.position = startingPosition;
                 Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
