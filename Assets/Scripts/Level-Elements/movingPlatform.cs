@@ -47,7 +47,6 @@ public class movingPlatform : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && !_alreadyTriggered)
         {
-            Debug.Log("player");
             _alreadyTriggered = true;
             _moving = true;
             StartCoroutine(move());

@@ -17,6 +17,7 @@ public class portal : MonoBehaviour
     GravityControl gravityScript;
     AbilitiesUI abilitiesUI = null;
     Rigidbody rb;
+    float passCooldown = 0.5f;
 
     private float latestCollisionTime = 0f;
 
@@ -51,27 +52,33 @@ public class portal : MonoBehaviour
          ChangeAbility();
     }
 
+    private void Update()
+    {
+        if (rb == null)
+        {
+            GameObject player = GameObject.FindWithTag("Player");
+            rb = player.GetComponent<Rigidbody>();
+        }
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            // if (throwingScript != null && throwingScript.justTeleported)
-            // {
-            //     // If the player just teleported, skip this collision to avoid unexpected pass increment
-            //     return;
-            // }
-            
+            if (Time.time - latestCollisionTime < passCooldown)
+            {
+                return;
+            }
             if (currentPass == passes.Length - 1) {
                 winScreen.SetActive(true);
-                rb.isKinematic = true;
+                if (rb != null)
+                {
+                    rb.isKinematic = true;
+                }
                 ScoreTracker.stopTime = true;
             }
             else
             {
-                if (Time.time - latestCollisionTime < 0.5f)
-                {
-                    return;
-                }
                 latestCollisionTime = Time.time;
                 currentPass++;
                 collision.gameObject.transform.position = startingPosition;
