@@ -5,7 +5,7 @@ using UnityEngine;
 public class movingPlatform : MonoBehaviour
 {
     public float moveTarget;
-    public float moveSpeed = 3f;
+    private float moveSpeed = 5f;
     public Material lineMaterial;
     private Rigidbody rb;
     private GameObject _spawnedPillar;

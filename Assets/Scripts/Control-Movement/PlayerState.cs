@@ -73,14 +73,15 @@ public class PlayerState : MonoBehaviour
                 StopWalkAudio();
                 StartCoroutine(SwitchToPrefabForDuration(jumpPrefab, 0.967f));
             }
-            else if (playerMovement._isGrounded && playerMovement._running && _velocity > 3f)
+            else if (playerMovement._isGrounded && playerMovement._running && _velocity > 5.5f)
             {
                 GameObject runPrefab = GetCurrentAbilityPrefab("Run");
                 SetActivePrefab(runPrefab);
                 PlayWalkAudio();
             }
-            else if (playerMovement._isGrounded && _velocity > 3f)
+            else if (playerMovement._isGrounded && _velocity > 5.5f)
             {
+                // Debug.Log(_velocity);
                 GameObject walkPrefab = GetCurrentAbilityPrefab("Walk");
                 SetActivePrefab(walkPrefab);
                 PlayWalkAudio();
