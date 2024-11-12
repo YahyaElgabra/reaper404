@@ -53,6 +53,10 @@ public class Throwing : MonoBehaviour
     public Material circleMaterial;
     private List<LineRenderer> circleRenderers = new List<LineRenderer>();
     
+    private GameObject playerModel;
+    private Transform originalCameraParent;
+    private bool isFollowingLantern = false;
+    
     void Awake()
     {
         _inputActions = new PlayerInputActions();
@@ -74,6 +78,9 @@ public class Throwing : MonoBehaviour
         GameObject playerObject = GameObject.FindWithTag("Player");
         
         playerCamera = GetComponentInChildren<Camera>();
+        
+        playerModel = GameObject.FindWithTag("Player");
+        originalCameraParent = playerCamera.transform.parent;
         
         cameraController = playerCamera.GetComponent<MonoBehaviour>();
         
@@ -117,6 +124,12 @@ public class Throwing : MonoBehaviour
                 }
             }
         }
+        
+        if (isFollowingLantern && currentThrowable != null)
+        {
+            playerCamera.transform.position = currentThrowable.transform.position;
+            playerCamera.transform.rotation = Quaternion.LookRotation(currentThrowable.transform.forward);
+        }
     }
     
     IEnumerator OutOfCharge()
@@ -135,7 +148,7 @@ public class Throwing : MonoBehaviour
     {
         if (charges > 0)
         {
-            currentThrowable = Instantiate(throwablePrefab, playerTransform.position + playerTransform.rotation * offset, Quaternion.identity);
+            currentThrowable = Instantiate(throwablePrefab, playerTransform.position + playerTransform.rotation * offset, playerTransform.rotation);
 
             currentThrowableScript = currentThrowable.GetComponent<Throwable>();
             
@@ -341,6 +354,12 @@ public class Throwing : MonoBehaviour
                 cameraController.enabled = true;
             
             currentThrowableScript.Throw(aimDirection, throwForce);
+            
+            if (playerModel != null)
+                playerModel.SetActive(false);
+
+            playerCamera.transform.SetParent(currentThrowable.transform);
+            isFollowingLantern = true;
         }
         
         isHeld = false;
@@ -349,6 +368,15 @@ public class Throwing : MonoBehaviour
     public void TeleportPlayerAndDestroy(GameObject throwable)
     {
         playerTransform.position = throwable.transform.position + Vector3.up * 0.5f;
+        
+        if (playerModel != null)
+            playerModel.SetActive(true);
+
+        playerCamera.transform.SetParent(originalCameraParent);
+        playerCamera.transform.localPosition = Vector3.zero;
+        playerCamera.transform.localRotation = Quaternion.identity;
+
+        isFollowingLantern = false;
     
         Destroy(throwable);
         isThrown = false;
@@ -356,6 +384,15 @@ public class Throwing : MonoBehaviour
     
     public void OnThrowableHitDeath(GameObject throwable)
     {
+        if (playerModel != null)
+            playerModel.SetActive(true);
+
+        playerCamera.transform.SetParent(originalCameraParent);
+        playerCamera.transform.localPosition = Vector3.zero;
+        playerCamera.transform.localRotation = Quaternion.identity;
+
+        isFollowingLantern = false;
+        
         Destroy(throwable);
         isThrown = false;
     }
