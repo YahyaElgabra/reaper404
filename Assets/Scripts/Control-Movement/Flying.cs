@@ -134,7 +134,7 @@ public class Flying : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // check if the player colided with anything that is not the goal
-        if (!collision.gameObject.CompareTag("Goal"))
+        if (!collision.gameObject.CompareTag("Finish"))
         {
             // reload the current scene ("death")
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

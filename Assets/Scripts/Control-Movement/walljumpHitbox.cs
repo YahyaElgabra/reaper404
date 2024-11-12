@@ -30,7 +30,6 @@ public class walljumpHitbox : MonoBehaviour
             _isTouching = true;
             touching = trigger;
         }
-        Debug.Log(trigger.name);
     }
 
     void FixedUpdate()
@@ -39,7 +38,6 @@ public class walljumpHitbox : MonoBehaviour
         {
             player.SetIsOnWall(false, _closest - transform.position);
             _isTouching = false;
-            Debug.Log("bro died");
         }
     }
 
