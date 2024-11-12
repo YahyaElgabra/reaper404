@@ -70,6 +70,7 @@ public class PlayerState : MonoBehaviour
             if (playerMovement._isGrounded && _inputActions.Gameplay.Jump.IsPressed() && !playerMovement._isTP)
             {
                 GameObject jumpPrefab = GetCurrentAbilityPrefab("Jump");
+                StopWalkAudio();
                 StartCoroutine(SwitchToPrefabForDuration(jumpPrefab, 0.967f));
             }
             else if (playerMovement._isGrounded && playerMovement._running && _velocity > 3f)
