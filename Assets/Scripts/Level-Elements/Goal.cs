@@ -16,6 +16,10 @@ public class portal : MonoBehaviour
     Throwing throwingScript;
     GravityControl gravityScript;
     AbilitiesUI abilitiesUI = null;
+    Rigidbody rb;
+    float passCooldown = 0.5f;
+
+    private float latestCollisionTime = 0f;
 
     Quaternion startingRotation;
 
@@ -27,6 +31,7 @@ public class portal : MonoBehaviour
         movementScript = player.GetComponent<PlayerMovement>();
         throwingScript = player.GetComponent<Throwing>();
         gravityScript = player.GetComponent<GravityControl>();
+        rb = player.GetComponent<Rigidbody>();
         GameObject abilitiesObject = GameObject.FindGameObjectWithTag("AbilitiesUI");
         if (abilitiesObject != null)
         {
@@ -47,21 +52,34 @@ public class portal : MonoBehaviour
          ChangeAbility();
     }
 
+    private void Update()
+    {
+        if (rb == null)
+        {
+            GameObject player = GameObject.FindWithTag("Player");
+            rb = player.GetComponent<Rigidbody>();
+        }
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            // if (throwingScript != null && throwingScript.justTeleported)
-            // {
-            //     // If the player just teleported, skip this collision to avoid unexpected pass increment
-            //     return;
-            // }
-            
+            if (Time.time - latestCollisionTime < passCooldown)
+            {
+                return;
+            }
             if (currentPass == passes.Length - 1) {
                 winScreen.SetActive(true);
+                if (rb != null)
+                {
+                    rb.isKinematic = true;
+                }
+                ScoreTracker.stopTime = true;
             }
             else
             {
+                latestCollisionTime = Time.time;
                 currentPass++;
                 collision.gameObject.transform.position = startingPosition;
                 Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();

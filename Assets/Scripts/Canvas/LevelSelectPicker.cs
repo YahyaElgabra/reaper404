@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LevelSelectPicker : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class LevelSelectPicker : MonoBehaviour
     int cols;
     picker pickerScript;
     bool inputAvailable = false;
+    public static List<string> levelOrder = new List<string>
+    {
+        "_DONE_tut1", "_DONE_tut2", "_DONE_tut3", "_DONE_easy", "_DONE_easy2", "_DONE_easy3", "_DONE_hard"
+    };
 
     void Awake()
     {
@@ -107,7 +112,7 @@ public class LevelSelectPicker : MonoBehaviour
 
         if (_inputActions.Gameplay.Enter.IsPressed())
         {
-            buttons[curr].onClick.Invoke();
+            SceneManager.LoadScene(levelOrder[curr]);
         }
 
         Vector3 buttonPosition = buttons[curr].transform.position;

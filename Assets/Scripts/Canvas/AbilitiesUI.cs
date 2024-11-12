@@ -80,19 +80,17 @@ public class AbilitiesUI : MonoBehaviour
             }
             else
             {
-                iconImage.color = new Color(1, 1, 1, 0.5f);
+                iconImage.color = new Color(1, 1, 1, 0.25f);
             }
         }
     }
 
     public void updateCharges(int charges)
     {
-        if (current < iconObjects.Count)
+        if (current < iconObjects.Count && abilities[current] == 2 || abilities[current] == 3)
         {
             TextMeshProUGUI text = containers[current].transform.Find("charges").GetComponent<TextMeshProUGUI>();
             text.text = "Charges: " + charges;
-            //Transform textMesh = iconObjects[current].transform.GetChild(0);
-            //textMesh.GetComponent<TextMeshProUGUI>().text = charges.ToString();
         }
     }
 }

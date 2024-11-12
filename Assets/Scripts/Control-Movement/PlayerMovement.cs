@@ -39,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     private const float maxSpeed = 12f;
     private const float RunScale = 40f;
     private const float maxRunningSpeed = 18f;
+    private const float maxTPSpeed = 5f;
     //private const float _fakeDrag = 30f;
     // Value for force-based drag. We are not using that, we are using velocity-based drag instead. For that, drag must be between 0 and 1.
     private const float _groundDrag = 0.8f;
@@ -46,21 +47,12 @@ public class PlayerMovement : MonoBehaviour
     private const float _groundMultiplier = 1f;
     private const float _minimumSpeedForAirDrag = 0.5f;
 
-
-    private const float RotScale = 2f;
     private const float WallJumpVertScale = 45f;
     private const float WallJumpHoriScale = 15f;
 
     private const float JumpScale = 40f;
-    private const float maxVerticalSpeed = 0.2f;
     private float _gravityStrength = 80f;
     private float _maxFallingSpeed = 40f;
-
-    private Vector3 _normalizedInputDirection;
-
-
-    private const float _rayLength = 10f;
-    
 
     public Camera playerCamera;
     private float defaultFOV = 65f;
@@ -165,7 +157,7 @@ public class PlayerMovement : MonoBehaviour
         float targetFOV = _running ? sprintFOV : defaultFOV;
         playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, Time.deltaTime * fovTransitionSpeed);
         
-        if (_inputActions.Gameplay.Jump.IsPressed() && !_jumpDisabled && !_isHoggingJump && !Throwing.isAiming)
+        if (_inputActions.Gameplay.Jump.IsPressed() && !_jumpDisabled && !_isHoggingJump && !_isTP)
         {
             if (_isGrounded && !_userWallJumped)
             {
@@ -262,7 +254,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 _lossFromRecentWallJump = _prevNormalizedWallJumpHori * Vector3.Dot(_normalizedInputDirection, _prevNormalizedWallJumpHori);
         Vector3 _finalDirection = _normalizedInputDirection - _lossFromRecentWallJump;
-        if (Throwing.isAiming)
+        if (_isTP)
         {
             _finalDirection *= 0.1f;
         }
@@ -280,6 +272,18 @@ public class PlayerMovement : MonoBehaviour
         }
         else {
             _rigidbody.AddForce(_finalDirection * RunScale, ForceMode.Force);
+        }
+
+        if (_isTP)
+        {
+            Vector3 horizontalVelocity = new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z);
+
+            if (horizontalVelocity.magnitude > maxTPSpeed)
+            {
+                horizontalVelocity = horizontalVelocity.normalized * maxTPSpeed;
+            }
+
+            _rigidbody.velocity = new Vector3(horizontalVelocity.x, _rigidbody.velocity.y, horizontalVelocity.z);
         }
 
         if (_userJumped)

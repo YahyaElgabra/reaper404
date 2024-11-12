@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -6,12 +7,28 @@ using UnityEngine.UI;
 public class MainMenuManager : MonoBehaviour
 {
     private PlayerInputActions _inputActions;
-    
+    public GameObject help;
+    GameObject winScreen;
     void Awake()
     {
         _inputActions = new PlayerInputActions();
+        if (help != null)
+        {
+            help.SetActive(false);
+        }
     }
 
+    private void Start()
+    {
+        foreach (Transform child in transform)
+        {
+            if (child.CompareTag("WinScreen"))
+            {
+                winScreen = child.gameObject;
+                break;
+            }
+        }
+    }
     void OnEnable()
     {
         _inputActions.Gameplay.Enable();
@@ -45,11 +62,30 @@ public class MainMenuManager : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
-    }
-
-    public void LoadLevel(string levelName)
-    {
-        Debug.Log("Loading Level: " + levelName);
-        SceneManager.LoadScene(levelName);
+        if (_inputActions.Gameplay.Help.WasPressedThisFrame())
+        {
+            if (help != null)
+            {
+                help.SetActive(!help.activeSelf);
+            }
+        }
+        if (winScreen == null)
+        {
+            foreach (Transform child in transform)
+            {
+                if (child.CompareTag("WinScreen"))
+                {
+                    winScreen = child.gameObject;
+                    break;
+                }
+            }
+        }
+        else if (winScreen.activeSelf && _inputActions.Gameplay.Jump.IsPressed())
+        {
+            winScreen.SetActive(false);
+            List<string> levels = LevelSelectPicker.levelOrder;
+            int nextIndex = levels.IndexOf(SceneManager.GetActiveScene().name) + 1;
+            SceneManager.LoadScene(levels[nextIndex]);
+        }
     }
 }
