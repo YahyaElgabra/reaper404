@@ -25,7 +25,7 @@ public class Throwing : MonoBehaviour
     
     public static bool isAiming = false;
     private LineRenderer trajectoryLine;
-    private int trajectoryPointsCount = 30;
+    private int trajectoryPointsCount = 50;
     private float timeBetweenPoints = 0.1f;
 
     private float aimHorizontal;
@@ -49,6 +49,9 @@ public class Throwing : MonoBehaviour
     
     public GameObject endpointPrefab;
     private GameObject endpointInstance;
+    
+    public Material circleMaterial;
+    private List<LineRenderer> circleRenderers = new List<LineRenderer>();
     
     void Awake()
     {
@@ -232,7 +235,6 @@ public class Throwing : MonoBehaviour
                 trajectoryLine.SetPosition(i, hit.point);
                 trajectoryLine.positionCount = i + 1;
                 
-                // Check if the hit surface is valid (flat or tagged as "Finish")
                 float surfaceAngle = Vector3.Angle(hit.normal, Vector3.up);
                 bool isFlatSurface = surfaceAngle < 45f;
                 bool isFinishSurface = hit.collider.CompareTag("Finish");
@@ -244,6 +246,8 @@ public class Throwing : MonoBehaviour
                         endpointInstance.transform.position = hit.point + Vector3.up * 0.5f;
                         endpointInstance.SetActive(true); 
                     }
+                    
+                    DrawConcentricCircles(hit.point);
                 }
                 else
                 {
@@ -251,6 +255,8 @@ public class Throwing : MonoBehaviour
                     {
                         endpointInstance.SetActive(false);
                     }
+                    
+                    ClearConcentricCircles();
                 }
                 
                 break;
@@ -263,9 +269,57 @@ public class Throwing : MonoBehaviour
                 {
                     endpointInstance.SetActive(false);
                 }
+                
+                ClearConcentricCircles();
             }
             previousPoint = pointPosition;
         }
+    }
+    
+    private void DrawConcentricCircles(Vector3 center)
+    {
+        int numberOfCircles = 3;
+        float initialRadius = 0.5f;
+        float radiusIncrement = 1.0f;
+        int segments = 30;
+        
+        ClearConcentricCircles();
+
+        for (int i = 0; i < numberOfCircles; i++)
+        {
+            LineRenderer lineRenderer = new GameObject($"Circle_{i}").AddComponent<LineRenderer>();
+            lineRenderer.positionCount = segments + 1;
+            lineRenderer.startWidth = 0.05f;
+            lineRenderer.endWidth = 0.05f;
+            lineRenderer.useWorldSpace = false;
+            lineRenderer.material = circleMaterial;
+            
+            float radius = initialRadius + i * 2 * radiusIncrement;
+            Vector3[] positions = new Vector3[segments + 1];
+        
+            for (int j = 0; j <= segments; j++)
+            {
+                float angle = j * 2 * Mathf.PI / segments;
+                positions[j] = new Vector3(Mathf.Cos(angle) * radius, 0, Mathf.Sin(angle) * radius);
+            }
+
+            lineRenderer.SetPositions(positions);
+            
+            lineRenderer.transform.position = center;
+            circleRenderers.Add(lineRenderer);
+        }
+    }
+
+    private void ClearConcentricCircles()
+    {
+        foreach (var lineRenderer in circleRenderers)
+        {
+            if (lineRenderer != null)
+            {
+                Destroy(lineRenderer.gameObject);
+            }
+        }
+        circleRenderers.Clear();
     }
     
     private void ThrowObject()
@@ -280,6 +334,8 @@ public class Throwing : MonoBehaviour
             
             if (endpointInstance != null)
                 endpointInstance.SetActive(false);
+            
+            ClearConcentricCircles();
             
             if (cameraController != null)
                 cameraController.enabled = true;
@@ -297,27 +353,6 @@ public class Throwing : MonoBehaviour
         Destroy(throwable);
         isThrown = false;
     }
-    
-    // public bool justTeleported = false;
-    //
-    // public void TeleportPlayerAndDestroy(GameObject throwable)
-    // {
-    //     playerTransform.position = throwable.transform.position;
-    //     // playerTransform.position = throwable.transform.position + Vector3.up * 0.5f;
-    //
-    //     Destroy(throwable);
-    //     isThrown = false;
-    //
-    //     // Set the teleport flag and start a coroutine to reset it after a delay
-    //     justTeleported = true;
-    //     StartCoroutine(ResetTeleportFlag());
-    // }
-    //
-    // IEnumerator ResetTeleportFlag()
-    // {
-    //     yield return new WaitForSeconds(0.1f); // Delay to ensure collision has settled
-    //     justTeleported = false;
-    // }
     
     public void OnThrowableHitDeath(GameObject throwable)
     {

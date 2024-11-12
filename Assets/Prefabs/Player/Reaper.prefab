@@ -690,6 +690,7 @@ MonoBehaviour:
   throwablePrefab: {fileID: 1627955320942381573, guid: 7f7ed46e509f4403ebbafe9c04bc8c80, type: 3}
   charges: 0
   endpointPrefab: {fileID: 4173550920320438120, guid: 43648fdc5231644d5a78de1cea347b73, type: 3}
+  circleMaterial: {fileID: 2100000, guid: 7cdaeabb63e0c4f7082a5e500ececbfb, type: 2}
 --- !u!114 &552626095913720579
 MonoBehaviour:
   m_ObjectHideFlags: 0
