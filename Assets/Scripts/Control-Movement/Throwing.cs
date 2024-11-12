@@ -57,6 +57,8 @@ public class Throwing : MonoBehaviour
     private Transform originalCameraParent;
     private bool isFollowingLantern = false;
     
+    private bool hasCanceledThrow = false;
+    
     void Awake()
     {
         _inputActions = new PlayerInputActions();
@@ -101,7 +103,7 @@ public class Throwing : MonoBehaviour
     void Update()
     {
         if (_inputActions.Gameplay.ThrowHold.IsPressed() && 
-            !isHeld && charges > 0 && !isThrown && playerMovement._isTP)
+            !isHeld && charges > 0 && !isThrown && playerMovement._isTP && !hasCanceledThrow)
         {
             SpawnThrowableObject();
         }
@@ -110,19 +112,27 @@ public class Throwing : MonoBehaviour
         {
             currentThrowable.transform.position = playerTransform.position + playerTransform.rotation * offset;
             
-            if (_inputActions.Gameplay.ThrowHold.IsPressed())
+            if (_inputActions.Gameplay.ThrowHold.IsPressed() && !hasCanceledThrow)
             {
                 EnterAimMode();
+            }
+            
+            // Add cancel throw check
+            if (_inputActions.Gameplay.Jump.WasPerformedThisFrame() && isAiming)
+            {
+                CancelThrow();
+                hasCanceledThrow = true;
             }
             
             if (_inputActions.Gameplay.ThrowRelease.WasPerformedThisFrame() && isAiming)
             {
                 ThrowObject();
-                if (charges == 0)
-                {
-                    StartCoroutine(OutOfCharge());
-                }
             }
+        }
+        
+        if (_inputActions.Gameplay.ThrowHold.WasReleasedThisFrame())
+        {
+            hasCanceledThrow = false;
         }
         
         if (isFollowingLantern && currentThrowable != null)
@@ -130,18 +140,6 @@ public class Throwing : MonoBehaviour
             playerCamera.transform.position = currentThrowable.transform.position;
             playerCamera.transform.rotation = Quaternion.LookRotation(currentThrowable.transform.forward);
         }
-    }
-    
-    IEnumerator OutOfCharge()
-    {
-        float elapsedTime = 0f;
-
-        while (5.5f > elapsedTime)
-        {
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void SpawnThrowableObject()
@@ -159,12 +157,6 @@ public class Throwing : MonoBehaviour
             
             isHeld = true;
             isThrown = false;
-            
-            charges--;
-            if (abilitiesUI != null)
-            {
-                abilitiesUI.updateCharges(charges);
-            }
         }
     }
     
@@ -367,7 +359,13 @@ public class Throwing : MonoBehaviour
     
     public void TeleportPlayerAndDestroy(GameObject throwable)
     {
-        playerTransform.position = throwable.transform.position + Vector3.up * 0.5f;
+        playerTransform.position = throwable.transform.position + Vector3.up * 1.0f;
+        
+        charges--;
+        if (abilitiesUI != null)
+        {
+            abilitiesUI.updateCharges(charges);
+        }
         
         if (playerModel != null)
             playerModel.SetActive(true);
@@ -380,6 +378,24 @@ public class Throwing : MonoBehaviour
     
         Destroy(throwable);
         isThrown = false;
+        
+        if (charges == 0)
+        {
+            StartCoroutine(OutOfCharge());
+        }
+    }
+
+    IEnumerator OutOfCharge()
+    {
+        float elapsedTime = 0f;
+
+        while (2.5f > elapsedTime)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);   
     }
     
     public void OnThrowableHitDeath(GameObject throwable)
@@ -395,5 +411,35 @@ public class Throwing : MonoBehaviour
         
         Destroy(throwable);
         isThrown = false;
+    }
+    
+    private void CancelThrow()
+    {
+        if (isAiming && isHeld)
+        {
+            isAiming = false;
+            isHeld = false;
+            
+            if (trajectoryLine != null)
+            {
+                trajectoryLine.positionCount = 0;
+            }
+            ClearConcentricCircles();
+            
+            if (cameraController != null)
+            {
+                cameraController.enabled = true;
+            }
+            
+            if (currentThrowable != null)
+            {
+                Destroy(currentThrowable);
+            }
+            
+            if (endpointInstance != null)
+            {
+                endpointInstance.SetActive(false);
+            }
+        }
     }
 }
