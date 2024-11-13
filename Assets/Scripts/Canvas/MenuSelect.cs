@@ -109,7 +109,8 @@ public class menuSelect : MonoBehaviour
 
         if (_inputActions.Gameplay.Enter.IsPressed() && optionsMenu.activeSelf == false)
         {
-            StartCoroutine(WaitPlease());
+            audioSourceCHOOSE.Play();
+            //WAIT HERE
 
             if (buttons[curr].name == "start")
             {
@@ -131,9 +132,5 @@ public class menuSelect : MonoBehaviour
         Vector3 buttonPosition = buttons[curr].transform.position;
         pickerScript.startingPosition = buttonPosition - new Vector3(150, 0, 0);
     }
-    private IEnumerator WaitPlease()
-    {
-        audioSourceCHOOSE.Play();
-        yield return new WaitForSeconds(0.3f);
-    }
+    
 }
