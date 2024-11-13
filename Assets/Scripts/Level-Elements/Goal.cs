@@ -22,6 +22,7 @@ public class portal : MonoBehaviour
     private float latestCollisionTime = 0f;
 
     Quaternion startingRotation;
+    public AudioSource audioSource;
 
     void Start()
     {
@@ -71,6 +72,8 @@ public class portal : MonoBehaviour
             }
             if (currentPass == passes.Length - 1) {
                 winScreen.SetActive(true);
+                audioSource.Play();
+
                 if (rb != null)
                 {
                     rb.isKinematic = true;

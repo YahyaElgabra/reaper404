@@ -15,6 +15,8 @@ public class movingPlatform : MonoBehaviour
     private LineRenderer lr;
     private Vector3 displacementFactor;
 
+    public AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,7 +57,7 @@ public class movingPlatform : MonoBehaviour
 
     IEnumerator move()
     {
-        
+        audioSource.Play();
 
         while (((_initialLocation + transform.forward * moveTarget)-transform.position).sqrMagnitude > 0.1)
         {

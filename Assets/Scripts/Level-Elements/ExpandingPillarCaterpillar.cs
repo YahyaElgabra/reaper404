@@ -14,6 +14,8 @@ public class PillarStacker : MonoBehaviour
     private int pillarCounter = 1; // track spawned pillar names
     private LineRenderer lineRenderer;
 
+    public AudioSource audioSource;
+
     void Start()
     {
         MeshFilter mf = GetComponent<MeshFilter>();
@@ -64,6 +66,7 @@ public class PillarStacker : MonoBehaviour
 
     private IEnumerator SpawnPillars()
     {
+        audioSource.Play();
         Vector3 spawnPosition = transform.position;
 
         for (int i = 1; i <= pillarsToSpawn; i++)

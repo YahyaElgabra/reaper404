@@ -15,6 +15,9 @@ public class menuSelect : MonoBehaviour
     picker pickerScript;
     bool inputAvailable = false;
     public GameObject optionsMenu;
+    public AudioSource audioSource;
+
+    public AudioSource audioSourceCHOOSE;
     
     void Awake()
     {
@@ -93,32 +96,44 @@ public class menuSelect : MonoBehaviour
 
         if (left || up)
         {
+            audioSource.Play();
             curr = Mathf.Max(0, curr - 1);
             inputAvailable = false;
         }
         else if (right || down)
         {
+            audioSource.Play();
             curr = Mathf.Min(buttons.Count - 1, curr + 1);
             inputAvailable = false;
         }
 
         if (_inputActions.Gameplay.Enter.IsPressed() && optionsMenu.activeSelf == false)
         {
+            StartCoroutine(WaitPlease());
+
             if (buttons[curr].name == "start")
             {
+                
                 SceneManager.LoadScene("LevelSelect");
             }
             else if (buttons[curr].name == "exit")
             {
+
                 SceneManager.LoadScene("SplashScreen");
             }
             else if (buttons[curr].name == "options") 
             {
+
                 optionsMenu.SetActive(true);
             }
         }
 
         Vector3 buttonPosition = buttons[curr].transform.position;
         pickerScript.startingPosition = buttonPosition - new Vector3(150, 0, 0);
+    }
+    private IEnumerator WaitPlease()
+    {
+        audioSourceCHOOSE.Play();
+        yield return new WaitForSeconds(0.3f);
     }
 }
