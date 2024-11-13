@@ -42,7 +42,7 @@ public class AbilitiesUI : MonoBehaviour
             {
                 case 0:
                     abilityName.text = "WALK";
-                    textmesh.text = "Hold WASD to walk\n\nPress Space/X to jump";
+                    textmesh.text = "Use WASD/LJoy to walk\n\nPress Space/X to jump";
                     break;
                 case 1:
                     abilityName.text = "WALLJUMP & RUN";
