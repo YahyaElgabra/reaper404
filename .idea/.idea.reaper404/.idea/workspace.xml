@@ -4,67 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5580101a-c1c3-49c0-ae75-68e3344bbe3a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.reaper404/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.reaper404/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Fly.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/o.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/o.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_cape_BaseColor.1005.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_cape_BaseColor.1005.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_cape_Height.1005.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_cape_Height.1005.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_cape_Metallic.1005.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_cape_Metallic.1005.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_cape_Normal.1005.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_cape_Normal.1005.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_cape_Roughness.1005.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_cape_Roughness.1005.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_coat_BaseColor.1004.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_coat_BaseColor.1004.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_coat_Height.1004.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_coat_Height.1004.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_coat_Metallic.1004.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_coat_Metallic.1004.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_coat_Normal.1004.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_coat_Normal.1004.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_coat_Roughness.1004.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_coat_Roughness.1004.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_lambert11_BaseColor.1002_Raw_ACEScg.png.tx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_lambert11_BaseColor.1002_Raw_ACEScg.png.tx.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_lambert11_Metallic.1002.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_lambert11_Metallic.1002.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_lambert11_Normal.1002_Raw_ACEScg.png.tx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_lambert11_Normal.1002_Raw_ACEScg.png.tx.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_lambert11_Roughness.1002.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_lambert11_Roughness.1002.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_lambert6_BaseColor.1003.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_lambert6_BaseColor.1003.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_lambert6_Height.1003.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_lambert6_Height.1003.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_lambert6_Metallic.1003.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_lambert6_Metallic.1003.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_lambert6_Roughness.1003.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Grav/oldreaper_for_substance_lambert6_Roughness.1003.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Standard.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/Teleport.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/WallJump.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/accessories.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/accessories.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/boots.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/boots.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/cape.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/cape.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/coat.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/coat.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/shorts.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/old_inuse/shorts.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Reaper.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Reaper.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/_DONE_tut1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/_DONE_tut1.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Control-Movement/PlayerMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Control-Movement/PlayerMovement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Control-Movement/PlayerState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Control-Movement/PlayerState.cs" afterDir="false" />
-    </list>
+    <list default="true" id="5580101a-c1c3-49c0-ae75-68e3344bbe3a" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -169,6 +109,7 @@
       <workItem from="1730729725143" duration="511000" />
       <workItem from="1730774052764" duration="377000" />
       <workItem from="1731408321108" duration="648000" />
+      <workItem from="1731506280932" duration="352000" />
     </task>
     <servers />
   </component>
