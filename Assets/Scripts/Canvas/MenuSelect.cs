@@ -100,6 +100,10 @@ public class menuSelect : MonoBehaviour
             {
                 SceneManager.LoadScene("SplashScreen");
             }
+            else if (buttons[curr].name == "options") 
+            {
+                SceneManager.LoadScene("Options");
+            }
         }
 
         Vector3 buttonPosition = buttons[curr].transform.position;
