@@ -45,7 +45,7 @@ EditorBuildSettings:
     path: Assets/Scenes/_DONE_easy3.unity
     guid: 602969473dc50074b94c17e11a9368e9
   - enabled: 1
-    path: Assets/Scenes/_DONE_tut1.unity
+    path: Assets/Scenes/Walljump Intro.unity
     guid: 191197ddac62ab64e89e9d7791533359
   - enabled: 1
     path: Assets/Scenes/_DONE_tut2.unity

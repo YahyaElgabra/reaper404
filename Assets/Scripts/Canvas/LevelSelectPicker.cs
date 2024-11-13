@@ -17,7 +17,7 @@ public class LevelSelectPicker : MonoBehaviour
     bool inputAvailable = false;
     public static List<string> levelOrder = new List<string>
     {
-        "_DONE_tut1", "_DONE_tut2", "_DONE_tut3", "_DONE_easy", "_DONE_easy2", "_DONE_easy3", "_DONE_hard"
+        "Walljump Intro", "Fly Intro", "Teleport Intro", "Level1", "Level2", "Level3", "Level4"
     };
 
     void Awake()

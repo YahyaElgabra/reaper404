@@ -41,30 +41,39 @@ public class MainMenuManager : MonoBehaviour
     
     private void Update()
     {
-        if (_inputActions.Gameplay.Escape.IsPressed())
+        if (_inputActions.Gameplay.Escape.IsPressed() || _inputActions.Gameplay.GravRight.IsPressed())
         {
             if (SceneManager.GetActiveScene().name == "LevelSelect")
             {
                 SceneManager.LoadScene("MainMenu");
             }
-            else if (SceneManager.GetActiveScene().name == "MainMenu") 
+            else if (SceneManager.GetActiveScene().name == "SplashScreen")
+            {
+                return;
+            }
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+
+        if (_inputActions.Gameplay.Escape.IsPressed() && 
+            (SceneManager.GetActiveScene().name != "LevelSelect" &&
+             SceneManager.GetActiveScene().name != "SplashScreen"))
+        {
+            if (SceneManager.GetActiveScene().name == "MainMenu") 
             {
                 if (!optionsManager.sliderMode)
                 {
                     SceneManager.LoadScene("SplashScreen");
                 }
             }
-            else if (SceneManager.GetActiveScene().name == "SplashScreen")
-            {
-                return;
-            }
             else
             {
                 SceneManager.LoadScene("LevelSelect");
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None; 
             }
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
         }
+        
         if (_inputActions.Gameplay.Help.WasPressedThisFrame())
         {
             if (help != null)
