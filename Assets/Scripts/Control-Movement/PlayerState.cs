@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Vector3 = System.Numerics.Vector3;
 
 public class PlayerState : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class PlayerState : MonoBehaviour
     public GameObject standardIdlePrefab, standardWalkPrefab, standardJumpPrefab;
     public GameObject gravIdlePrefab, gravWalkPrefab, gravJumpPrefab;
     public GameObject teleportIdlePrefab, teleportWalkPrefab, teleportJumpPrefab;
-    public GameObject wallJumpIdlePrefab, wallJumpWalkPrefab, wallJumpJumpPrefab, wallJumpRunPrefab;
+    public GameObject wallJumpIdlePrefab, wallJumpWalkPrefab, wallJumpJumpPrefab, wallJumpRunPrefab, wallJumpWalljumpPrefab;
     
     // private bool _isGrounded = false;
     // private float _groundCheckDistance = 0.5f;
@@ -65,33 +66,80 @@ public class PlayerState : MonoBehaviour
         {
             currentPass = abilitiesUI ? abilitiesUI.current : 0;
 
-            _velocity = _playerRigidbody.velocity.magnitude;
-
-            if (playerMovement._isGrounded && _inputActions.Gameplay.Jump.IsPressed() && !playerMovement._isTP)
+            _velocity = _playerRigidbody.velocity.magnitude; 
+            float _velocityXZ = Mathf.Abs(_playerRigidbody.velocity.x) + Mathf.Abs(_playerRigidbody.velocity.z);
+            float _velocityY = Mathf.Abs(_playerRigidbody.velocity.y);
+            
+            Vector2 _moveInput = _inputActions.Gameplay.Move.ReadValue<Vector2>();
+            
+            if (playerMovement._userWallJumped)
             {
-                GameObject jumpPrefab = GetCurrentAbilityPrefab("Jump");
+                GameObject idlePrefab = GetCurrentAbilityPrefab("Idle");
+                SetActivePrefab(idlePrefab);
+                GameObject walljumpPrefab = GetCurrentAbilityPrefab("WallJump");
+                SetActivePrefab(walljumpPrefab);
                 StopWalkAudio();
-                StartCoroutine(SwitchToPrefabForDuration(jumpPrefab, 0.967f));
             }
-            else if (playerMovement._isGrounded && playerMovement._running && _velocity > 5.5f)
+            // else if ((_playerRigidbody.velocity.y > 0 || _inputActions.Gameplay.Jump.IsPressed()) && !playerMovement._isTP)
+            else if (playerMovement._isGrounded && _inputActions.Gameplay.Jump.IsPressed() && !playerMovement._isTP)
+            {
+                GameObject idlePrefab = GetCurrentAbilityPrefab("Idle");
+                SetActivePrefab(idlePrefab);
+                GameObject jumpPrefab = GetCurrentAbilityPrefab("Jump");
+                SetActivePrefab(jumpPrefab);
+                StopWalkAudio();
+            }
+            else if (playerMovement._isGrounded && playerMovement._running && _velocityXZ > 7f && _moveInput.magnitude > 0.1f)
             {
                 GameObject runPrefab = GetCurrentAbilityPrefab("Run");
                 SetActivePrefab(runPrefab);
                 PlayWalkAudio();
             }
-            else if (playerMovement._isGrounded && _velocity > 5.5f)
+            else if (playerMovement._isGrounded && _velocityXZ > 7f && _moveInput.magnitude > 0.1f)
             {
-                // Debug.Log(_velocity);
                 GameObject walkPrefab = GetCurrentAbilityPrefab("Walk");
                 SetActivePrefab(walkPrefab);
                 PlayWalkAudio();
             }
-            else
+            else if (playerMovement._isGrounded && _velocityXZ < 7f && _velocityY < 0.5f)
             {
                 GameObject idlePrefab = GetCurrentAbilityPrefab("Idle");
                 SetActivePrefab(idlePrefab);
                 StopWalkAudio();
             }
+            
+            // OLD CONDITIONS
+            // if (playerMovement._userWallJumped)
+            // {
+            //     GameObject walljumpPrefab = GetCurrentAbilityPrefab("WallJump");
+            //     StopWalkAudio();
+            //     StartCoroutine(SwitchToPrefabForDuration(walljumpPrefab, 1.5f));
+            // }
+            // else if (playerMovement._isGrounded && _inputActions.Gameplay.Jump.IsPressed() && !playerMovement._isTP)
+            // {
+            //     GameObject jumpPrefab = GetCurrentAbilityPrefab("Jump");
+            //     StopWalkAudio();
+            //     StartCoroutine(SwitchToPrefabForDuration(jumpPrefab, 0.967f));
+            // }
+            // else if (playerMovement._isGrounded && playerMovement._running && _velocity > 5.5f)
+            // {
+            //     GameObject runPrefab = GetCurrentAbilityPrefab("Run");
+            //     SetActivePrefab(runPrefab);
+            //     PlayWalkAudio();
+            // }
+            // else if (playerMovement._isGrounded && _velocity > 5.5f)
+            // {
+            //     // Debug.Log(_velocity);
+            //     GameObject walkPrefab = GetCurrentAbilityPrefab("Walk");
+            //     SetActivePrefab(walkPrefab);
+            //     PlayWalkAudio();
+            // }
+            // else
+            // {
+            //     GameObject idlePrefab = GetCurrentAbilityPrefab("Idle");
+            //     SetActivePrefab(idlePrefab);
+            //     StopWalkAudio();
+            // }
         }
     }
 
@@ -117,8 +165,9 @@ public class PlayerState : MonoBehaviour
             case 1: // Wall Jump
                 return actionType == "Idle" ? wallJumpIdlePrefab
                      : actionType == "Walk" ? wallJumpWalkPrefab
+                     : actionType == "Jump" ? wallJumpJumpPrefab
                      : actionType == "Run" ? wallJumpRunPrefab
-                     : wallJumpJumpPrefab;
+                     : wallJumpWalljumpPrefab;
 
             default: // Standard
                 return actionType == "Idle" ? standardIdlePrefab
@@ -146,6 +195,7 @@ public class PlayerState : MonoBehaviour
         _isActionInProgress = true;
         SetActivePrefab(prefab);
         yield return new WaitForSeconds(duration);
+        
         _isActionInProgress = false;
 
         _velocity = _playerRigidbody.velocity.magnitude;
