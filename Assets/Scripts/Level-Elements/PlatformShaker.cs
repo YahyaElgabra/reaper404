@@ -11,6 +11,8 @@ public class PlatformTrigger : MonoBehaviour
     private Vector3 originalPosition;
     private bool isShaking = false;
 
+    public AudioSource audioSource;
+
     private void Start()
     {
         timeLeft = shakeDuration;
@@ -35,6 +37,7 @@ public class PlatformTrigger : MonoBehaviour
     private IEnumerator ShakeAndDestroyPlatform()
     {
         isShaking = true;
+        audioSource.Play();
 
         while (timeLeft > 0)
         {
