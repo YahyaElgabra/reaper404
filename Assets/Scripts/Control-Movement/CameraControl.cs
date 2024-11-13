@@ -12,7 +12,8 @@ public class CameraControl : MonoBehaviour
     float minPitch = -45.0f;
     float maxPitch = 89.99f;
     private float pitch = 25f;
-    Vector3 startVector = new Vector3(0, 0, -12f);
+    Vector3 startVector;
+    float baseDistance = 5;
 
     void Awake()
     {
@@ -31,6 +32,8 @@ public class CameraControl : MonoBehaviour
     
     private void Start()
     {
+        float distance = baseDistance + 15 * PlayerPrefs.GetFloat("cameraDistance", 0.5f);
+        startVector = new Vector3(0, 0, -distance);
         transform.localPosition = startVector;
         transform.LookAt(transform.parent);
     }
@@ -41,7 +44,7 @@ public class CameraControl : MonoBehaviour
         _udInput = _lookInput.y;
         // _ewInput = _lookInput.x;
         
-        pitch += speedV * - _udInput;
+        pitch += speedV * - _udInput * Mathf.Lerp(0.25f, 3f, PlayerPrefs.GetFloat("cameraSensitivity", 0.25f));
         pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
 
         Quaternion rotation = Quaternion.Euler(pitch, 0, 0);

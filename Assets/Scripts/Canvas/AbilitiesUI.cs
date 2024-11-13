@@ -37,27 +37,34 @@ public class AbilitiesUI : MonoBehaviour
             TextMeshProUGUI run = container.transform.Find("run").GetComponent<TextMeshProUGUI>();
             run.text = "Run " + (i + 1);
             TextMeshProUGUI abilityName = container.transform.Find("ability name").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI textmesh = container.transform.Find("description").transform.Find("Input").GetComponent<TextMeshProUGUI>();
             switch (abilities[i])
             {
                 case 0:
                     abilityName.text = "WALK";
+                    textmesh.text = "Hold WASD to walk\n\nPress Space/X to jump";
                     break;
                 case 1:
                     abilityName.text = "WALLJUMP & RUN";
+                    textmesh.text = "Hold Shift/R1 to run\n\nPress Space/X to walljump";
                     break;
                 case 2:
                     abilityName.text = "TELEPORT";
+                    textmesh.text = "Hold C/L1 to aim\n\nRelease to throw\n\nPress Space/X to cancel";
                     break;
                 case 3:
                     abilityName.text = "GRAVITY";
+                    textmesh.text = "Press Z/Square to rotate left\n\nPress X/Circle to rotate right";
                     break;
                 case 4:
                     abilityName.text = "FLY";
+                    textmesh.text = "Hold Shift/R1 to boost\n\nHold Ctrl/L1 to brake";
                     break;
                 default:
                     abilityName.text = "";
                     break;
             }
+            textmesh.gameObject.SetActive(false);
             GameObject icon = container.transform.Find("Icon").gameObject;
             icon.GetComponent<Image>().sprite = icons[abilities[i]];
             iconObjects.Add(icon);
@@ -77,10 +84,12 @@ public class AbilitiesUI : MonoBehaviour
             if (i == current)
             {
                 iconImage.color = new Color(1, 1, 1, 1);
+                containers[i].transform.Find("description").transform.Find("Input").GetComponent<TextMeshProUGUI>().gameObject.SetActive(true);
             }
             else
             {
                 iconImage.color = new Color(1, 1, 1, 0.25f);
+                containers[i].transform.Find("description").transform.Find("Input").GetComponent<TextMeshProUGUI>().gameObject.SetActive(false);
             }
         }
     }
