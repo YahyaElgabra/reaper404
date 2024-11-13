@@ -59,6 +59,8 @@ public class Throwing : MonoBehaviour
     
     private bool hasCanceledThrow = false;
     
+    private AudioSource[] _audioSources;
+    
     void Awake()
     {
         _inputActions = new PlayerInputActions();
@@ -101,6 +103,8 @@ public class Throwing : MonoBehaviour
 
         _aimSensX *= Mathf.Lerp(0.25f, 3f, PlayerPrefs.GetFloat("cameraSensitivity", 0.25f));
         _aimSensY *= Mathf.Lerp(0.25f, 3f, PlayerPrefs.GetFloat("cameraSensitivity", 0.25f));
+        
+        _audioSources = GetComponents<AudioSource>();
     }
     
     void Update()
@@ -168,6 +172,8 @@ public class Throwing : MonoBehaviour
         if (!isAiming)
         {
             isAiming = true;
+
+            PlayAimAudio();
             
             if (cameraController != null)
                 cameraController.enabled = false;
@@ -337,6 +343,8 @@ public class Throwing : MonoBehaviour
             isHeld = false;
             isThrown = true;
             isAiming = false;
+
+            PlayThrowAudio();
             
             trajectoryLine.positionCount = 0;
             
@@ -381,6 +389,8 @@ public class Throwing : MonoBehaviour
     
         Destroy(throwable);
         isThrown = false;
+
+        PlayTeleportAudio();
         
         if (charges == 0)
         {
@@ -444,5 +454,19 @@ public class Throwing : MonoBehaviour
                 endpointInstance.SetActive(false);
             }
         }
+    }
+    
+    private void PlayTeleportAudio()
+    {
+        _audioSources[2].Play();
+    }
+    private void PlayThrowAudio()
+    {
+        _audioSources[3].Play();
+    }
+    
+    private void PlayAimAudio()
+    {
+        _audioSources[4].Play();
     }
 }
