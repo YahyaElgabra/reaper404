@@ -14,7 +14,7 @@ public class optionsManager : MonoBehaviour
     picker pickerScript;
     List<GameObject> buttons;
     bool inputAvailable = false;
-    bool sliderMode = false;
+    public static bool sliderMode = false;
     Slider slider;
     Vector3 _button_offset = new Vector3(370, -10, 0);
     Vector3 _panel_offset = new Vector3(150, 0, 0);
@@ -106,7 +106,7 @@ public class optionsManager : MonoBehaviour
                 up = true;
             }
 
-            if (!up && !down && !right && !left && !Input.anyKey)
+            if (!up && !down && !right && !left && !Input.anyKey && !_inputActions.Gameplay.Escape.IsPressed())
             {
                 inputAvailable = true;
             }
@@ -135,7 +135,7 @@ public class optionsManager : MonoBehaviour
 
             if ((right || left) && sliderMode)
             {
-                slider.value -= x * -0.0025f * Mathf.Lerp(0.25f, 3f, PlayerPrefs.GetFloat("cameraSensitivity", 0.25f)); ;
+                slider.value -= x * -0.0025f * Mathf.Lerp(0.25f, 3f, PlayerPrefs.GetFloat("cameraSensitivity", 0.25f));
                 if (curr == 0) // master volume
                 {
                     PlayerPrefs.SetFloat("masterVolume", slider.value);
@@ -158,13 +158,13 @@ public class optionsManager : MonoBehaviour
             {
                 pickerPosition = buttons[curr].transform.position - _panel_offset;
             }
-            if (_inputActions.Gameplay.Escape.IsPressed() || _inputActions.Gameplay.GravRight.IsPressed())
+            if ((_inputActions.Gameplay.Escape.IsPressed() || _inputActions.Gameplay.GravRight.IsPressed()) && inputAvailable)
             {
+                inputAvailable = false;
                 if (sliderMode)
                 {
                     sliderMode = false;
                     pickerPosition = buttons[curr].transform.position - _button_offset;
-                    inputAvailable = false;
                 }
                 else
                 {
