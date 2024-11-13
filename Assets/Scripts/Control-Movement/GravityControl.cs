@@ -33,18 +33,22 @@ public class GravityControl : MonoBehaviour
 
     private void Update()
     {
-        Vector3 lookDirection = FindSide(0); // Forward direction
-        Vector3 rightDirection = FindSide(1); // Right direction
-
-        // Calculate the up direction based on the right and forward directions
+        Vector3 lookDirection = FindSide(0);
+        Vector3 rightDirection = FindSide(1);
         Vector3 upDirection = Vector3.Cross(rightDirection, lookDirection).normalized;
-
-        // Set the arrow's rotation using a quaternion
         arrow.transform.rotation = Quaternion.LookRotation(lookDirection, upDirection);
 
         if (playerMovement.GetIsGrounded() && Time.time - _lastRotTime > _rotDuration)
         {
             _isGravDisabled = false;
+        }
+        if (playerMovement._isGrav)
+        {
+            arrow.SetActive(true);
+        }
+        else
+        {
+            arrow.SetActive(false);
         }
     }
 
