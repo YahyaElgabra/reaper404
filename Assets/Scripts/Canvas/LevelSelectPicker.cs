@@ -17,7 +17,7 @@ public class LevelSelectPicker : MonoBehaviour
     bool inputAvailable = false;
     public static List<string> levelOrder = new List<string>
     {
-        "Walljump Intro", "Fly Intro", "Teleport Intro", "Level1", "Level2", "Level3", "Level4"
+        "Walljump Intro", "Fly Intro", "Teleport Intro", "Level1", "Level2", "Level3", "Level4", "LevelSelect"
     };
 
     void Awake()
