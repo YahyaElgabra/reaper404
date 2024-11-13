@@ -15,6 +15,7 @@ public class splashInputListener : MonoBehaviour
     void Awake()
     {
         _inputActions = new PlayerInputActions();
+        AudioListener.volume = PlayerPrefs.GetFloat("masterVolume", 1.0f);
     }
 
     void OnEnable()

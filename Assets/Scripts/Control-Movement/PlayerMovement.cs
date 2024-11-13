@@ -138,7 +138,7 @@ public class PlayerMovement : MonoBehaviour
         
         if (!Throwing.isAiming)
         {
-            _yaw += speedH* _ewInput;
+            _yaw += speedH* _ewInput * Mathf.Lerp(0.25f, 3f, PlayerPrefs.GetFloat("cameraSensitivity", 0.25f));
         }
         else
         {

@@ -49,7 +49,10 @@ public class MainMenuManager : MonoBehaviour
             }
             else if (SceneManager.GetActiveScene().name == "MainMenu") 
             {
-                SceneManager.LoadScene("SplashScreen");
+                if (!optionsManager.sliderMode)
+                {
+                    SceneManager.LoadScene("SplashScreen");
+                }
             }
             else if (SceneManager.GetActiveScene().name == "SplashScreen")
             {

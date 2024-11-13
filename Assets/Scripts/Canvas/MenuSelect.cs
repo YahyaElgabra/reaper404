@@ -14,6 +14,7 @@ public class menuSelect : MonoBehaviour
     List<GameObject> buttons;
     picker pickerScript;
     bool inputAvailable = false;
+    public GameObject optionsMenu;
     
     void Awake()
     {
@@ -45,6 +46,11 @@ public class menuSelect : MonoBehaviour
         
         float x = _menuCursor.x;
         float y = _menuCursor.y;
+        if (optionsMenu.activeSelf == true)
+        {
+            x = 0;
+            y = 0;
+        }
 
         bool left = false;
         bool right = false;
@@ -69,10 +75,16 @@ public class menuSelect : MonoBehaviour
             up = true;
         }
 
-        if (!up && !down && !right && !left)
+        if (!up && !down && !right && !left && !Input.anyKey)
         {
             inputAvailable = true;
         }
+        
+        if (_inputActions.Gameplay.Enter.IsPressed() && optionsMenu.activeSelf == true)
+        {
+            inputAvailable = false;
+        }
+        
 
         if (!inputAvailable)
         {
@@ -90,7 +102,7 @@ public class menuSelect : MonoBehaviour
             inputAvailable = false;
         }
 
-        if (_inputActions.Gameplay.Enter.IsPressed())
+        if (_inputActions.Gameplay.Enter.IsPressed() && optionsMenu.activeSelf == false)
         {
             if (buttons[curr].name == "start")
             {
@@ -98,7 +110,11 @@ public class menuSelect : MonoBehaviour
             }
             else if (buttons[curr].name == "exit")
             {
-                SceneManager.LoadScene("SplashScreen");
+                Application.Quit();
+            }
+            else if (buttons[curr].name == "options") 
+            {
+                optionsMenu.SetActive(true);
             }
         }
 
