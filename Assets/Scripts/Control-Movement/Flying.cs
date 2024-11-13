@@ -75,8 +75,8 @@ public class Flying : MonoBehaviour
         _verticalInput = _moveInput.y; // left/right <-> A/D | left/right arrow keys | joystick left/right
         _horizontalInput = _moveInput.x; // up/down <-> W/S | up/down arrow keys | joystick up/down
         // check for boosting (shift) and braking (ctrl)
-        _isBoosting = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-        _isBraking = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
+        _isBoosting = _inputActions.Gameplay.Run.IsPressed();
+        _isBraking = _inputActions.Gameplay.ThrowHold.IsPressed() || Input.GetKey(KeyCode.LeftControl);
 
         // adjust the forward speed based on input
         AdjustSpeed();

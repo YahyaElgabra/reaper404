@@ -98,6 +98,9 @@ public class Throwing : MonoBehaviour
             endpointInstance = Instantiate(endpointPrefab);
             endpointInstance.SetActive(false);
         }
+
+        _aimSensX *= Mathf.Lerp(0.25f, 3f, PlayerPrefs.GetFloat("cameraSensitivity", 0.25f));
+        _aimSensY *= Mathf.Lerp(0.25f, 3f, PlayerPrefs.GetFloat("cameraSensitivity", 0.25f));
     }
     
     void Update()
