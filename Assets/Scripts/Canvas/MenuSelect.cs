@@ -110,7 +110,7 @@ public class menuSelect : MonoBehaviour
             }
             else if (buttons[curr].name == "exit")
             {
-                Application.Quit();
+                SceneManager.LoadScene("SplashScreen");
             }
             else if (buttons[curr].name == "options") 
             {
