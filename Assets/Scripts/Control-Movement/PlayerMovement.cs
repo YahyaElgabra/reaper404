@@ -5,6 +5,13 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private PlayerInputActions _inputActions;
+    private float _fbInput;
+    private float _rlInput;
+    // private float _udInput;
+    private float _ewInput;
+    private float speedH = 1.5f;
+    
     // ability boolean flags
     public bool _isRunWallJump = false;
     public bool _isTP = false;
@@ -13,15 +20,13 @@ public class PlayerMovement : MonoBehaviour
 
     // flying reaper prefab
     public GameObject flyingReaperPrefab;
-
-    private float _fbInput;
-    private float _lrInput;
+    
     private float _yaw;
     
-    private bool _isGrounded;
-    private bool _isOnWall;
+    public bool _isGrounded;
+    public bool _isOnWall;
     private bool _userJumped;
-    private bool _userWallJumped;
+    public bool _userWallJumped;
     private bool _isHoggingJump = false;
     private bool _jumpDisabled = false;
     public bool _running = false;
@@ -31,31 +36,23 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody _rigidbody;
 
     private const float MoveScale = 40f;
-    private const float maxSpeed = 11.5f;
+    private const float maxSpeed = 12f;
     private const float RunScale = 40f;
-    private const float maxRunningSpeed = 13f;
-    private const float _fakeDrag = 30f;
+    private const float maxRunningSpeed = 18f;
+    private const float maxTPSpeed = 5f;
+    //private const float _fakeDrag = 30f;
+    // Value for force-based drag. We are not using that, we are using velocity-based drag instead. For that, drag must be between 0 and 1.
+    private const float _groundDrag = 0.8f;
+    private const float _airDrag = 0.05f;
     private const float _groundMultiplier = 1f;
-    private const float _groundDragMultiplier = 1f;
+    private const float _minimumSpeedForAirDrag = 0.5f;
 
-
-    private const float RotScale = 2f;
-    private const float WallJumpVertScale = 40f;
-    private const float WallJumpHoriScale = 20f;
+    private const float WallJumpVertScale = 45f;
+    private const float WallJumpHoriScale = 15f;
 
     private const float JumpScale = 40f;
-    private const float maxVerticalSpeed = 0.2f;
     private float _gravityStrength = 80f;
     private float _maxFallingSpeed = 40f;
-
-    private Vector3 _normalizedInputDirection;
-
-
-    private const float _rayLength = 10f;
-    
-    
-    float speedH = 2.0f;
-    
 
     public Camera playerCamera;
     private float defaultFOV = 65f;
@@ -67,7 +64,22 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _baseVelocity = Vector3.zero;
 
     GravityControl gravityControl;
+    
+    void Awake()
+    {
+        _inputActions = new PlayerInputActions();
+    }
 
+    void OnEnable()
+    {
+        _inputActions.Gameplay.Enable();
+    }
+
+    void OnDisable()
+    {
+        _inputActions.Gameplay.Disable();
+    }
+    
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -100,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _baseVelocity = baseVel;
         float currentRelativeSpeed = Vector3.Dot(_rigidbody.velocity, baseVel) / (baseVel.magnitude * baseVel.magnitude);
-        Debug.Log(currentRelativeSpeed);
+        // Debug.Log(currentRelativeSpeed);
         if (currentRelativeSpeed != 1) 
         {
             _rigidbody.AddForce(((1 - (currentRelativeSpeed))/baseVel.magnitude)*baseVel, ForceMode.VelocityChange);
@@ -114,20 +126,26 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        _fbInput = Input.GetAxisRaw("Vertical");
-        _lrInput = Input.GetAxisRaw("Horizontal");
-
+        Vector2 _moveInput = _inputActions.Gameplay.Move.ReadValue<Vector2>();
+        
+        _fbInput = _moveInput.y;
+        _rlInput = _moveInput.x;
+        
+        Vector2 _lookInput = _inputActions.Gameplay.Look.ReadValue<Vector2>();
+        
+        // _udInput = _lookInput.y;
+        _ewInput = _lookInput.x;
         
         if (!Throwing.isAiming)
         {
-            _yaw += speedH* (Input.GetAxis("Mouse X") + Input.GetAxis("RJoy X"));
+            _yaw += speedH* _ewInput * Mathf.Lerp(0.25f, 3f, PlayerPrefs.GetFloat("cameraSensitivity", 0.25f));
         }
         else
         {
             _yaw = 0.0f;
         }
         
-        if ((Input.GetKey(KeyCode.LeftShift) || Input.GetButton("Fire2")) && _isRunWallJump)
+        if (_inputActions.Gameplay.Run.IsPressed() && _isRunWallJump)
         {
             _running = true;
         }
@@ -139,7 +157,8 @@ public class PlayerMovement : MonoBehaviour
         float targetFOV = _running ? sprintFOV : defaultFOV;
         playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, Time.deltaTime * fovTransitionSpeed);
         
-        if (Input.GetButton("Jump") && !_jumpDisabled && !_isHoggingJump){
+        if (_inputActions.Gameplay.Jump.IsPressed() && !_jumpDisabled && !_isHoggingJump && !_isTP)
+        {
             if (_isGrounded && !_userWallJumped)
             {
                 _isHoggingJump = true;
@@ -153,16 +172,16 @@ public class PlayerMovement : MonoBehaviour
                 _isOnWall = false;
             }
         }
-        if (!Input.GetButton("Jump"))
+        if (!_inputActions.Gameplay.Jump.IsPressed())
         {
             _isHoggingJump = false;
         }
 
-        if (_isGrav && (Input.GetKeyDown(KeyCode.Z) || Input.GetButtonUp("Fire4")))
+        if (_isGrav && _inputActions.Gameplay.GravLeft.IsPressed())
         {
             gravityControl.RotateGravity(0);
         }
-        else if (_isGrav && (Input.GetKeyDown(KeyCode.X) || Input.GetButtonUp("Fire5")))
+        else if (_isGrav && _inputActions.Gameplay.GravRight.IsPressed())
         {
             gravityControl.RotateGravity(1);
         }
@@ -198,7 +217,7 @@ public class PlayerMovement : MonoBehaviour
         _yaw = 0.0f;
 
 
-        Vector3 _normalizedInputDirection = Vector3.Normalize(transform.forward * _fbInput + transform.right * _lrInput); 
+        Vector3 _normalizedInputDirection = Vector3.Normalize(transform.forward * _fbInput + transform.right * _rlInput); 
         ApplyFakeDrag(_normalizedInputDirection);
         ApplyFakeGrav();
 
@@ -235,6 +254,10 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 _lossFromRecentWallJump = _prevNormalizedWallJumpHori * Vector3.Dot(_normalizedInputDirection, _prevNormalizedWallJumpHori);
         Vector3 _finalDirection = _normalizedInputDirection - _lossFromRecentWallJump;
+        if (_isTP)
+        {
+            _finalDirection *= 0.1f;
+        }
 
         if (!_running)
         {
@@ -249,6 +272,18 @@ public class PlayerMovement : MonoBehaviour
         }
         else {
             _rigidbody.AddForce(_finalDirection * RunScale, ForceMode.Force);
+        }
+
+        if (_isTP)
+        {
+            Vector3 horizontalVelocity = new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z);
+
+            if (horizontalVelocity.magnitude > maxTPSpeed)
+            {
+                horizontalVelocity = horizontalVelocity.normalized * maxTPSpeed;
+            }
+
+            _rigidbody.velocity = new Vector3(horizontalVelocity.x, _rigidbody.velocity.y, horizontalVelocity.z);
         }
 
         if (_userJumped)
@@ -267,6 +302,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (_userWallJumped)
         {
+            // Debug.Log("wj");
             _userWallJumped = false;
             _isOnWall = false;
 
@@ -278,9 +314,12 @@ public class PlayerMovement : MonoBehaviour
 
             _prevNormalizedWallJumpHori = _horiNormalToWall;
             //Player will be unable to move in this ^ direction for a short period of time, see RegainFullHoriControl
+            Vector3 finalHori = -1 * (_horiNormalToWall * WallJumpHoriScale);
+            
+            _rigidbody.AddForce(finalHori, ForceMode.VelocityChange);
+            _rigidbody.AddForce(-GetHorizontalVel(), ForceMode.VelocityChange);
 
-            _rigidbody.AddForce(-1*(_horiNormalToWall * WallJumpHoriScale), ForceMode.VelocityChange);
-            _rigidbody.AddForce(transform.up * Math.Max((WallJumpVertScale - upVelocity), 0), ForceMode.VelocityChange);
+            _rigidbody.AddForce(-gravityDirection * Math.Max((WallJumpVertScale - upVelocity), 0), ForceMode.VelocityChange);
             _jumpDisabled = true;
             StartCoroutine(RegainJump());
             StartCoroutine(RegainFullHoriControl());
@@ -289,16 +328,24 @@ public class PlayerMovement : MonoBehaviour
 
     void ApplyFakeDrag(Vector3 input)
     {
+        if (_prevNormalizedWallJumpHori != Vector3.zero)
+        {
+            return;
+        }
         Vector3 horizontal = GetHorizontalVel();
-        Vector3 drag = (horizontal - (input * Vector3.Dot(horizontal, input))) * (_fakeDrag);
+        Vector3 withoutInput = (horizontal - (input * Vector3.Dot(horizontal, input)));
+
+        Vector3 drag = withoutInput * -1;
         if (_isGrounded)
         {
-
-            _rigidbody.AddForce(drag * -1 * _groundDragMultiplier, ForceMode.Force);
+            _rigidbody.AddForce(drag * _groundDrag, ForceMode.VelocityChange);
         }
-        else 
+        else if (drag.magnitude > _minimumSpeedForAirDrag)
         {
-            _rigidbody.AddForce(drag * -1, ForceMode.Force);
+
+            _rigidbody.AddForce(drag * _airDrag, ForceMode.VelocityChange);
+            //Debug.Log("velocity: " + horizontal.ToString());
+            //Debug.Log(drag);
         }
 
     }
@@ -327,7 +374,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator RegainFullHoriControl()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.32f);
         _prevNormalizedWallJumpHori = Vector3.zero;
     }
 

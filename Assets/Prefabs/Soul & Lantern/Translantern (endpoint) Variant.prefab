@@ -53,6 +53,18 @@ PrefabInstance:
       value: Translantern (endpoint) Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5534831035950659626, guid: 42dbe2eecddda1248a7eeae3ae3065a3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.0578609
+      objectReference: {fileID: 0}
+    - target: {fileID: 5534831035950659626, guid: 42dbe2eecddda1248a7eeae3ae3065a3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.0578609
+      objectReference: {fileID: 0}
+    - target: {fileID: 5534831035950659626, guid: 42dbe2eecddda1248a7eeae3ae3065a3, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.0578609
+      objectReference: {fileID: 0}
+    - target: {fileID: 5534831035950659626, guid: 42dbe2eecddda1248a7eeae3ae3065a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.6
       objectReference: {fileID: 0}

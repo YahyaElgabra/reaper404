@@ -1,23 +1,103 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
 {
-    private void Update()
+    private PlayerInputActions _inputActions;
+    public GameObject help;
+    GameObject winScreen;
+    void Awake()
     {
-        if (Input.GetButton("Cancel"))
+        _inputActions = new PlayerInputActions();
+        if (help != null)
         {
-            SceneManager.LoadScene("MainMenu");
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+            help.SetActive(false);
         }
     }
 
-    public void LoadLevel(string levelName)
+    private void Start()
     {
-        Debug.Log("Loading Level: " + levelName);
-        SceneManager.LoadScene(levelName);
+        foreach (Transform child in transform)
+        {
+            if (child.CompareTag("WinScreen"))
+            {
+                winScreen = child.gameObject;
+                break;
+            }
+        }
+    }
+    void OnEnable()
+    {
+        _inputActions.Gameplay.Enable();
+    }
+
+    void OnDisable()
+    {
+        _inputActions.Gameplay.Disable();
+    }
+    
+    private void Update()
+    {
+        if (_inputActions.Gameplay.Escape.IsPressed() || _inputActions.Gameplay.GravRight.IsPressed())
+        {
+            if (SceneManager.GetActiveScene().name == "LevelSelect")
+            {
+                SceneManager.LoadScene("MainMenu");
+            }
+            else if (SceneManager.GetActiveScene().name == "SplashScreen")
+            {
+                return;
+            }
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+
+        if (_inputActions.Gameplay.Escape.IsPressed() && 
+            (SceneManager.GetActiveScene().name != "LevelSelect" &&
+             SceneManager.GetActiveScene().name != "SplashScreen"))
+        {
+            if (SceneManager.GetActiveScene().name == "MainMenu") 
+            {
+                if (!optionsManager.sliderMode)
+                {
+                    SceneManager.LoadScene("SplashScreen");
+                }
+            }
+            else
+            {
+                SceneManager.LoadScene("LevelSelect");
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None; 
+            }
+        }
+        
+        if (_inputActions.Gameplay.Help.WasPressedThisFrame())
+        {
+            if (help != null)
+            {
+                help.SetActive(!help.activeSelf);
+            }
+        }
+        if (winScreen == null)
+        {
+            foreach (Transform child in transform)
+            {
+                if (child.CompareTag("WinScreen"))
+                {
+                    winScreen = child.gameObject;
+                    break;
+                }
+            }
+        }
+        else if (winScreen.activeSelf && _inputActions.Gameplay.Jump.IsPressed())
+        {
+            winScreen.SetActive(false);
+            List<string> levels = LevelSelectPicker.levelOrder;
+            int nextIndex = levels.IndexOf(SceneManager.GetActiveScene().name) + 1;
+            SceneManager.LoadScene(levels[nextIndex]);
+        }
     }
 }

@@ -1,56 +1,61 @@
 using System.Collections;
 using UnityEngine;
 
-public class DisappearingPlatform : MonoBehaviour
+public class PlatformTrigger : MonoBehaviour
 {
-    public GameObject hitboxObject; // Assign the hitbox GameObject in the Inspector
-    public float shakeDuration = 1f; // Duration for shaking
-    public float shakeIntensity = 0.1f; // Intensity of shake (how far it moves)
+    public GameObject platformObject;
+    public float shakeDuration = 1f;
+    public float timeLeft;
+    public float shakeMagnitude = 0.1f;
 
     private Vector3 originalPosition;
     private bool isShaking = false;
 
-    void Start()
-    {
-        originalPosition = transform.position;
-    }
+    public AudioSource audioSource;
 
-    private void OnTriggerEnter(Collider other)
+    private void Start()
     {
-        if (other.CompareTag("Player") && !isShaking)
+        timeLeft = shakeDuration;
+        if (platformObject != null)
         {
-            StartCoroutine(ShakeAndDisappear());
+            originalPosition = platformObject.transform.position;
+        }
+        else
+        {
+            Debug.LogWarning("platform object not assigned");
         }
     }
 
-    private IEnumerator ShakeAndDisappear()
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && !isShaking && platformObject != null)
+        {
+            StartCoroutine(ShakeAndDestroyPlatform());
+        }
+    }
+
+    private IEnumerator ShakeAndDestroyPlatform()
     {
         isShaking = true;
-        float elapsedTime = 0f;
+        audioSource.Play();
 
-        while (elapsedTime < shakeDuration)
+        while (timeLeft > 0)
         {
-            // Apply a quick shake effect without modifying mesh or bounds
             Vector3 shakeOffset = new Vector3(
-                Random.Range(-shakeIntensity, shakeIntensity),
+                Random.Range(-shakeMagnitude, shakeMagnitude),
                 0,
-                Random.Range(-shakeIntensity, shakeIntensity)
+                Random.Range(-shakeMagnitude, shakeMagnitude)
             );
 
-            transform.position = originalPosition + shakeOffset;
+            platformObject.transform.position = originalPosition + shakeOffset;
 
-            elapsedTime += Time.deltaTime;
+            timeLeft -= Time.deltaTime;
             yield return null;
         }
 
-        // Reset position before destroying
-        transform.position = originalPosition;
+        platformObject.transform.position = originalPosition;
 
-        // Destroy the hitbox object and then the platform itself
-        if (hitboxObject != null)
-        {
-            Destroy(hitboxObject); // Delete the hitbox object
-        }
-        Destroy(gameObject); // Delete the platform itself
+        Destroy(platformObject);
+        Destroy(gameObject);
     }
 }

@@ -5,7 +5,6 @@ using UnityEngine;
 public class jumpHitbox : MonoBehaviour
 {
     public PlayerMovement player;
-    private string _previousTouched;
     private HashSet<string> _latest;
     private Vector3 baseVel;
     // Start is called before the first frame update
@@ -17,15 +16,25 @@ public class jumpHitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider trigger)
     {
-        if (trigger.name != _previousTouched)
+        player.SetIsGrounded(true);
+        //Debug.Log("Ground at " + trigger.name);
+
+        
+        if (trigger.tag == "DisappearingPlatform")
         {
-            _previousTouched = trigger.name;
-            player.SetIsGrounded(true);
-            //Debug.Log("Ground");
-            
+            float time = trigger.GetComponent<PlatformTrigger>().timeLeft;
+            string name = trigger.transform.parent.name;
+            StartCoroutine(RemoveDisappeared(name, time));
+            _latest.Add(name);
+        }
+        else if (trigger.tag == "MovingPlatform")
+        {
+            string name = trigger.transform.parent.name;
+            _latest.Add(name);
+        }
+        else
+        {
             _latest.Add(trigger.name);
-            _previousTouched = "";
-            //StartCoroutine(WipePrevious());s
         }
     }
 
@@ -33,17 +42,29 @@ public class jumpHitbox : MonoBehaviour
     {
         if (trigger.tag == "MovingPlatform" && trigger.GetComponent<Rigidbody>().velocity != baseVel)
         {
-            baseVel = trigger.GetComponent<Rigidbody>().velocity;
-            player.SetBaseVelocity(trigger.GetComponent<Rigidbody>().velocity);
-            Debug.Log(trigger.GetComponent<Rigidbody>().velocity);
+            if (trigger.GetComponent<movingPlatform>()._moving == true) {
+                baseVel = trigger.GetComponent<Rigidbody>().velocity;
+                player.SetBaseVelocity(trigger.GetComponent<Rigidbody>().velocity);
+                //Debug.Log(trigger.GetComponent<Rigidbody>().velocity);
+            }
+            else
+            {
+                player.RemoveBaseVelocity();
+            }
         }
     }
 
     private void OnTriggerExit(Collider trigger)
     {
-        if (_latest.Contains(trigger.name))
+        string name = trigger.name;
+        if (trigger.tag == "MovingPlatform" | trigger.tag == "DisappearingPlatform")
         {
-            _latest.Remove(trigger.name);
+            name = trigger.transform.parent.name;
+        }
+        if (_latest.Contains(name))
+        {
+            _latest.Remove(name);
+            //Debug.Log("Lost a real one: " + trigger.name);
         }
         if (_latest.Count == 0) { 
             player.SetIsGrounded(false);
@@ -56,9 +77,24 @@ public class jumpHitbox : MonoBehaviour
         }
     }
 
-    private IEnumerator WipePrevious()
+    IEnumerator RemoveDisappeared(string platformToDelete, float time)
     {
-        yield return new WaitForSeconds(0.7f);
-        _previousTouched = "";
+        float elapsedTime = 0f;
+
+        while (time > elapsedTime)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        if (_latest.Contains(platformToDelete))
+        {
+            _latest.Remove(platformToDelete);
+            //Debug.Log("Deleted a real one: " + platformToDelete);
+        }
+        if (_latest.Count == 0)
+        {
+            player.SetIsGrounded(false);
+            //Debug.Log("Air");
+        }
     }
 }

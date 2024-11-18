@@ -5,15 +5,17 @@ using UnityEngine;
 public class movingPlatform : MonoBehaviour
 {
     public float moveTarget;
-    public float moveSpeed = 3f;
+    private float moveSpeed = 5f;
     public Material lineMaterial;
     private Rigidbody rb;
     private GameObject _spawnedPillar;
     private Vector3 _initialLocation;
     private bool _alreadyTriggered = false;
-    private bool _moving = false;
+    public bool _moving = false;
     private LineRenderer lr;
     private Vector3 displacementFactor;
+
+    public AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -47,7 +49,6 @@ public class movingPlatform : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && !_alreadyTriggered)
         {
-            Debug.Log("player");
             _alreadyTriggered = true;
             _moving = true;
             StartCoroutine(move());
@@ -56,7 +57,7 @@ public class movingPlatform : MonoBehaviour
 
     IEnumerator move()
     {
-        
+        audioSource.Play();
 
         while (((_initialLocation + transform.forward * moveTarget)-transform.position).sqrMagnitude > 0.1)
         {

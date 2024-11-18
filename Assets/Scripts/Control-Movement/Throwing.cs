@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Throwing : MonoBehaviour
 {
+    private PlayerInputActions _inputActions;
+    private float _udInput;
+    private float _ewInput;
+    
     public Transform playerTransform;
     private bool isHeld = false;
     private Vector3 offset = new Vector3(1f, 2f, 1f);
@@ -20,7 +25,7 @@ public class Throwing : MonoBehaviour
     
     public static bool isAiming = false;
     private LineRenderer trajectoryLine;
-    private int trajectoryPointsCount = 30;
+    private int trajectoryPointsCount = 50;
     private float timeBetweenPoints = 0.1f;
 
     private float aimHorizontal;
@@ -31,8 +36,8 @@ public class Throwing : MonoBehaviour
     private float _minAimAngleX = -45f;
     private float _maxAimAngleY = 85f;
     private float _minAimAngleY = -25f;
-    private float _aimSensX = 0.05f;
-    private float _aimSensY = 0.1f;
+    private float _aimSensX = 0.01f;
+    private float _aimSensY = 0.01f;
     
     private Camera playerCamera;
     private MonoBehaviour cameraController;
@@ -45,12 +50,41 @@ public class Throwing : MonoBehaviour
     public GameObject endpointPrefab;
     private GameObject endpointInstance;
     
+    public Material circleMaterial;
+    private List<LineRenderer> circleRenderers = new List<LineRenderer>();
+    
+    private GameObject playerModel;
+    private Transform originalCameraParent;
+    private bool isFollowingLantern = false;
+    
+    private bool hasCanceledThrow = false;
+    
+    private AudioSource[] _audioSources;
+    
+    void Awake()
+    {
+        _inputActions = new PlayerInputActions();
+    }
+
+    void OnEnable()
+    {
+        _inputActions.Gameplay.Enable();
+    }
+
+    void OnDisable()
+    {
+        _inputActions.Gameplay.Disable();
+    }
+    
     void Start()
     {
         playerTransform = this.transform;
         GameObject playerObject = GameObject.FindWithTag("Player");
         
         playerCamera = GetComponentInChildren<Camera>();
+        
+        playerModel = GameObject.FindWithTag("Player");
+        originalCameraParent = playerCamera.transform.parent;
         
         cameraController = playerCamera.GetComponent<MonoBehaviour>();
         
@@ -66,12 +100,17 @@ public class Throwing : MonoBehaviour
             endpointInstance = Instantiate(endpointPrefab);
             endpointInstance.SetActive(false);
         }
+
+        _aimSensX *= Mathf.Lerp(0.25f, 3f, PlayerPrefs.GetFloat("cameraSensitivity", 0.25f));
+        _aimSensY *= Mathf.Lerp(0.25f, 3f, PlayerPrefs.GetFloat("cameraSensitivity", 0.25f));
+        
+        _audioSources = GetComponents<AudioSource>();
     }
     
     void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.C) || Input.GetButtonDown("Fire3")) && 
-            !isHeld && charges > 0 && !isThrown && playerMovement._isTP)
+        if (_inputActions.Gameplay.ThrowHold.IsPressed() && 
+            !isHeld && charges > 0 && !isThrown && playerMovement._isTP && !hasCanceledThrow)
         {
             SpawnThrowableObject();
         }
@@ -80,23 +119,41 @@ public class Throwing : MonoBehaviour
         {
             currentThrowable.transform.position = playerTransform.position + playerTransform.rotation * offset;
             
-            if (Input.GetKey(KeyCode.C) || Input.GetButton("Fire3"))
+            if (_inputActions.Gameplay.ThrowHold.IsPressed() && !hasCanceledThrow)
             {
                 EnterAimMode();
             }
             
-            if ((Input.GetKeyUp(KeyCode.C) || Input.GetButtonUp("Fire3")) && isAiming)
+            // Add cancel throw check
+            if (_inputActions.Gameplay.Jump.WasPerformedThisFrame() && isAiming)
+            {
+                CancelThrow();
+                hasCanceledThrow = true;
+            }
+            
+            if (_inputActions.Gameplay.ThrowRelease.WasPerformedThisFrame() && isAiming)
             {
                 ThrowObject();
             }
         }
+        
+        if (_inputActions.Gameplay.ThrowHold.WasReleasedThisFrame())
+        {
+            hasCanceledThrow = false;
+        }
+        
+        if (isFollowingLantern && currentThrowable != null)
+        {
+            playerCamera.transform.position = currentThrowable.transform.position;
+            playerCamera.transform.rotation = Quaternion.LookRotation(currentThrowable.transform.forward);
+        }
     }
-    
+
     private void SpawnThrowableObject()
     {
         if (charges > 0)
         {
-            currentThrowable = Instantiate(throwablePrefab, playerTransform.position + playerTransform.rotation * offset, Quaternion.identity);
+            currentThrowable = Instantiate(throwablePrefab, playerTransform.position + playerTransform.rotation * offset, playerTransform.rotation);
 
             currentThrowableScript = currentThrowable.GetComponent<Throwable>();
             
@@ -107,12 +164,6 @@ public class Throwing : MonoBehaviour
             
             isHeld = true;
             isThrown = false;
-            
-            charges--;
-            if (abilitiesUI != null)
-            {
-                abilitiesUI.updateCharges(charges);
-            }
         }
     }
     
@@ -121,6 +172,8 @@ public class Throwing : MonoBehaviour
         if (!isAiming)
         {
             isAiming = true;
+
+            PlayAimAudio();
             
             if (cameraController != null)
                 cameraController.enabled = false;
@@ -139,8 +192,13 @@ public class Throwing : MonoBehaviour
     
     private void UpdateAimDirection()
     {
-        aimHorizontal = Input.GetAxis("RJoy X") + Input.GetAxis("Mouse X");
-        aimVertical = Input.GetAxis("RJoy Y") - Input.GetAxis("Mouse Y");
+        Vector2 _lookInput = _inputActions.Gameplay.Look.ReadValue<Vector2>();
+        
+        _udInput = _lookInput.y;
+        _ewInput = _lookInput.x;
+        
+        aimHorizontal = - - _ewInput;
+        aimVertical = - _udInput;
         
         Vector3 right = playerTransform.right;
         Vector3 up = playerTransform.up;
@@ -192,14 +250,18 @@ public class Throwing : MonoBehaviour
                 trajectoryLine.positionCount = i + 1;
                 
                 float surfaceAngle = Vector3.Angle(hit.normal, Vector3.up);
-            
-                if (surfaceAngle < 45f)
+                bool isFlatSurface = surfaceAngle < 45f;
+                bool isFinishSurface = hit.collider.CompareTag("Finish");
+                
+                if (isFlatSurface || isFinishSurface)
                 {
                     if (endpointInstance != null)
                     {
                         endpointInstance.transform.position = hit.point + Vector3.up * 0.5f;
                         endpointInstance.SetActive(true); 
                     }
+                    
+                    DrawConcentricCircles(hit.point);
                 }
                 else
                 {
@@ -207,6 +269,8 @@ public class Throwing : MonoBehaviour
                     {
                         endpointInstance.SetActive(false);
                     }
+                    
+                    ClearConcentricCircles();
                 }
                 
                 break;
@@ -219,9 +283,57 @@ public class Throwing : MonoBehaviour
                 {
                     endpointInstance.SetActive(false);
                 }
+                
+                ClearConcentricCircles();
             }
             previousPoint = pointPosition;
         }
+    }
+    
+    private void DrawConcentricCircles(Vector3 center)
+    {
+        int numberOfCircles = 3;
+        float initialRadius = 0.5f;
+        float radiusIncrement = 1.0f;
+        int segments = 30;
+        
+        ClearConcentricCircles();
+
+        for (int i = 0; i < numberOfCircles; i++)
+        {
+            LineRenderer lineRenderer = new GameObject($"Circle_{i}").AddComponent<LineRenderer>();
+            lineRenderer.positionCount = segments + 1;
+            lineRenderer.startWidth = 0.05f;
+            lineRenderer.endWidth = 0.05f;
+            lineRenderer.useWorldSpace = false;
+            lineRenderer.material = circleMaterial;
+            
+            float radius = initialRadius + i * 2 * radiusIncrement;
+            Vector3[] positions = new Vector3[segments + 1];
+        
+            for (int j = 0; j <= segments; j++)
+            {
+                float angle = j * 2 * Mathf.PI / segments;
+                positions[j] = new Vector3(Mathf.Cos(angle) * radius, 0, Mathf.Sin(angle) * radius);
+            }
+
+            lineRenderer.SetPositions(positions);
+            
+            lineRenderer.transform.position = center;
+            circleRenderers.Add(lineRenderer);
+        }
+    }
+
+    private void ClearConcentricCircles()
+    {
+        foreach (var lineRenderer in circleRenderers)
+        {
+            if (lineRenderer != null)
+            {
+                Destroy(lineRenderer.gameObject);
+            }
+        }
+        circleRenderers.Clear();
     }
     
     private void ThrowObject()
@@ -231,16 +343,26 @@ public class Throwing : MonoBehaviour
             isHeld = false;
             isThrown = true;
             isAiming = false;
+
+            PlayThrowAudio();
             
             trajectoryLine.positionCount = 0;
             
             if (endpointInstance != null)
                 endpointInstance.SetActive(false);
             
+            ClearConcentricCircles();
+            
             if (cameraController != null)
                 cameraController.enabled = true;
             
             currentThrowableScript.Throw(aimDirection, throwForce);
+            
+            if (playerModel != null)
+                playerModel.SetActive(false);
+
+            playerCamera.transform.SetParent(currentThrowable.transform);
+            isFollowingLantern = true;
         }
         
         isHeld = false;
@@ -248,15 +370,103 @@ public class Throwing : MonoBehaviour
     
     public void TeleportPlayerAndDestroy(GameObject throwable)
     {
-        playerTransform.position = throwable.transform.position;
+        playerTransform.position = throwable.transform.position + Vector3.up * 1.0f;
+        
+        charges--;
+        if (abilitiesUI != null)
+        {
+            abilitiesUI.updateCharges(charges);
+        }
+        
+        if (playerModel != null)
+            playerModel.SetActive(true);
 
+        playerCamera.transform.SetParent(originalCameraParent);
+        playerCamera.transform.localPosition = Vector3.zero;
+        playerCamera.transform.localRotation = Quaternion.identity;
+
+        isFollowingLantern = false;
+    
         Destroy(throwable);
         isThrown = false;
+
+        PlayTeleportAudio();
+        
+        if (charges == 0)
+        {
+            StartCoroutine(OutOfCharge());
+        }
+    }
+
+    IEnumerator OutOfCharge()
+    {
+        float elapsedTime = 0f;
+
+        while (2.5f > elapsedTime)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);   
     }
     
     public void OnThrowableHitDeath(GameObject throwable)
     {
+        if (playerModel != null)
+            playerModel.SetActive(true);
+
+        playerCamera.transform.SetParent(originalCameraParent);
+        playerCamera.transform.localPosition = Vector3.zero;
+        playerCamera.transform.localRotation = Quaternion.identity;
+
+        isFollowingLantern = false;
+        
         Destroy(throwable);
         isThrown = false;
+    }
+    
+    private void CancelThrow()
+    {
+        if (isAiming && isHeld)
+        {
+            isAiming = false;
+            isHeld = false;
+            
+            if (trajectoryLine != null)
+            {
+                trajectoryLine.positionCount = 0;
+            }
+            ClearConcentricCircles();
+            
+            if (cameraController != null)
+            {
+                cameraController.enabled = true;
+            }
+            
+            if (currentThrowable != null)
+            {
+                Destroy(currentThrowable);
+            }
+            
+            if (endpointInstance != null)
+            {
+                endpointInstance.SetActive(false);
+            }
+        }
+    }
+    
+    private void PlayTeleportAudio()
+    {
+        _audioSources[2].Play();
+    }
+    private void PlayThrowAudio()
+    {
+        _audioSources[3].Play();
+    }
+    
+    private void PlayAimAudio()
+    {
+        _audioSources[4].Play();
     }
 }
