@@ -40,7 +40,7 @@ public class Throwing : MonoBehaviour
     private float _aimSensY = 0.01f;
     
     private Camera playerCamera;
-    private MonoBehaviour cameraController;
+    // private MonoBehaviour cameraController;
 
     AbilitiesUI abilitiesUI;
     public int charges;
@@ -86,7 +86,7 @@ public class Throwing : MonoBehaviour
         playerModel = GameObject.FindWithTag("Player");
         originalCameraParent = playerCamera.transform.parent;
         
-        cameraController = playerCamera.GetComponent<MonoBehaviour>();
+        // cameraController = playerCamera.GetComponent<MonoBehaviour>();
         
         playerMovement = playerObject.GetComponent<PlayerMovement>();
         GameObject abilitiesObject = GameObject.FindGameObjectWithTag("AbilitiesUI");
@@ -124,13 +124,13 @@ public class Throwing : MonoBehaviour
                 EnterAimMode();
             }
             
-            if (_inputActions.Gameplay.Jump.WasPerformedThisFrame() && isAiming)
+            if (_inputActions.Gameplay.ThrowRelease.WasPerformedThisFrame() && isAiming)
             {
                 CancelThrow();
                 hasCanceledThrow = true;
             }
             
-            if (_inputActions.Gameplay.ThrowRelease.WasPerformedThisFrame() && isAiming)
+            if (_inputActions.Gameplay.Jump.WasPerformedThisFrame() && isAiming)
             {
                 ThrowObject();
             }
@@ -174,8 +174,8 @@ public class Throwing : MonoBehaviour
 
             PlayAimAudio();
             
-            if (cameraController != null)
-                cameraController.enabled = false;
+            // if (cameraController != null)
+            //     cameraController.enabled = false;
             
             aimDirection = playerTransform.forward;
             
@@ -191,10 +191,10 @@ public class Throwing : MonoBehaviour
     
     private void UpdateAimDirection()
     {
-        Vector2 _lookInput = _inputActions.Gameplay.Look.ReadValue<Vector2>();
+        Vector2 _aimInput = _inputActions.Gameplay.Move.ReadValue<Vector2>();
         
-        _udInput = _lookInput.y;
-        _ewInput = _lookInput.x;
+        _udInput = _aimInput.y;
+        _ewInput = _aimInput.x;
         
         aimHorizontal = - - _ewInput;
         aimVertical = - _udInput;
@@ -352,8 +352,8 @@ public class Throwing : MonoBehaviour
             
             ClearConcentricCircles();
             
-            if (cameraController != null)
-                cameraController.enabled = true;
+            // if (cameraController != null)
+            //     cameraController.enabled = true;
             
             currentThrowableScript.Throw(aimDirection, throwForce);
             
@@ -438,10 +438,10 @@ public class Throwing : MonoBehaviour
             }
             ClearConcentricCircles();
             
-            if (cameraController != null)
-            {
-                cameraController.enabled = true;
-            }
+            // if (cameraController != null)
+            // {
+            //     cameraController.enabled = true;
+            // }
             
             if (currentThrowable != null)
             {

@@ -136,14 +136,7 @@ public class PlayerMovement : MonoBehaviour
         // _udInput = _lookInput.y;
         _ewInput = _lookInput.x;
         
-        if (!Throwing.isAiming)
-        {
-            _yaw += speedH* _ewInput * Mathf.Lerp(0.25f, 3f, PlayerPrefs.GetFloat("cameraSensitivity", 0.25f));
-        }
-        else
-        {
-            _yaw = 0.0f;
-        }
+        _yaw += speedH* _ewInput * Mathf.Lerp(0.25f, 3f, PlayerPrefs.GetFloat("cameraSensitivity", 0.25f));
         
         if (_inputActions.Gameplay.Run.IsPressed() && _isRunWallJump)
         {
