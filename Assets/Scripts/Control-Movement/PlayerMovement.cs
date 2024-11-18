@@ -256,7 +256,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 _finalDirection = _normalizedInputDirection - _lossFromRecentWallJump;
         if (_isTP)
         {
-            _finalDirection *= 0.1f;
+            _finalDirection *= 0.0f;
         }
 
         if (!_running)
@@ -274,17 +274,17 @@ public class PlayerMovement : MonoBehaviour
             _rigidbody.AddForce(_finalDirection * RunScale, ForceMode.Force);
         }
 
-        if (_isTP)
-        {
-            Vector3 horizontalVelocity = new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z);
-
-            if (horizontalVelocity.magnitude > maxTPSpeed)
-            {
-                horizontalVelocity = horizontalVelocity.normalized * maxTPSpeed;
-            }
-
-            _rigidbody.velocity = new Vector3(horizontalVelocity.x, _rigidbody.velocity.y, horizontalVelocity.z);
-        }
+        // if (_isTP)
+        // {
+        //     Vector3 horizontalVelocity = new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z);
+        //
+        //     if (horizontalVelocity.magnitude > maxTPSpeed)
+        //     {
+        //         horizontalVelocity = horizontalVelocity.normalized * maxTPSpeed;
+        //     }
+        //
+        //     _rigidbody.velocity = new Vector3(horizontalVelocity.x, _rigidbody.velocity.y, horizontalVelocity.z);
+        // }
 
         if (_userJumped)
         {

@@ -32,10 +32,10 @@ public class Throwing : MonoBehaviour
     private float aimVertical;
     private Vector3 aimDirection;
     
-    private float _maxAimAngleX = 45f;
-    private float _minAimAngleX = -45f;
-    private float _maxAimAngleY = 85f;
-    private float _minAimAngleY = -25f;
+    private float _maxAimAngleX = 60f;
+    private float _minAimAngleX = -60f;
+    private float _maxAimAngleY = 90f;
+    private float _minAimAngleY = -60f;
     private float _aimSensX = 0.01f;
     private float _aimSensY = 0.01f;
     
@@ -124,7 +124,6 @@ public class Throwing : MonoBehaviour
                 EnterAimMode();
             }
             
-            // Add cancel throw check
             if (_inputActions.Gameplay.Jump.WasPerformedThisFrame() && isAiming)
             {
                 CancelThrow();
@@ -242,7 +241,7 @@ public class Throwing : MonoBehaviour
         {
             float t = i * timeBetweenPoints;
             Vector3 pointPosition = startPos + t * startVelocity;
-            pointPosition.y = startPos.y + (startVelocity.y * t) + (0.5f * (Physics.gravity.y - 0.1f) * t * t);
+            pointPosition.y = startPos.y + (startVelocity.y * t) + (0.5f * Physics.gravity.y * t * t);
             
             if (Physics.Raycast(previousPoint, pointPosition - previousPoint, out RaycastHit hit, (pointPosition - previousPoint).magnitude))
             {
