@@ -58,6 +58,8 @@ public class Throwing : MonoBehaviour
     private bool isFollowingLantern = false;
     
     private bool hasCanceledThrow = false;
+    private Vector3 lastAimDirection;
+    private float angle;
     
     private AudioSource[] _audioSources;
     
@@ -87,6 +89,9 @@ public class Throwing : MonoBehaviour
         originalCameraParent = playerCamera.transform.parent;
         
         // cameraController = playerCamera.GetComponent<MonoBehaviour>();
+        
+        lastAimDirection = Vector3.zero;
+        angle = 45F;
         
         playerMovement = playerObject.GetComponent<PlayerMovement>();
         GameObject abilitiesObject = GameObject.FindGameObjectWithTag("AbilitiesUI");
@@ -161,6 +166,11 @@ public class Throwing : MonoBehaviour
                 currentThrowableScript.Initialize(this);
             }
             
+            if (lastAimDirection == Vector3.zero) 
+            {
+                lastAimDirection = playerCamera.transform.forward;
+            }
+            
             isHeld = true;
             isThrown = false;
         }
@@ -177,12 +187,27 @@ public class Throwing : MonoBehaviour
             // if (cameraController != null)
             //     cameraController.enabled = false;
             
-            aimDirection = playerTransform.forward;
-            
-            float angle = 45f;
-            float throwHeight = Mathf.Tan(angle * Mathf.Deg2Rad);
-            aimDirection.y += throwHeight;
-            aimDirection.Normalize();
+            aimDirection = lastAimDirection;
+
+            if (aimDirection == playerCamera.transform.forward)
+            {
+                angle = 45f;
+                float throwHeight = Mathf.Tan(angle * Mathf.Deg2Rad);
+                aimDirection.y += throwHeight;
+                aimDirection.Normalize();
+            }
+            else
+            {
+                angle = Mathf.Atan2(aimDirection.y, Mathf.Sqrt(aimDirection.x * aimDirection.x + aimDirection.z * aimDirection.z)) * Mathf.Rad2Deg;
+                
+                float throwHeight = Mathf.Tan(angle * Mathf.Deg2Rad);
+
+                if (Mathf.Abs(throwHeight) > 1.0f)
+                {
+                    aimDirection.y += throwHeight;
+                    aimDirection.Normalize();
+                }
+            }
         }
         
         UpdateAimDirection();
@@ -357,6 +382,8 @@ public class Throwing : MonoBehaviour
             
             currentThrowableScript.Throw(aimDirection, throwForce);
             
+            lastAimDirection = Vector3.zero;
+            
             if (playerModel != null)
                 playerModel.SetActive(false);
 
@@ -442,6 +469,8 @@ public class Throwing : MonoBehaviour
             // {
             //     cameraController.enabled = true;
             // }
+            
+            lastAimDirection = aimDirection;
             
             if (currentThrowable != null)
             {
