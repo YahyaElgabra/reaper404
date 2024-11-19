@@ -149,7 +149,7 @@ public class Throwing : MonoBehaviour
         if (isFollowingLantern && currentThrowable != null)
         {
             playerCamera.transform.position = currentThrowable.transform.position;
-            playerCamera.transform.rotation = Quaternion.LookRotation(currentThrowable.transform.forward);
+            playerCamera.transform.rotation = Quaternion.LookRotation(playerCamera.transform.forward);
         }
     }
 
