@@ -50,7 +50,7 @@ public class AbilitiesUI : MonoBehaviour
                     break;
                 case 2:
                     abilityName.text = "TELEPORT";
-                    textmesh.text = "Hold C/L1 to aim\n\nRelease to throw\n\nPress Space/X to cancel";
+                    textmesh.text = "Hold C/L1 to aim\n\nRelease to cancel\n\nPress Space/X to throw";
                     break;
                 case 3:
                     abilityName.text = "GRAVITY";

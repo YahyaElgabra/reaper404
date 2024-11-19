@@ -32,15 +32,15 @@ public class Throwing : MonoBehaviour
     private float aimVertical;
     private Vector3 aimDirection;
     
-    private float _maxAimAngleX = 45f;
-    private float _minAimAngleX = -45f;
-    private float _maxAimAngleY = 85f;
-    private float _minAimAngleY = -25f;
+    private float _maxAimAngleX = 60f;
+    private float _minAimAngleX = -60f;
+    private float _maxAimAngleY = 90f;
+    private float _minAimAngleY = -60f;
     private float _aimSensX = 0.01f;
     private float _aimSensY = 0.01f;
     
     private Camera playerCamera;
-    private MonoBehaviour cameraController;
+    // private MonoBehaviour cameraController;
 
     AbilitiesUI abilitiesUI;
     public int charges;
@@ -58,6 +58,8 @@ public class Throwing : MonoBehaviour
     private bool isFollowingLantern = false;
     
     private bool hasCanceledThrow = false;
+    private Vector3 lastAimDirection;
+    private float angle;
     
     private AudioSource[] _audioSources;
     
@@ -86,7 +88,10 @@ public class Throwing : MonoBehaviour
         playerModel = GameObject.FindWithTag("Player");
         originalCameraParent = playerCamera.transform.parent;
         
-        cameraController = playerCamera.GetComponent<MonoBehaviour>();
+        // cameraController = playerCamera.GetComponent<MonoBehaviour>();
+        
+        lastAimDirection = Vector3.zero;
+        angle = 45F;
         
         playerMovement = playerObject.GetComponent<PlayerMovement>();
         GameObject abilitiesObject = GameObject.FindGameObjectWithTag("AbilitiesUI");
@@ -124,14 +129,13 @@ public class Throwing : MonoBehaviour
                 EnterAimMode();
             }
             
-            // Add cancel throw check
-            if (_inputActions.Gameplay.Jump.WasPerformedThisFrame() && isAiming)
+            if (_inputActions.Gameplay.ThrowRelease.WasPerformedThisFrame() && isAiming)
             {
                 CancelThrow();
                 hasCanceledThrow = true;
             }
             
-            if (_inputActions.Gameplay.ThrowRelease.WasPerformedThisFrame() && isAiming)
+            if (_inputActions.Gameplay.Jump.WasPerformedThisFrame() && isAiming)
             {
                 ThrowObject();
             }
@@ -145,7 +149,7 @@ public class Throwing : MonoBehaviour
         if (isFollowingLantern && currentThrowable != null)
         {
             playerCamera.transform.position = currentThrowable.transform.position;
-            playerCamera.transform.rotation = Quaternion.LookRotation(currentThrowable.transform.forward);
+            playerCamera.transform.rotation = Quaternion.LookRotation(playerCamera.transform.forward);
         }
     }
 
@@ -162,6 +166,11 @@ public class Throwing : MonoBehaviour
                 currentThrowableScript.Initialize(this);
             }
             
+            if (lastAimDirection == Vector3.zero) 
+            {
+                lastAimDirection = playerCamera.transform.forward;
+            }
+            
             isHeld = true;
             isThrown = false;
         }
@@ -175,15 +184,30 @@ public class Throwing : MonoBehaviour
 
             PlayAimAudio();
             
-            if (cameraController != null)
-                cameraController.enabled = false;
+            // if (cameraController != null)
+            //     cameraController.enabled = false;
             
-            aimDirection = playerTransform.forward;
-            
-            float angle = 45f;
-            float throwHeight = Mathf.Tan(angle * Mathf.Deg2Rad);
-            aimDirection.y += throwHeight;
-            aimDirection.Normalize();
+            aimDirection = lastAimDirection;
+
+            if (aimDirection == playerCamera.transform.forward)
+            {
+                angle = 45f;
+                float throwHeight = Mathf.Tan(angle * Mathf.Deg2Rad);
+                aimDirection.y += throwHeight;
+                aimDirection.Normalize();
+            }
+            else
+            {
+                angle = Mathf.Atan2(aimDirection.y, Mathf.Sqrt(aimDirection.x * aimDirection.x + aimDirection.z * aimDirection.z)) * Mathf.Rad2Deg;
+                
+                float throwHeight = Mathf.Tan(angle * Mathf.Deg2Rad);
+
+                if (Mathf.Abs(throwHeight) > 1.0f)
+                {
+                    aimDirection.y += throwHeight;
+                    aimDirection.Normalize();
+                }
+            }
         }
         
         UpdateAimDirection();
@@ -192,10 +216,10 @@ public class Throwing : MonoBehaviour
     
     private void UpdateAimDirection()
     {
-        Vector2 _lookInput = _inputActions.Gameplay.Look.ReadValue<Vector2>();
+        Vector2 _aimInput = _inputActions.Gameplay.Move.ReadValue<Vector2>();
         
-        _udInput = _lookInput.y;
-        _ewInput = _lookInput.x;
+        _udInput = _aimInput.y;
+        _ewInput = _aimInput.x;
         
         aimHorizontal = - - _ewInput;
         aimVertical = - _udInput;
@@ -242,7 +266,7 @@ public class Throwing : MonoBehaviour
         {
             float t = i * timeBetweenPoints;
             Vector3 pointPosition = startPos + t * startVelocity;
-            pointPosition.y = startPos.y + (startVelocity.y * t) + (0.5f * (Physics.gravity.y - 0.1f) * t * t);
+            pointPosition.y = startPos.y + (startVelocity.y * t) + (0.5f * Physics.gravity.y * t * t);
             
             if (Physics.Raycast(previousPoint, pointPosition - previousPoint, out RaycastHit hit, (pointPosition - previousPoint).magnitude))
             {
@@ -353,10 +377,12 @@ public class Throwing : MonoBehaviour
             
             ClearConcentricCircles();
             
-            if (cameraController != null)
-                cameraController.enabled = true;
+            // if (cameraController != null)
+            //     cameraController.enabled = true;
             
             currentThrowableScript.Throw(aimDirection, throwForce);
+            
+            lastAimDirection = Vector3.zero;
             
             if (playerModel != null)
                 playerModel.SetActive(false);
@@ -439,10 +465,12 @@ public class Throwing : MonoBehaviour
             }
             ClearConcentricCircles();
             
-            if (cameraController != null)
-            {
-                cameraController.enabled = true;
-            }
+            // if (cameraController != null)
+            // {
+            //     cameraController.enabled = true;
+            // }
+            
+            lastAimDirection = aimDirection;
             
             if (currentThrowable != null)
             {
