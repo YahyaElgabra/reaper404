@@ -71,7 +71,9 @@ public class Throwable : MonoBehaviour
                 }
                 else
                 {
-                    playerScript.TeleportPlayerAndDestroy(gameObject);
+                    // Check if the player is teleporting to the goal
+                    bool reachedGoal = hit.collider.CompareTag("Finish");
+                    playerScript.TeleportPlayerAndDestroy(gameObject, reachedGoal);
                 }
                 yield break;
             }
