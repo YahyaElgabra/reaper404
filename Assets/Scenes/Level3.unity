@@ -210,14 +210,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8868199960328990078, guid: 555e1257d2b6f5143ac849a4a3b9418b, type: 3}
-      propertyPath: moveSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8868199960328990078, guid: 555e1257d2b6f5143ac849a4a3b9418b, type: 3}
-      propertyPath: moveTarget
-      value: 30
-      objectReference: {fileID: 0}
     - target: {fileID: 2712727419941860996, guid: afe204b89bac03940a79a588faf1237f, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -273,6 +265,14 @@ PrefabInstance:
     - target: {fileID: 4877951677474393359, guid: afe204b89bac03940a79a588faf1237f, type: 3}
       propertyPath: m_Name
       value: Moving Platform (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8868199960328990078, guid: 555e1257d2b6f5143ac849a4a3b9418b, type: 3}
+      propertyPath: moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8868199960328990078, guid: 555e1257d2b6f5143ac849a4a3b9418b, type: 3}
+      propertyPath: moveTarget
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -444,14 +444,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8868199960328990078, guid: 555e1257d2b6f5143ac849a4a3b9418b, type: 3}
-      propertyPath: moveSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8868199960328990078, guid: 555e1257d2b6f5143ac849a4a3b9418b, type: 3}
-      propertyPath: moveTarget
-      value: 30
-      objectReference: {fileID: 0}
     - target: {fileID: 2712727419941860996, guid: afe204b89bac03940a79a588faf1237f, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -507,6 +499,14 @@ PrefabInstance:
     - target: {fileID: 4877951677474393359, guid: afe204b89bac03940a79a588faf1237f, type: 3}
       propertyPath: m_Name
       value: Moving Platform (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8868199960328990078, guid: 555e1257d2b6f5143ac849a4a3b9418b, type: 3}
+      propertyPath: moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8868199960328990078, guid: 555e1257d2b6f5143ac849a4a3b9418b, type: 3}
+      propertyPath: moveTarget
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -639,14 +639,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8868199960328990078, guid: 555e1257d2b6f5143ac849a4a3b9418b, type: 3}
-      propertyPath: moveSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8868199960328990078, guid: 555e1257d2b6f5143ac849a4a3b9418b, type: 3}
-      propertyPath: moveTarget
-      value: 30
-      objectReference: {fileID: 0}
     - target: {fileID: 2712727419941860996, guid: afe204b89bac03940a79a588faf1237f, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -702,6 +694,14 @@ PrefabInstance:
     - target: {fileID: 4877951677474393359, guid: afe204b89bac03940a79a588faf1237f, type: 3}
       propertyPath: m_Name
       value: Moving Platform
+      objectReference: {fileID: 0}
+    - target: {fileID: 8868199960328990078, guid: 555e1257d2b6f5143ac849a4a3b9418b, type: 3}
+      propertyPath: moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8868199960328990078, guid: 555e1257d2b6f5143ac849a4a3b9418b, type: 3}
+      propertyPath: moveTarget
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1582,14 +1582,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8868199960328990078, guid: 555e1257d2b6f5143ac849a4a3b9418b, type: 3}
-      propertyPath: moveSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8868199960328990078, guid: 555e1257d2b6f5143ac849a4a3b9418b, type: 3}
-      propertyPath: moveTarget
-      value: 30
-      objectReference: {fileID: 0}
     - target: {fileID: 2712727419941860996, guid: afe204b89bac03940a79a588faf1237f, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -1645,6 +1637,14 @@ PrefabInstance:
     - target: {fileID: 4877951677474393359, guid: afe204b89bac03940a79a588faf1237f, type: 3}
       propertyPath: m_Name
       value: Moving Platform (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8868199960328990078, guid: 555e1257d2b6f5143ac849a4a3b9418b, type: 3}
+      propertyPath: moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8868199960328990078, guid: 555e1257d2b6f5143ac849a4a3b9418b, type: 3}
+      propertyPath: moveTarget
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1759,14 +1759,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8868199960328990078, guid: 555e1257d2b6f5143ac849a4a3b9418b, type: 3}
-      propertyPath: moveSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8868199960328990078, guid: 555e1257d2b6f5143ac849a4a3b9418b, type: 3}
-      propertyPath: moveTarget
-      value: 30
-      objectReference: {fileID: 0}
     - target: {fileID: 2712727419941860996, guid: afe204b89bac03940a79a588faf1237f, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -1822,6 +1814,14 @@ PrefabInstance:
     - target: {fileID: 4877951677474393359, guid: afe204b89bac03940a79a588faf1237f, type: 3}
       propertyPath: m_Name
       value: Moving Platform (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8868199960328990078, guid: 555e1257d2b6f5143ac849a4a3b9418b, type: 3}
+      propertyPath: moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8868199960328990078, guid: 555e1257d2b6f5143ac849a4a3b9418b, type: 3}
+      propertyPath: moveTarget
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
