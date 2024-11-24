@@ -62,6 +62,7 @@ public class Throwing : MonoBehaviour
     private float angle;
     
     private AudioSource[] _audioSources;
+    public GameObject chains;
     
     void Awake()
     {
@@ -114,6 +115,15 @@ public class Throwing : MonoBehaviour
     
     void Update()
     {
+        if (playerMovement._isTP && playerModel.activeInHierarchy)
+        {
+            chains.SetActive(true);
+        }
+        else
+        {
+            chains.SetActive(false);
+        }
+        
         if (_inputActions.Gameplay.ThrowHold.IsPressed() && 
             !isHeld && charges > 0 && !isThrown && playerMovement._isTP && !hasCanceledThrow)
         {
