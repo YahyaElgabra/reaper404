@@ -74,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 39846076999c14ff19efb441b6685585, type: 2}
     - target: {fileID: 919132149155446097, guid: ffa4bbc9ed3c949d48e7b78378fb6335, type: 3}
       propertyPath: m_Name
-      value: TIdle
+      value: TAim
       objectReference: {fileID: 0}
     - target: {fileID: 1042744115741867719, guid: ffa4bbc9ed3c949d48e7b78378fb6335, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -94,14 +94,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ffa4bbc9ed3c949d48e7b78378fb6335, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -5261432512239961230}
+      addedObject: {fileID: 8091659383394169012}
   m_SourcePrefab: {fileID: 100100000, guid: ffa4bbc9ed3c949d48e7b78378fb6335, type: 3}
 --- !u!1 &9205836648442949623 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ffa4bbc9ed3c949d48e7b78378fb6335, type: 3}
   m_PrefabInstance: {fileID: 8286863531324461734}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &-5261432512239961230
+--- !u!95 &8091659383394169012
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -111,7 +111,7 @@ Animator:
   m_GameObject: {fileID: 9205836648442949623}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 65cad21b5b03446d98b41e6b86b4fce6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
