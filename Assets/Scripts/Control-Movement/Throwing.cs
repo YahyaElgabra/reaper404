@@ -62,6 +62,7 @@ public class Throwing : MonoBehaviour
     private float angle;
     
     private AudioSource[] _audioSources;
+    public GameObject chains;
     
     void Awake()
     {
@@ -114,6 +115,15 @@ public class Throwing : MonoBehaviour
     
     void Update()
     {
+        if (playerMovement._isTP && playerModel.activeInHierarchy)
+        {
+            chains.SetActive(true);
+        }
+        else
+        {
+            chains.SetActive(false);
+        }
+        
         if (_inputActions.Gameplay.ThrowHold.IsPressed() && 
             !isHeld && charges > 0 && !isThrown && playerMovement._isTP && !hasCanceledThrow)
         {
@@ -394,7 +404,7 @@ public class Throwing : MonoBehaviour
         isHeld = false;
     }
     
-    public void TeleportPlayerAndDestroy(GameObject throwable)
+    public void TeleportPlayerAndDestroy(GameObject throwable, bool reachedGoal = false)
     {
         playerTransform.position = throwable.transform.position + Vector3.up * 1.0f;
         
@@ -418,7 +428,7 @@ public class Throwing : MonoBehaviour
 
         PlayTeleportAudio();
         
-        if (charges == 0)
+        if (charges == 0 && !reachedGoal) // Only reset the level if the player didn't reach the goal
         {
             StartCoroutine(OutOfCharge());
         }

@@ -6,6 +6,21 @@
   <component name="ChangeListManager">
     <list default="true" id="5580101a-c1c3-49c0-ae75-68e3344bbe3a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.reaper404/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.reaper404/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Indicator_geo.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Indicator_geo.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Indicator_BaseColor_Mat.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Indicator_BaseColor_Mat.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Indicator_Emission_Mat.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Indicator_Emission_Mat.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Indicator_Emission_MatPurpleGreen.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Indicator_Emission_MatPurpleGreen.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Indicator_MetallicRaw_Mat.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Indicator_MetallicRaw_Mat.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Indicator_Normal_Mat.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player Mat/Textures/Indicator_Normal_Mat.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Reaper.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Reaper.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/TIdle.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/TIdle.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Teleport Intro.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Teleport Intro.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Control-Movement/Throwing.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Control-Movement/Throwing.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -24,18 +39,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "throwing-mech",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;throwing-mech&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="$USER_HOME$/Downloads/v1_reaper404Ex.app/Contents/MacOS/Reaper" />
@@ -115,7 +130,10 @@
       <workItem from="1731506280932" duration="6659000" />
       <workItem from="1731516509107" duration="9563000" />
       <workItem from="1731531354284" duration="2923000" />
-      <workItem from="1731967510239" duration="13355000" />
+      <workItem from="1731967510239" duration="16402000" />
+      <workItem from="1732143981206" duration="7538000" />
+      <workItem from="1732418173187" duration="18864000" />
+      <workItem from="1732484464186" duration="1136000" />
     </task>
     <servers />
   </component>
