@@ -81,7 +81,7 @@ public class PlayerState : MonoBehaviour
                 StopWalkAudio();
             }
             // else if ((_playerRigidbody.velocity.y > 0 || _inputActions.Gameplay.Jump.IsPressed()) && !playerMovement._isTP)
-            else if (playerMovement._isGrounded && _inputActions.Gameplay.Jump.IsPressed() && !playerMovement._isTP)
+            else if (((playerMovement._isGrounded && _inputActions.Gameplay.Jump.IsPressed()) || playerMovement._userJumped) && !playerMovement._isTP)
             {
                 GameObject idlePrefab = GetCurrentAbilityPrefab("Idle");
                 SetActivePrefab(idlePrefab);

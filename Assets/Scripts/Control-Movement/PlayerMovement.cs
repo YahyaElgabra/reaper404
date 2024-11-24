@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     
     public bool _isGrounded;
     public bool _isOnWall;
-    private bool _userJumped;
+    public bool _userJumped;
     public bool _userWallJumped;
     private bool _isHoggingJump = false;
     private bool _jumpDisabled = false;
