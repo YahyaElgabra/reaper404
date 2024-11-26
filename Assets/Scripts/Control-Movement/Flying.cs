@@ -55,13 +55,13 @@ public class Flying : MonoBehaviour
         _currentSpeed = forwardSpeed;
 
         // delay movement
-        StartCoroutine(DelayMovement());        
+        StartCoroutine(DelayMovement(2.5f));        
     }
 
-    private IEnumerator DelayMovement()
+    private IEnumerator DelayMovement(float duration)
     {
         
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(duration);
         _canMove = true;
     }
 
@@ -74,6 +74,10 @@ public class Flying : MonoBehaviour
         
         _verticalInput = _moveInput.y; // left/right <-> A/D | left/right arrow keys | joystick left/right
         _horizontalInput = _moveInput.x; // up/down <-> W/S | up/down arrow keys | joystick up/down
+        if (PlayerPrefs.GetInt("invertFly", 0) == 1)
+        {
+            _verticalInput *= -1;
+        }
         // check for boosting (shift) and braking (ctrl)
         _isBoosting = _inputActions.Gameplay.Run.IsPressed();
         _isBraking = _inputActions.Gameplay.ThrowHold.IsPressed() || Input.GetKey(KeyCode.LeftControl);
@@ -136,8 +140,11 @@ public class Flying : MonoBehaviour
         // check if the player colided with anything that is not the goal
         if (!collision.gameObject.CompareTag("Finish"))
         {
-            // reload the current scene ("death")
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            // reset
+            GameObject goal = GameObject.FindWithTag("Finish");
+            goal.GetComponent<portal>().ResetPass();
+            _canMove = false;
+            StartCoroutine(DelayMovement(0.5f));
         }
     }
 }

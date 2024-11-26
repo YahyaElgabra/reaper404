@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class help : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class help : MonoBehaviour
     {
         if (_inputActions.Gameplay.Help.IsPressed())
         {
-            gameObject.SetActive(!gameObject.activeSelf);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }

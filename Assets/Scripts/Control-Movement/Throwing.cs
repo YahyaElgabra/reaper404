@@ -107,8 +107,8 @@ public class Throwing : MonoBehaviour
             endpointInstance.SetActive(false);
         }
 
-        _aimSensX *= Mathf.Lerp(0.25f, 3f, PlayerPrefs.GetFloat("cameraSensitivity", 0.25f));
-        _aimSensY *= Mathf.Lerp(0.25f, 3f, PlayerPrefs.GetFloat("cameraSensitivity", 0.25f));
+        _aimSensX *= Mathf.Lerp(0.25f, 1.5f, PlayerPrefs.GetFloat("cameraSensitivity", 0.5f));
+        _aimSensY *= Mathf.Lerp(0.25f, 1.5f, PlayerPrefs.GetFloat("cameraSensitivity", 0.5f));
         
         _audioSources = GetComponents<AudioSource>();
     }
@@ -443,8 +443,9 @@ public class Throwing : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);   
+
+        GameObject goal = GameObject.FindWithTag("Finish");
+        goal.GetComponent<portal>().ResetPass();
     }
     
     public void OnThrowableHitDeath(GameObject throwable)
