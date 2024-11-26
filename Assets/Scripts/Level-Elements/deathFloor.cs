@@ -6,7 +6,12 @@ using UnityEngine.SceneManagement;
 public class deathFloor : MonoBehaviour
 {
     Vector3 startingPosition;
+    private PlayerInputActions _inputActions;
     // Start is called before the first frame update
+    private void Awake()
+    {
+        _inputActions = new PlayerInputActions();
+    }
     void Start()
     {
         GameObject player = GameObject.FindWithTag("Player");
@@ -19,14 +24,14 @@ public class deathFloor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            GameObject goal = GameObject.FindWithTag("Finish");
+            goal.GetComponent<portal>().ResetPass();
         }
     }
 }

@@ -122,6 +122,7 @@ MonoBehaviour:
   passes: 
   charges: 
   audioSource: {fileID: 4079015031187885029}
+  passSfx: {fileID: 4079015031187885029}
 --- !u!82 &4079015031187885029
 AudioSource:
   m_ObjectHideFlags: 0
