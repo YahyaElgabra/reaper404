@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     
     public bool _isGrounded;
     public bool _isOnWall;
-    private bool _userJumped;
+    public bool _userJumped;
     public bool _userWallJumped;
     private bool _isHoggingJump = false;
     private bool _jumpDisabled = false;
@@ -136,14 +136,7 @@ public class PlayerMovement : MonoBehaviour
         // _udInput = _lookInput.y;
         _ewInput = _lookInput.x;
         
-        if (!Throwing.isAiming)
-        {
-            _yaw += speedH* _ewInput * Mathf.Lerp(0.25f, 3f, PlayerPrefs.GetFloat("cameraSensitivity", 0.25f));
-        }
-        else
-        {
-            _yaw = 0.0f;
-        }
+        _yaw += speedH* _ewInput * Mathf.Lerp(0.25f, 1.5f, PlayerPrefs.GetFloat("cameraSensitivity", 0.5f));
         
         if (_inputActions.Gameplay.Run.IsPressed() && _isRunWallJump)
         {
@@ -256,7 +249,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 _finalDirection = _normalizedInputDirection - _lossFromRecentWallJump;
         if (_isTP)
         {
-            _finalDirection *= 0.1f;
+            _finalDirection *= 0.0f;
         }
 
         if (!_running)
@@ -274,17 +267,17 @@ public class PlayerMovement : MonoBehaviour
             _rigidbody.AddForce(_finalDirection * RunScale, ForceMode.Force);
         }
 
-        if (_isTP)
-        {
-            Vector3 horizontalVelocity = new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z);
-
-            if (horizontalVelocity.magnitude > maxTPSpeed)
-            {
-                horizontalVelocity = horizontalVelocity.normalized * maxTPSpeed;
-            }
-
-            _rigidbody.velocity = new Vector3(horizontalVelocity.x, _rigidbody.velocity.y, horizontalVelocity.z);
-        }
+        // if (_isTP)
+        // {
+        //     Vector3 horizontalVelocity = new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z);
+        //
+        //     if (horizontalVelocity.magnitude > maxTPSpeed)
+        //     {
+        //         horizontalVelocity = horizontalVelocity.normalized * maxTPSpeed;
+        //     }
+        //
+        //     _rigidbody.velocity = new Vector3(horizontalVelocity.x, _rigidbody.velocity.y, horizontalVelocity.z);
+        // }
 
         if (_userJumped)
         {

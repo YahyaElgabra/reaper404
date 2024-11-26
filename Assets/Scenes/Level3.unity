@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 0.66
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.627451, g: 0.47370645, b: 0.41960785, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 14ef734f7af581c4baa384748603312b, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 29e2c96d13321454db816bd79f0f2ac2, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -313,7 +313,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8260354913946434505, guid: 001f01d7cfae972478e790d723499a79, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.39
+      value: -4.52
       objectReference: {fileID: 0}
     - target: {fileID: 8260354913946434505, guid: 001f01d7cfae972478e790d723499a79, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1191,7 +1191,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1480410238911608721, guid: 4d8599562b94ea74d8b68d1af871f8ff, type: 3}
       propertyPath: charges.Array.data[0]
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1480410238911608721, guid: 4d8599562b94ea74d8b68d1af871f8ff, type: 3}
       propertyPath: charges.Array.data[1]
@@ -1207,7 +1207,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3867711864387483906, guid: 4d8599562b94ea74d8b68d1af871f8ff, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -95.35
+      value: -92.88
       objectReference: {fileID: 0}
     - target: {fileID: 3867711864387483906, guid: 4d8599562b94ea74d8b68d1af871f8ff, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1277,7 +1277,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 87057986af55b4374be3749c96faf445, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.8
+  m_Volume: 0.335
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1384,7 +1384,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: aa090302b5a9d02499d90dcbc43ca549, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 21bc14ddd25474374aebba46ff5c1716, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

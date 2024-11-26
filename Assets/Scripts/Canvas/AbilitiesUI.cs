@@ -11,12 +11,16 @@ public class AbilitiesUI : MonoBehaviour
     public GameObject containerPrefab;
     public Sprite[] icons;
     public int[] abilities;
+    public int[] charges;
     List<GameObject> iconObjects;
     List<GameObject> containers;
     public int current;
+    int chargeIndex = 0;
+    public AudioSource audioSource;
     void Awake()
     {
         abilities = GameObject.FindGameObjectWithTag("Finish").GetComponent<portal>().passes;
+        charges = GameObject.FindGameObjectWithTag("Finish").GetComponent<portal>().charges;
         iconObjects = new List<GameObject>();
         containers = new List<GameObject>();
         RectTransform rect = GetComponent<RectTransform>();
@@ -38,6 +42,7 @@ public class AbilitiesUI : MonoBehaviour
             run.text = "Run " + (i + 1);
             TextMeshProUGUI abilityName = container.transform.Find("ability name").GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI textmesh = container.transform.Find("description").transform.Find("Input").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI text;
             switch (abilities[i])
             {
                 case 0:
@@ -50,11 +55,23 @@ public class AbilitiesUI : MonoBehaviour
                     break;
                 case 2:
                     abilityName.text = "TELEPORT";
-                    textmesh.text = "Hold C/L1 to aim\n\nRelease to throw\n\nPress Space/X to cancel";
+                    textmesh.text = "Hold C/L1 to aim, Release to cancel\n\nPress Space/X to throw\n\nMovement blocked";
+                    text = container.transform.Find("charges").GetComponent<TextMeshProUGUI>();
+                    if (chargeIndex < charges.Length)
+                    {
+                        text.text = "Charges: " + charges[chargeIndex];
+                        chargeIndex++;
+                    }
                     break;
                 case 3:
                     abilityName.text = "GRAVITY";
                     textmesh.text = "Press Z/Square to rotate left\n\nPress X/Circle to rotate right";
+                    text = container.transform.Find("charges").GetComponent<TextMeshProUGUI>();
+                    if (chargeIndex < charges.Length)
+                    {
+                        text.text = "Charges: " + charges[chargeIndex];
+                        chargeIndex++;
+                    }
                     break;
                 case 4:
                     abilityName.text = "FLY";
@@ -88,7 +105,7 @@ public class AbilitiesUI : MonoBehaviour
             }
             else
             {
-                iconImage.color = new Color(1, 1, 1, 0.25f);
+                iconImage.color = new Color(1, 1, 1, 0.1f);
                 containers[i].transform.Find("description").transform.Find("Input").GetComponent<TextMeshProUGUI>().gameObject.SetActive(false);
             }
         }
@@ -101,5 +118,10 @@ public class AbilitiesUI : MonoBehaviour
             TextMeshProUGUI text = containers[current].transform.Find("charges").GetComponent<TextMeshProUGUI>();
             text.text = "Charges: " + charges;
         }
+    }
+
+    public void newPassAudio()
+    {
+        audioSource.Play();
     }
 }

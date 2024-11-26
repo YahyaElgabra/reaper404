@@ -8,7 +8,7 @@ public class PlayerState : MonoBehaviour
     
     public GameObject standardIdlePrefab, standardWalkPrefab, standardJumpPrefab;
     public GameObject gravIdlePrefab, gravWalkPrefab, gravJumpPrefab;
-    public GameObject teleportIdlePrefab, teleportWalkPrefab, teleportJumpPrefab;
+    public GameObject teleportIdlePrefab, teleportAimPrefab, teleportWalkPrefab, teleportJumpPrefab;
     public GameObject wallJumpIdlePrefab, wallJumpWalkPrefab, wallJumpJumpPrefab, wallJumpRunPrefab, wallJumpWalljumpPrefab;
     
     // private bool _isGrounded = false;
@@ -81,7 +81,7 @@ public class PlayerState : MonoBehaviour
                 StopWalkAudio();
             }
             // else if ((_playerRigidbody.velocity.y > 0 || _inputActions.Gameplay.Jump.IsPressed()) && !playerMovement._isTP)
-            else if (playerMovement._isGrounded && _inputActions.Gameplay.Jump.IsPressed() && !playerMovement._isTP)
+            else if (((playerMovement._isGrounded && _inputActions.Gameplay.Jump.IsPressed()) || playerMovement._userJumped) && !playerMovement._isTP)
             {
                 GameObject idlePrefab = GetCurrentAbilityPrefab("Idle");
                 SetActivePrefab(idlePrefab);
@@ -100,6 +100,12 @@ public class PlayerState : MonoBehaviour
                 GameObject walkPrefab = GetCurrentAbilityPrefab("Walk");
                 SetActivePrefab(walkPrefab);
                 PlayWalkAudio();
+            }
+            else if (playerMovement._isTP && Throwing.isAiming)
+            {
+                GameObject aimPrefab = GetCurrentAbilityPrefab("Aim");
+                SetActivePrefab(aimPrefab);
+                StopWalkAudio();
             }
             else if (playerMovement._isGrounded && _velocityXZ < 7f && _velocityY < 0.5f)
             {
@@ -155,6 +161,7 @@ public class PlayerState : MonoBehaviour
             case 2: // Teleport
                 return actionType == "Idle" ? teleportIdlePrefab
                      : actionType == "Walk" ? teleportWalkPrefab
+                     : actionType == "Aim" ? teleportAimPrefab
                      : teleportJumpPrefab;
 
             case 3: // Gravity

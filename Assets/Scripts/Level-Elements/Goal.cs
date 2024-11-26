@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class portal : MonoBehaviour
 {
@@ -18,14 +19,17 @@ public class portal : MonoBehaviour
     AbilitiesUI abilitiesUI = null;
     Rigidbody rb;
     float passCooldown = 0.5f;
+    GameObject player;
+    int originalCharge;
 
     private float latestCollisionTime = 0f;
 
     Quaternion startingRotation;
+    public AudioSource audioSource;
 
     void Start()
     {
-        GameObject player = GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag("Player");
         startingPosition = player.transform.position;
         startingRotation = player.transform.rotation;
         movementScript = player.GetComponent<PlayerMovement>();
@@ -71,6 +75,8 @@ public class portal : MonoBehaviour
             }
             if (currentPass == passes.Length - 1) {
                 winScreen.SetActive(true);
+                audioSource.Play();
+
                 if (rb != null)
                 {
                     rb.isKinematic = true;
@@ -79,14 +85,15 @@ public class portal : MonoBehaviour
             }
             else
             {
+                abilitiesUI.newPassAudio();
                 latestCollisionTime = Time.time;
                 currentPass++;
-                collision.gameObject.transform.position = startingPosition;
-                Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
+                player.transform.position = startingPosition;
+                Rigidbody rb = player.GetComponent<Rigidbody>();
                 rb.velocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
                 movementScript.gravityDirection = Vector3.down;
-                collision.gameObject.transform.rotation = startingRotation;
+                player.transform.rotation = startingRotation;
                 ChangeAbility();
                 if (abilitiesUI != null)
                 {
@@ -96,6 +103,38 @@ public class portal : MonoBehaviour
                         abilitiesUI.updateCharges(charges[chargeIndex]);
                     }
                 }
+            }
+        }
+    }
+
+    public void ResetPass()
+    {
+        if (currentPass == 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        else
+        {
+            player = GameObject.FindWithTag("Player"); // need to update it if its fly
+            player.transform.position = startingPosition;
+            Rigidbody rb = player.GetComponent<Rigidbody>();
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            movementScript.gravityDirection = Vector3.down;
+            player.transform.rotation = startingRotation;
+            if (currentAbility == 2)
+            {
+                throwingScript.charges = originalCharge;
+                abilitiesUI.updateCharges(originalCharge);
+            }
+            else if (currentAbility == 3)
+            {
+                gravityScript.charges = originalCharge;
+                abilitiesUI.updateCharges(originalCharge);
+            }
+            else if (currentAbility == 4)
+            {
+                Debug.Log("g");
             }
         }
     }
@@ -143,6 +182,7 @@ public class portal : MonoBehaviour
                 if (chargeIndex < charges.Length)
                 {
                     throwingScript.charges = charges[chargeIndex];
+                    originalCharge = charges[chargeIndex];
                 }
                 if (chargeIndex < charges.Length - 1)
                 {
@@ -154,6 +194,7 @@ public class portal : MonoBehaviour
                 if (chargeIndex < charges.Length)
                 {
                     gravityScript.charges = charges[chargeIndex];
+                    originalCharge = charges[chargeIndex];
                 }
                 if (chargeIndex < charges.Length - 1)
                 {
