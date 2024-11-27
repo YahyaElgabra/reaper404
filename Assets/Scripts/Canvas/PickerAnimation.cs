@@ -5,8 +5,8 @@ using UnityEngine;
 public class picker : MonoBehaviour
 {
     public Vector3 startingPosition;
-    float moveDistance = 25f;
-    float moveSpeed = 2.0f;
+    float moveDistance = 5f;
+    float moveSpeed = 6.0f;
     void Start()
     {
         startingPosition = transform.position;

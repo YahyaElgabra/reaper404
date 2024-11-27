@@ -17,6 +17,10 @@ public class AbilitiesUI : MonoBehaviour
     int chargeIndex = 0;
     public AudioSource audioSource;
 
+    // unity hates me so add these in the inspector
+    [SerializeField] private GameObject gravityPointer;
+    [SerializeField] private GameObject flyPointer;
+
     void Awake()
     {
         abilities = GameObject.FindGameObjectWithTag("Finish").GetComponent<portal>().passes;
@@ -90,57 +94,72 @@ public class AbilitiesUI : MonoBehaviour
     }
 
     public void updateIcons(int next)
-{
-    current = next;
-    for (int i = 0; i < iconObjects.Count; i++)
     {
-        Image iconImage = iconObjects[i].GetComponent<Image>();
-        Image containerImage = containers[i].GetComponent<Image>();
-        Image frameImage = containers[i].transform.Find("frame")?.GetComponent<Image>(); // Assume "Frame" is the frame's GameObject
-
-        if (i == current)
+        current = next;
+        for (int i = 0; i < iconObjects.Count; i++)
         {
-            // Make icon opaque
-            iconImage.color = new Color(1, 1, 1, 1);
+            Image iconImage = iconObjects[i].GetComponent<Image>();
+            Image containerImage = containers[i].GetComponent<Image>();
+            Image frameImage = containers[i].transform.Find("frame")?.GetComponent<Image>();
 
-            // Set container background to white
-            if (containerImage != null)
+            if (i == current)
             {
-                containerImage.color = new Color(0f, 0f, 0f, 0.5f);
-            }
+                // make icon opaque
+                iconImage.color = new Color(1, 1, 1, 1);
 
-            // Show frame if it exists
-            if (frameImage != null)
+                // set bg colour
+                if (containerImage != null)
+                {
+                    containerImage.color = new Color(0f, 0f, 0f, 0.5f);
+                }
+
+                // show frame
+                if (frameImage != null)
+                {
+                    frameImage.enabled = true; 
+                }
+
+                // show desc
+                containers[i].transform.Find("description/Input").GetComponent<TextMeshProUGUI>().gameObject.SetActive(true);
+
+                // show pointers based on ability
+                if (abilities[i] == 4) // fly
+                {
+                    if (flyPointer != null) flyPointer.SetActive(true);
+                    if (gravityPointer != null) gravityPointer.SetActive(false);
+                }
+                else if (abilities[i] == 3) // gravity
+                {
+                    if (gravityPointer != null) gravityPointer.SetActive(true);
+                    if (flyPointer != null) flyPointer.SetActive(false);
+                }
+                else // for other abilities, disable both pointers
+                {
+                    if (gravityPointer != null) gravityPointer.SetActive(false);
+                    if (flyPointer != null) flyPointer.SetActive(false);
+                }
+            }
+            else
             {
-                frameImage.enabled = true; // Show the frame
+                // fade icon
+                iconImage.color = new Color(1, 1, 1, 0.08f);
+
+                // set bg to dark
+                if (containerImage != null)
+                {
+                    containerImage.color = new Color(0f, 0f, 0f, 0.8f);
+                }
+
+                if (frameImage != null)
+                {
+                    frameImage.enabled = false;
+                }
+
+                // hide desc
+                containers[i].transform.Find("description/Input").GetComponent<TextMeshProUGUI>().gameObject.SetActive(false);
             }
-
-            // Show description
-            containers[i].transform.Find("description/Input").GetComponent<TextMeshProUGUI>().gameObject.SetActive(true);
-        }
-        else
-        {
-            // Fade icon
-            iconImage.color = new Color(1, 1, 1, 0.08f);
-
-            // Set container background to gray
-            if (containerImage != null)
-            {
-                containerImage.color = new Color(1f, 1f, 1f, 0.1f);
-            }
-
-            // Hide frame if it exists
-            if (frameImage != null)
-            {
-                frameImage.enabled = false; // Hide the frame
-            }
-
-            // Hide description
-            containers[i].transform.Find("description/Input").GetComponent<TextMeshProUGUI>().gameObject.SetActive(false);
         }
     }
-}
-
 
     public void updateCharges(int charges)
     {

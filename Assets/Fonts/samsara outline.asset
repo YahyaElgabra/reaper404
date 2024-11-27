@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: Font_samsara-Regular SDF
+  m_Name: samsara outline
   m_EditorClassIdentifier: 
-  hashCode: 753345076
+  hashCode: 1984124382
   material: {fileID: 5965708468745318890}
-  materialHashCode: -1338369388
+  materialHashCode: -1342657218
   m_Version: 1.1.0
   m_SourceFontFileGUID: c2dcd3b72d1978545b9c3803dcc0f77f
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: c2dcd3b72d1978545b9c3803dcc0f77f, type: 3}
@@ -1687,7 +1687,7 @@ Material:
     - _ColorMask: 15
     - _CullMode: 0
     - _Diffuse: 0.5
-    - _FaceDilate: -0
+    - _FaceDilate: 0.31
     - _FaceUVSpeedX: 0
     - _FaceUVSpeedY: 0
     - _GlowInner: 0.05
@@ -1701,12 +1701,12 @@ Material:
     - _OutlineSoftness: 0
     - _OutlineUVSpeedX: 0
     - _OutlineUVSpeedY: 0
-    - _OutlineWidth: 0
+    - _OutlineWidth: 0.233
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
     - _ScaleRatioA: 0.9
-    - _ScaleRatioB: 0.6964286
-    - _ScaleRatioC: 0.73125
+    - _ScaleRatioB: 0.4307143
+    - _ScaleRatioC: 0.45225
     - _ScaleX: 1
     - _ScaleY: 1
     - _ShaderFlags: 0
