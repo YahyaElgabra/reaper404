@@ -96,46 +96,45 @@ public class AbilitiesUI : MonoBehaviour
     {
         Image iconImage = iconObjects[i].GetComponent<Image>();
         Image containerImage = containers[i].GetComponent<Image>();
-        Image frameImage = containers[i].transform.Find("frame")?.GetComponent<Image>(); // Assume "Frame" is the frame's GameObject
+        Image frameImage = containers[i].transform.Find("frame")?.GetComponent<Image>();
 
         if (i == current)
         {
-            // Make icon opaque
+            // make icon opaque
             iconImage.color = new Color(1, 1, 1, 1);
 
-            // Set container background to white
+            // set bg colour
             if (containerImage != null)
             {
                 containerImage.color = new Color(0f, 0f, 0f, 0.5f);
             }
 
-            // Show frame if it exists
+            // show frame
             if (frameImage != null)
             {
-                frameImage.enabled = true; // Show the frame
+                frameImage.enabled = true; 
             }
 
-            // Show description
+            // show desc
             containers[i].transform.Find("description/Input").GetComponent<TextMeshProUGUI>().gameObject.SetActive(true);
         }
         else
         {
-            // Fade icon
+            // fade icon
             iconImage.color = new Color(1, 1, 1, 0.08f);
 
-            // Set container background to gray
+            // set bg to dark
             if (containerImage != null)
             {
-                containerImage.color = new Color(1f, 1f, 1f, 0.1f);
+                containerImage.color = new Color(0f, 0f, 0f, 0.8f);
             }
 
-            // Hide frame if it exists
             if (frameImage != null)
             {
-                frameImage.enabled = false; // Hide the frame
+                frameImage.enabled = false;
             }
 
-            // Hide description
+            // hide desc
             containers[i].transform.Find("description/Input").GetComponent<TextMeshProUGUI>().gameObject.SetActive(false);
         }
     }
