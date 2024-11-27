@@ -76,7 +76,9 @@ public class MainMenuManager : MonoBehaviour
         
         if (_inputActions.Gameplay.Help.WasPressedThisFrame())
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            if (help != null){
+                help.SetActive(!help.activeSelf);
+            }
         }
         if (winScreen == null)
         {
