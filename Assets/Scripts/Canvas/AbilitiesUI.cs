@@ -21,6 +21,8 @@ public class AbilitiesUI : MonoBehaviour
     [SerializeField] private GameObject gravityPointer;
     [SerializeField] private GameObject flyPointer;
 
+    [SerializeField] private GameObject TPPointer;
+
     void Awake()
     {
         abilities = GameObject.FindGameObjectWithTag("Finish").GetComponent<portal>().passes;
@@ -127,16 +129,25 @@ public class AbilitiesUI : MonoBehaviour
                 {
                     if (flyPointer != null) flyPointer.SetActive(true);
                     if (gravityPointer != null) gravityPointer.SetActive(false);
+                    if (TPPointer != null) TPPointer.SetActive(false);
                 }
                 else if (abilities[i] == 3) // gravity
                 {
                     if (gravityPointer != null) gravityPointer.SetActive(true);
                     if (flyPointer != null) flyPointer.SetActive(false);
+                    if (TPPointer != null) TPPointer.SetActive(false);
                 }
-                else // for other abilities, disable both pointers
+                else if (abilities[i] == 2) // tp
                 {
                     if (gravityPointer != null) gravityPointer.SetActive(false);
                     if (flyPointer != null) flyPointer.SetActive(false);
+                    if (TPPointer != null) TPPointer.SetActive(true);
+                }
+                else // for other abilities, disable all pointers
+                {
+                    if (gravityPointer != null) gravityPointer.SetActive(false);
+                    if (flyPointer != null) flyPointer.SetActive(false);
+                    if (TPPointer != null) TPPointer.SetActive(false);
                 }
             }
             else

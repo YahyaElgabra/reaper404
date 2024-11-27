@@ -18,7 +18,7 @@ public class help : MonoBehaviour
     {
         if (_inputActions.Gameplay.Help.IsPressed())
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            gameObject.SetActive(!gameObject.activeSelf);
         }
     }
 }
