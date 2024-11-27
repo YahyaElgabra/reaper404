@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
     private const float _groundMultiplier = 1f;
     private const float _minimumSpeedForAirDrag = 0.5f;
 
-    private const float WallJumpVertScale = 45f;
+    private const float WallJumpVertScale = 42f;
     private const float WallJumpHoriScale = 15f;
 
     private const float JumpScale = 40f;
