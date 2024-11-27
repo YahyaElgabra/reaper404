@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 public class portal : MonoBehaviour
 {
     Vector3 startingPosition;
-    GameObject winScreen;
+    GameObject winScreen = null;
     // will assume that 0 means no special abilities, 1 means run+wall jump, 2 means tp, 3 means gravity, 4 means fly
     public int[] passes;
     int currentPass = 0;
-    int currentAbility = -1;
+    public int currentAbility = -1;
     public int[] charges;
     int chargeIndex = 0;
     PlayerMovement movementScript;
@@ -46,11 +46,14 @@ public class portal : MonoBehaviour
             }
         }
         GameObject canvas = GameObject.FindWithTag("Canvas");
-        foreach (Transform child in canvas.transform)
+        if (canvas != null)
         {
-            if (child.CompareTag("WinScreen"))
+            foreach (Transform child in canvas.transform)
             {
-                winScreen = child.gameObject;
+                if (child.CompareTag("WinScreen"))
+                {
+                    winScreen = child.gameObject;
+                }
             }
         }
          ChangeAbility();
@@ -74,7 +77,10 @@ public class portal : MonoBehaviour
                 return;
             }
             if (currentPass == passes.Length - 1) {
-                winScreen.SetActive(true);
+                if (winScreen != null)
+                {
+                    winScreen.SetActive(true);
+                }
                 audioSource.Play();
 
                 if (rb != null)
@@ -85,7 +91,10 @@ public class portal : MonoBehaviour
             }
             else
             {
-                abilitiesUI.newPassAudio();
+                if (abilitiesUI != null)
+                {
+                    abilitiesUI.newPassAudio();
+                }
                 latestCollisionTime = Time.time;
                 currentPass++;
                 player.transform.position = startingPosition;
@@ -125,12 +134,18 @@ public class portal : MonoBehaviour
             if (currentAbility == 2)
             {
                 throwingScript.charges = originalCharge;
-                abilitiesUI.updateCharges(originalCharge);
+                if (abilitiesUI != null)
+                {
+                    abilitiesUI.updateCharges(originalCharge);
+                }
             }
             else if (currentAbility == 3)
             {
                 gravityScript.charges = originalCharge;
-                abilitiesUI.updateCharges(originalCharge);
+                if (abilitiesUI != null)
+                {
+                    abilitiesUI.updateCharges(originalCharge);
+                }
             }
             else if (currentAbility == 4)
             {

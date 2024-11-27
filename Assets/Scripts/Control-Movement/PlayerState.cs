@@ -24,8 +24,7 @@ public class PlayerState : MonoBehaviour
     private AudioSource[] _audioSources;
     private int currentPass = 0;
     
-    private AbilitiesUI abilitiesUI;
-    private int[] abilities;
+    private portal portal;
     
     private PlayerMovement playerMovement;
 
@@ -48,12 +47,10 @@ public class PlayerState : MonoBehaviour
     {
         _playerRigidbody = GetComponent<Rigidbody>();
 
-        abilitiesUI = FindObjectOfType<AbilitiesUI>();
-        abilities = abilitiesUI ? abilitiesUI.abilities : new int[0];
+        portal = FindObjectOfType<portal>();
         
         playerMovement = GetComponent<PlayerMovement>();
         
-        SetAbilityPrefabs();
         SetActivePrefab(standardIdlePrefab);
         _audioSources = GetComponents<AudioSource>();
     }
@@ -64,8 +61,6 @@ public class PlayerState : MonoBehaviour
 
         if (!_isActionInProgress)
         {
-            currentPass = abilitiesUI ? abilitiesUI.current : 0;
-
             _velocity = _playerRigidbody.velocity.magnitude; 
             float _velocityXZ = Mathf.Abs(_playerRigidbody.velocity.x) + Mathf.Abs(_playerRigidbody.velocity.z);
             float _velocityY = Mathf.Abs(_playerRigidbody.velocity.y);
@@ -149,14 +144,9 @@ public class PlayerState : MonoBehaviour
         }
     }
 
-    private void SetAbilityPrefabs()
-    {
-        currentPass = abilitiesUI ? abilitiesUI.current : 0;
-    }
-
     private GameObject GetCurrentAbilityPrefab(string actionType)
     {
-        switch (abilities.Length > currentPass ? abilities[currentPass] : 0)
+        switch (portal.currentAbility)
         {
             case 2: // Teleport
                 return actionType == "Idle" ? teleportIdlePrefab
