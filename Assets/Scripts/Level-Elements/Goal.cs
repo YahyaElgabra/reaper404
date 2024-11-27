@@ -118,7 +118,7 @@ public class portal : MonoBehaviour
 
     public void ResetPass()
     {
-        if (currentPass == 0)
+        if (true)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
