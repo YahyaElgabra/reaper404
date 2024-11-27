@@ -36,9 +36,9 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody _rigidbody;
 
     private const float MoveScale = 40f;
-    private const float maxSpeed = 12f;
+    private const float maxSpeed = 11.7f;
     private const float RunScale = 40f;
-    private const float maxRunningSpeed = 18f;
+    private const float maxRunningSpeed = 18.7f;
     private const float maxTPSpeed = 5f;
     //private const float _fakeDrag = 30f;
     // Value for force-based drag. We are not using that, we are using velocity-based drag instead. For that, drag must be between 0 and 1.
@@ -47,10 +47,11 @@ public class PlayerMovement : MonoBehaviour
     private const float _groundMultiplier = 1f;
     private const float _minimumSpeedForAirDrag = 0.5f;
 
-    private const float WallJumpVertScale = 42f;
+    private const float WallJumpVertScale = 40f;
     private const float WallJumpHoriScale = 15f;
 
     private const float JumpScale = 40f;
+    private const float JumpRunningBonus = 2f;
     private float _gravityStrength = 80f;
     private float _maxFallingSpeed = 40f;
 
@@ -283,9 +284,15 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector3 velocity = _rigidbody.velocity;
             float upVelocity = Vector3.Dot(velocity, -gravityDirection);
-            
 
-            _rigidbody.AddForce(transform.up * Math.Max((JumpScale-upVelocity), 0), ForceMode.VelocityChange);
+            if (_running)
+            {
+                _rigidbody.AddForce(transform.up * Math.Max((JumpScale + JumpRunningBonus - upVelocity), 0), ForceMode.VelocityChange);
+            }
+            else
+            {
+                _rigidbody.AddForce(transform.up * Math.Max((JumpScale - upVelocity), 0), ForceMode.VelocityChange);
+            }
 
             _userJumped = false;
             _isGrounded = false;
