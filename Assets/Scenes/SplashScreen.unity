@@ -306,7 +306,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 530.4, y: -490}
+  m_AnchoredPosition: {x: 494, y: -486}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &928228113
@@ -331,15 +331,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Press <sprite name=PlaystationX> to start
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9957508b9a61bbe448a7bea3d76ecad7, type: 2}
-  m_sharedMaterial: {fileID: 8144276621929801473, guid: 9957508b9a61bbe448a7bea3d76ecad7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: abdd34d22fa89334e993d13beffbb045, type: 2}
+  m_sharedMaterial: {fileID: 5965708468745318890, guid: abdd34d22fa89334e993d13beffbb045, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4293256677
+  m_fontColor: {r: 0.899371, g: 0.899371, b: 0.899371, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1097,6 +1097,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deef677a0af74e92bcdd95ea9029d0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  help: {fileID: 0}
 --- !u!114 &2081353842
 MonoBehaviour:
   m_ObjectHideFlags: 0

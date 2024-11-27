@@ -98,6 +98,8 @@ public class AbilitiesUI : MonoBehaviour
         Image containerImage = containers[i].GetComponent<Image>();
         Image frameImage = containers[i].transform.Find("frame")?.GetComponent<Image>();
 
+        GameObject gravityPointers = GameObject.Find("gravityPointers");
+
         if (i == current)
         {
             // make icon opaque
@@ -117,6 +119,16 @@ public class AbilitiesUI : MonoBehaviour
 
             // show desc
             containers[i].transform.Find("description/Input").GetComponent<TextMeshProUGUI>().gameObject.SetActive(true);
+
+            // show gravityPointers if current ability is Gravity
+            if (abilities[i] == 3 && gravityPointers != null)
+            {
+                gravityPointers.SetActive(true);
+            }
+            else if (gravityPointers != null)
+            {
+                gravityPointers.SetActive(false);
+            }
         }
         else
         {
@@ -139,6 +151,7 @@ public class AbilitiesUI : MonoBehaviour
         }
     }
 }
+
 
 
     public void updateCharges(int charges)
