@@ -7,6 +7,7 @@ public class jumpHitbox : MonoBehaviour
     public PlayerMovement player;
     private HashSet<string> _latest;
     private Vector3 baseVel;
+    private string _movingPlatformName;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +32,8 @@ public class jumpHitbox : MonoBehaviour
         {
             string name = trigger.transform.parent.name;
             _latest.Add(name);
+            _movingPlatformName = name;
+            //Debug.Log("Landed on " + name);
         }
         else
         {
@@ -42,13 +45,16 @@ public class jumpHitbox : MonoBehaviour
     {
         if (trigger.tag == "MovingPlatform" && trigger.GetComponent<Rigidbody>().velocity != baseVel)
         {
+            //Debug.Log(trigger.transform.parent.name);
             if (trigger.GetComponent<movingPlatform>()._moving == true) {
                 baseVel = trigger.GetComponent<Rigidbody>().velocity;
                 player.SetBaseVelocity(trigger.GetComponent<Rigidbody>().velocity);
+                
                 //Debug.Log(trigger.GetComponent<Rigidbody>().velocity);
             }
             else
             {
+                baseVel = trigger.GetComponent<Rigidbody>().velocity;
                 player.RemoveBaseVelocity();
             }
         }
@@ -70,10 +76,11 @@ public class jumpHitbox : MonoBehaviour
             player.SetIsGrounded(false);
             //Debug.Log("Air");
         }
-        if (trigger.tag == "MovingPlatform")
+        if (trigger.tag == "MovingPlatform" && name == _movingPlatformName)
         {
             baseVel = Vector3.zero;
             player.RemoveBaseVelocity();
+            //Debug.Log("Left " + name);
         }
     }
 
