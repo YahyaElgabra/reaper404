@@ -8,7 +8,7 @@ public class Flying : MonoBehaviour
     private PlayerInputActions _inputActions;
     
     private float forwardSpeed = 8f; // forward speed
-    private float movementSpeed = 10f; // up/down/left/right speed
+    private float movementSpeed = 14f; // up/down/left/right speed
     private float boostedSpeed = 20f; // boosting (shift) speed
     private float brakingSpeed = 5f; // braking (ctrl) speed
     private float accelerationRate = 5f; // boosting acceleration
