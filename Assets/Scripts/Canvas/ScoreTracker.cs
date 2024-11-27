@@ -30,6 +30,7 @@ public class ScoreTracker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        stopTime = false;
         time = 0.0f;
         score = 0;
     }
