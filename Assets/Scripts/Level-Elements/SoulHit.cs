@@ -53,7 +53,10 @@ public class SoulHit : MonoBehaviour
                 audioSource.Play();
             }
             
-            scorer.score += 1;
+            if (scorer != null)
+            {
+                scorer.score += 1;
+            }
             StartCoroutine(SpinAndDisappear());
         }
     }

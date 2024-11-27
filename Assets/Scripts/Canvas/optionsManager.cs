@@ -49,6 +49,12 @@ public class optionsManager : MonoBehaviour
                     buttons.Add(panelChild.gameObject);
                 }
             }
+            else if (child.gameObject.name == "invert")
+            {
+                buttons.Add(child.gameObject);
+                Toggle toggle = child.gameObject.GetComponentInChildren<Toggle>();
+                toggle.isOn = (PlayerPrefs.GetInt("invertFly", 0) == 1) ? true : false;
+            }
             else
             {
                 if (child.gameObject.activeSelf == false)
@@ -58,7 +64,7 @@ public class optionsManager : MonoBehaviour
                 buttons.Add(child.gameObject);
                 if (child.gameObject.name == "master")
                 {
-                    child.gameObject.GetComponentInChildren<Slider>().value = PlayerPrefs.GetFloat("masterVolume", 1.0f);
+                    child.gameObject.GetComponentInChildren<Slider>().value = PlayerPrefs.GetFloat("volume", 1.0f);
                 }
                 if (child.gameObject.name == "distance")
                 {
@@ -66,7 +72,7 @@ public class optionsManager : MonoBehaviour
                 }
                 if (child.gameObject.name == "sensitivity")
                 {
-                    child.gameObject.GetComponentInChildren<Slider>().value = PlayerPrefs.GetFloat("cameraSensitivity", 0.25f);
+                    child.gameObject.GetComponentInChildren<Slider>().value = PlayerPrefs.GetFloat("cameraSensitivity", 0.5f);
                 }
             }
         }
@@ -135,11 +141,11 @@ public class optionsManager : MonoBehaviour
 
             if ((right || left) && sliderMode)
             {
-                slider.value -= x * -0.0025f * Mathf.Lerp(0.25f, 3f, PlayerPrefs.GetFloat("cameraSensitivity", 0.25f));
+                slider.value -= x * -0.0025f * Mathf.Lerp(0.25f, 1.5f, PlayerPrefs.GetFloat("cameraSensitivity", 0.5f));
                 if (curr == 0) // master volume
                 {
-                    PlayerPrefs.SetFloat("masterVolume", slider.value);
-                    AudioListener.volume = PlayerPrefs.GetFloat("masterVolume", 1.0f);
+                    PlayerPrefs.SetFloat("volume", slider.value);
+                    AudioListener.volume = PlayerPrefs.GetFloat("volume", 1.0f);
                 }
                 else if (curr == 1) // camera distance
                 {
@@ -150,7 +156,7 @@ public class optionsManager : MonoBehaviour
                     PlayerPrefs.SetFloat("cameraSensitivity", slider.value);
                 }
             }
-            if (curr < _num_sliders)
+            if (curr < _num_sliders + 1)
             {
                 pickerPosition = buttons[curr].transform.position - _button_offset;
             }
@@ -181,6 +187,19 @@ public class optionsManager : MonoBehaviour
                 else if (buttons[curr].name == "restart")
                 {
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
+                else if (buttons[curr].name == "invert")
+                {
+                    Toggle toggle = buttons[curr].GetComponentInChildren<Toggle>();
+                    toggle.isOn = !toggle.isOn;
+                    if (toggle.isOn)
+                    {
+                        PlayerPrefs.SetInt("invertFly", 1);
+                    }
+                    else
+                    {
+                        PlayerPrefs.SetInt("invertFly", 0);
+                    }
                 }
                 else
                 {

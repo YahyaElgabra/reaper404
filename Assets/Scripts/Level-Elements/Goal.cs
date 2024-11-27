@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class portal : MonoBehaviour
 {
     Vector3 startingPosition;
-    GameObject winScreen;
+    GameObject winScreen = null;
     // will assume that 0 means no special abilities, 1 means run+wall jump, 2 means tp, 3 means gravity, 4 means fly
     public int[] passes;
     int currentPass = 0;
-    int currentAbility = -1;
+    public int currentAbility = -1;
     public int[] charges;
     int chargeIndex = 0;
     PlayerMovement movementScript;
@@ -18,6 +19,8 @@ public class portal : MonoBehaviour
     AbilitiesUI abilitiesUI = null;
     Rigidbody rb;
     float passCooldown = 0.5f;
+    GameObject player;
+    int originalCharge;
 
     private float latestCollisionTime = 0f;
 
@@ -26,7 +29,7 @@ public class portal : MonoBehaviour
 
     void Start()
     {
-        GameObject player = GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag("Player");
         startingPosition = player.transform.position;
         startingRotation = player.transform.rotation;
         movementScript = player.GetComponent<PlayerMovement>();
@@ -43,11 +46,14 @@ public class portal : MonoBehaviour
             }
         }
         GameObject canvas = GameObject.FindWithTag("Canvas");
-        foreach (Transform child in canvas.transform)
+        if (canvas != null)
         {
-            if (child.CompareTag("WinScreen"))
+            foreach (Transform child in canvas.transform)
             {
-                winScreen = child.gameObject;
+                if (child.CompareTag("WinScreen"))
+                {
+                    winScreen = child.gameObject;
+                }
             }
         }
          ChangeAbility();
@@ -71,7 +77,10 @@ public class portal : MonoBehaviour
                 return;
             }
             if (currentPass == passes.Length - 1) {
-                winScreen.SetActive(true);
+                if (winScreen != null)
+                {
+                    winScreen.SetActive(true);
+                }
                 audioSource.Play();
 
                 if (rb != null)
@@ -82,14 +91,18 @@ public class portal : MonoBehaviour
             }
             else
             {
+                if (abilitiesUI != null)
+                {
+                    abilitiesUI.newPassAudio();
+                }
                 latestCollisionTime = Time.time;
                 currentPass++;
-                collision.gameObject.transform.position = startingPosition;
-                Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
+                player.transform.position = startingPosition;
+                Rigidbody rb = player.GetComponent<Rigidbody>();
                 rb.velocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
                 movementScript.gravityDirection = Vector3.down;
-                collision.gameObject.transform.rotation = startingRotation;
+                player.transform.rotation = startingRotation;
                 ChangeAbility();
                 if (abilitiesUI != null)
                 {
@@ -99,6 +112,44 @@ public class portal : MonoBehaviour
                         abilitiesUI.updateCharges(charges[chargeIndex]);
                     }
                 }
+            }
+        }
+    }
+
+    public void ResetPass()
+    {
+        if (true)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        else
+        {
+            player = GameObject.FindWithTag("Player"); // need to update it if its fly
+            player.transform.position = startingPosition;
+            Rigidbody rb = player.GetComponent<Rigidbody>();
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            movementScript.gravityDirection = Vector3.down;
+            player.transform.rotation = startingRotation;
+            if (currentAbility == 2)
+            {
+                throwingScript.charges = originalCharge;
+                if (abilitiesUI != null)
+                {
+                    abilitiesUI.updateCharges(originalCharge);
+                }
+            }
+            else if (currentAbility == 3)
+            {
+                gravityScript.charges = originalCharge;
+                if (abilitiesUI != null)
+                {
+                    abilitiesUI.updateCharges(originalCharge);
+                }
+            }
+            else if (currentAbility == 4)
+            {
+                Debug.Log("g");
             }
         }
     }
@@ -146,6 +197,7 @@ public class portal : MonoBehaviour
                 if (chargeIndex < charges.Length)
                 {
                     throwingScript.charges = charges[chargeIndex];
+                    originalCharge = charges[chargeIndex];
                 }
                 if (chargeIndex < charges.Length - 1)
                 {
@@ -157,6 +209,7 @@ public class portal : MonoBehaviour
                 if (chargeIndex < charges.Length)
                 {
                     gravityScript.charges = charges[chargeIndex];
+                    originalCharge = charges[chargeIndex];
                 }
                 if (chargeIndex < charges.Length - 1)
                 {

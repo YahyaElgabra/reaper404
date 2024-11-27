@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
     private const float _groundMultiplier = 1f;
     private const float _minimumSpeedForAirDrag = 0.5f;
 
-    private const float WallJumpVertScale = 45f;
+    private const float WallJumpVertScale = 42f;
     private const float WallJumpHoriScale = 15f;
 
     private const float JumpScale = 40f;
@@ -136,7 +136,7 @@ public class PlayerMovement : MonoBehaviour
         // _udInput = _lookInput.y;
         _ewInput = _lookInput.x;
         
-        _yaw += speedH* _ewInput * Mathf.Lerp(0.25f, 3f, PlayerPrefs.GetFloat("cameraSensitivity", 0.25f));
+        _yaw += speedH* _ewInput * Mathf.Lerp(0.25f, 1.5f, PlayerPrefs.GetFloat("cameraSensitivity", 0.5f));
         
         if (_inputActions.Gameplay.Run.IsPressed() && _isRunWallJump)
         {
